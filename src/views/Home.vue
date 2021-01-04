@@ -10,7 +10,8 @@
         <span>多层网络性能展示系统</span>
       </div>
       <div class="head-weather">
-        <weather></weather>
+        <weather v-show="showWeather"></weather>
+        <people-container v-show="!showWeather"></people-container>
       </div>
     </div>
     <div class="body-area"></div>
@@ -21,12 +22,19 @@
 // @ is an alias to /src
 import Weather from "@/components/base/Weather";
 import Button from "@/components/base/Button";
+import PeopleContainer from "@/components/home/PeopleContainer";
 
 export default {
   name: "Home",
+  data() {
+    return {
+      showWeather: true
+    };
+  },
   components: {
     Button,
-    Weather
+    Weather,
+    PeopleContainer
   },
   methods: {
     showLogo: function() {
@@ -41,10 +49,19 @@ export default {
         span.style.animationDelay = `${delay + Math.abs(i - middle) * 0.1}s`;
         revealText.append(span);
       });
+    },
+    switchComponent: function() {
+      this.timer = setInterval(() => {
+        this.showWeather = !this.showWeather;
+      }, 10000);
     }
   },
   mounted() {
     this.showLogo();
+    this.switchComponent();
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
   }
 };
 </script>

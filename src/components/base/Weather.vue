@@ -1,5 +1,5 @@
 <template>
-  <div class="home-weather">
+  <div class="weather-area">
     <div class="weather-left">
       <div class="time">{{ left.time }}</div>
       <div class="date">
@@ -115,10 +115,11 @@ export default {
 </script>
 
 <style lang="less">
-@import '~@/assets/css/variable';
+@import "~@/assets/css/variable";
 
-.home-weather {
-  height: 80%;
+.weather-area {
+  width: 100%;
+  height: 100%;
   display: flex;
   position: relative;
 
@@ -144,7 +145,6 @@ export default {
     flex: 1;
     display: flex;
     align-items: center;
-
 
     img {
       width: 30%;

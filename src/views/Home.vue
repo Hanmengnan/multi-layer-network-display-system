@@ -14,7 +14,21 @@
         <people-container v-show="!showWeather"></people-container>
       </div>
     </div>
-    <div class="body-area"></div>
+    <div class="body-area">
+      <div class="side-row">
+        <div class="box-small"></div>
+        <div class="box-small"></div>
+        <div class="box-small"></div>
+      </div>
+      <div class="mid-row"></div>
+      <div class="side-row">
+        <div class="box-small"></div>
+        <div class="box-small">
+          <flow-chart></flow-chart>
+        </div>
+        <div class="box-small"></div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -23,6 +37,7 @@
 import Weather from "@/components/base/Weather";
 import Button from "@/components/base/Button";
 import PeopleContainer from "@/components/home/PeopleContainer";
+import FlowChart from "@/components/home/FlowChart";
 
 export default {
   name: "Home",
@@ -34,7 +49,8 @@ export default {
   components: {
     Button,
     Weather,
-    PeopleContainer
+    PeopleContainer,
+    FlowChart
   },
   methods: {
     showLogo: function() {

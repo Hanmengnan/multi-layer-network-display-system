@@ -15,18 +15,34 @@
       </div>
     </div>
     <div class="body-area">
-      <div class="side-row">
-        <div class="box-small"></div>
-        <div class="box-small"></div>
-        <div class="box-small"></div>
+      <div class="side-row magictime slideLeftReturn">
+        <div class="box box-1">
+          <div class="box-border-1"></div>
+          <div class="box-border-2"></div>
+        </div>
+        <div class="box box-2">
+          <div class="box-border-1"></div>
+          <div class="box-border-2"></div>
+        </div>
+        <div class="box box-3">
+          <div class="box-border-1"></div>
+          <div class="box-border-2"></div>
+        </div>
       </div>
       <div class="mid-row"></div>
-      <div class="side-row">
-        <div class="box-small"></div>
-        <div class="box-small">
+      <div class="side-row magictime slideRightReturn">
+        <div class="box box-4">
+          <div class="box-border-1"></div>
+          <div class="box-border-2"></div>
+        </div>
+        <div class="box-5">
+          <situation-handle></situation-handle>
+        </div>
+        <div class="box box-6">
+          <div class="box-border-1"></div>
+          <div class="box-border-2"></div>
           <flow-chart></flow-chart>
         </div>
-        <div class="box-small"></div>
       </div>
     </div>
   </div>
@@ -37,6 +53,7 @@
 import Weather from "@/components/base/Weather";
 import Button from "@/components/base/Button";
 import PeopleContainer from "@/components/home/PeopleContainer";
+import SituationHandle from "@/components/home/Situation/SituationHandle";
 import FlowChart from "@/components/home/FlowChart";
 
 export default {
@@ -50,6 +67,7 @@ export default {
     Button,
     Weather,
     PeopleContainer,
+    SituationHandle,
     FlowChart
   },
   methods: {
@@ -83,4 +101,5 @@ export default {
 </script>
 <style lang="less">
 @import "~@/assets/css/home.less";
+@import "~@/assets/css/other/magic.css";
 </style>

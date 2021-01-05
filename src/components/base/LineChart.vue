@@ -28,15 +28,6 @@ export default {
             color: "#ff9900"
           }
         },
-        legend: {
-          show: true,
-          icon: "roundRect",
-          textStyle: {
-            color: "#F0F8FF"
-          },
-          data: ["light"],
-          left: "10%"
-        },
         grid: {
           show: false,
           left: "15%",
@@ -47,12 +38,20 @@ export default {
         tooltip: {
           trigger: "axis"
         },
+        dataZoom: [
+          {
+            type: "inside"
+          }
+        ],
         xAxis: {
           type: "time",
+          axisLabel: {
+            color: "#2292DD"
+          },
           axisLine: {
             show: true,
             lineStyle: {
-              color: "grey"
+              color: "white"
             }
           },
           splitLine: {
@@ -61,20 +60,29 @@ export default {
         },
         yAxis: {
           type: "value",
+          axisLabel: {
+            color: "#2292DD"
+          },
           axisLine: {
             show: true,
             lineStyle: {
               color: "grey"
             }
           },
-          splitNumber: 5
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: "rgba(255,255,255,0.1)"
+            }
+          }
         },
         series: [
           {
             name: "light",
             type: "line",
-            color: "#00CCFF",
+            color: "#2B91D5",
             showSymbol: false,
+            smooth: true,
             data: this.listData
           }
         ]

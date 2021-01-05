@@ -46,14 +46,11 @@ export default {
       }
     },
     updateData: function() {
-      for (var i = 0; i < 5; i++) {
-        this.data.shift();
-        this.data.push(this.randomData());
-      }
+      this.data.shift();
+      this.data.push(this.randomData());
     }
   },
   mounted: function() {
-    console.log(this);
     this.init();
     setInterval(this.updateData, 1000);
   }

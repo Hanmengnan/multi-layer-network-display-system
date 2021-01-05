@@ -1,0 +1,11 @@
+export const backgroundColor = '#0c143f';
+export const defaultFontSize = 15;
+export const defaultFontColor = '#f8f8ff';
+export const defaultFontWeight = 500;
+export const titleFontSize = 20;
+export const titleFontColor = '#f8f8ff';
+export const titleFontHeight = 800;
+export const selectedColor = '#ff9900';
+export const lineChartColor = '#00ccff';
+export const titleDescribeSize = 4;
+export const borderColor = '#0099ff';

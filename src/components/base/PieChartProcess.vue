@@ -12,7 +12,7 @@ import {
   defaultFontColor,
   defaultFontSize,
   defaultFontWeight
-} from "@/assets/css/variable.js";
+} from "@/assets/js/variable.js";
 
 let chartArea;
 
@@ -45,7 +45,6 @@ export default {
   data() {
     return {
       options: {
-        silent: true,
         clockwise: true,
         title: [
           {
@@ -53,19 +52,21 @@ export default {
             textStyle: {
               color: defaultFontColor,
               lineHeight: 5,
-              fontSize: defaultFontSize - 2,
+              fontSize: defaultFontSize + 1,
               fontWeight: defaultFontWeight
             },
-            x: "45%",
-            y: "85%",
-            textAlign: "center"
+            x: "47%",
+            y: "70%",
+            textAlign: "center",
+            subtext: this.aimConditionNumber + "起"
           }
         ],
         series: [
           {
             type: "pie",
+            height: "70%",
             radius: ["0%", "80%"],
-
+            hoverAnimation: true,
             itemStyle: {
               borderColor: this.themeColor
             },
@@ -99,27 +100,6 @@ export default {
               color: "#ffffff",
               fontSize: defaultFontSize
             }
-          },
-          {
-            type: "pie",
-            radius: ["0%", "60%"],
-
-            itemStyle: {
-              borderColor: "#001428"
-            },
-
-            data: [
-              {
-                name: "aim",
-                value: (this.aimConditionNumber / this.conditionNumber) * 100,
-                itemStyle: {
-                  color: "#001428"
-                }
-              }
-            ],
-            label: {
-              show: false
-            }
           }
         ]
       }
@@ -134,14 +114,8 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/variable";
-.chartContainer:hover {
-  border-bottom: @themeColorLight 3px solid;
-  border-image: linear-gradient(
-      to right; #00000002 0%,
-      @themeColorLight 50%,
-      #00000002 100%
-    )
-    1 10;
-  cursor: pointer;
+.chartContainer {
+  width: 100%;
+  height: 90%;
 }
 </style>

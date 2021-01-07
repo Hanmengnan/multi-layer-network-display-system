@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="body-area">
-      <div class="side-row magictime slideLeftReturn">
+      <div ref="sideLeft" class="side-row magictime slideLeftReturn">
         <div class="box box-1">
           <div class="box-border-1"></div>
           <div class="box-border-2"></div>
@@ -30,7 +30,7 @@
         </div>
       </div>
       <div class="mid-row"></div>
-      <div class="side-row magictime slideRightReturn">
+      <div ref="sideRight" class="side-row magictime slideRightReturn">
         <div class="box box-4">
           <div class="box-border-1"></div>
           <div class="box-border-2"></div>
@@ -88,9 +88,14 @@ export default {
       this.timer = setInterval(() => {
         this.showWeather = !this.showWeather;
       }, 10000);
+    },
+    removeSideRowAnimation: function() {
+      this.$refs.sideRight.classList.remove("magictime");
+      this.$refs.sideLeft.classList.remove("magictime");
     }
   },
-  mounted() {
+  mounted: function() {
+    setTimeout(this.removeSideRowAnimation, 2000);
     this.showLogo();
     this.switchComponent();
   },

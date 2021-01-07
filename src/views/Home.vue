@@ -95,6 +95,7 @@ export default {
     }
   },
   mounted: function() {
+    // ugly 的 代码 ，为了解决 css 中 position : fixed 与 animation 不兼容的问题所采取的不得已办法
     setTimeout(this.removeSideRowAnimation, 2000);
     this.showLogo();
     this.switchComponent();

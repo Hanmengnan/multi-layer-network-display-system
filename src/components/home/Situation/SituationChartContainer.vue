@@ -8,23 +8,23 @@
   >
     <div class="box-border-1"></div>
     <div class="box-border-2"></div>
-    <PieChartProcess
+    <pie-chart-empty
       :title="title"
       :themeColor="themeColor"
       :aimConditionNumber="aimConditionNumber"
       :clickEvent="clickEvent"
       :conditionNumber="conditionNumber"
-    ></PieChartProcess>
+    ></pie-chart-empty>
   </div>
 </template>
 
 <script>
-import PieChartProcess from "@/components/base/PieChartProcess";
+import PieChartEmpty from "@/components/base/chart/PieChartEmpty";
 
 export default {
   name: "ChartContainer",
   components: {
-    PieChartProcess
+    PieChartEmpty
   },
   props: {
     index: {
@@ -53,12 +53,6 @@ export default {
       required: false,
       default: () => {}
     }
-  },
-  data() {
-    return {};
-  },
-  mounted: function() {
-    console.log(typeof this.index);
   }
 };
 </script>
@@ -93,9 +87,9 @@ export default {
   }
 }
 .first-box {
-  margin-right: 10px;
+  margin-right: 4px;
 }
 .last-box {
-  margin-left: 10px;
+  margin-left: 4px;
 }
 </style>

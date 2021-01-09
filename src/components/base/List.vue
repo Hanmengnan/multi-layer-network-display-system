@@ -57,16 +57,6 @@ export default {
       type: Boolean,
       default: true
     },
-    // handleMouseIn: {
-    // 	type: Function,
-    // 	default: () => {
-    // 	}
-    // },
-    // handleMouseOut: {
-    // 	type: Function,
-    // 	default: () => {
-    // 	}
-    // },
     header: {
       type: Array,
       require: true,
@@ -96,7 +86,10 @@ export default {
           { code: "6", value: "贵州", status: "故障", color: "gray" },
           { code: "7", value: "青海", status: "故障", color: "gray" },
           { code: "8", value: "山东", status: "繁忙", color: "yellow" },
-          { code: "9", value: "黑龙江", status: "拥塞", color: "red " }
+          { code: "9", value: "黑龙江", status: "拥塞", color: "red " },
+          { code: "10", value: "黑龙江", status: "拥塞", color: "red " },
+          { code: "11", value: "黑龙江", status: "拥塞", color: "red " },
+          { code: "12", value: "黑龙江", status: "拥塞", color: "red " }
         ];
       }
     },
@@ -186,7 +179,7 @@ export default {
         } else {
           this.activeIndex = 0;
         }
-      }, 1500); // 移动时间间隔
+      }, 1000); // 移动时间间隔
     }
   },
   beforeDestroy() {
@@ -199,6 +192,7 @@ export default {
 @import "~@/assets/css/variable";
 
 .main-area {
+  width: 100%;
   height: 100%;
 }
 
@@ -218,7 +212,6 @@ export default {
 
 .table-title {
   display: inline-block;
-  border-bottom: @titleDescribeSize solid @ChartColor1;
   position: relative;
 }
 
@@ -232,13 +225,12 @@ export default {
   color: black;
   display: flex;
   z-index: 1;
-  background: @themeColorMiddle;
+
   width: 100%;
   justify-content: space-between;
   // border-radius: 10%;
   .input-area {
     width: 100%;
-    background: @themeColorMiddle;
   }
 
   // left: 25%;
@@ -256,13 +248,5 @@ export default {
   font-size: @defaultFontSize;
   font-weight: @defaultFontWeight;
   position: relative;
-}
-
-table tbody tr:nth-child(2n + 1) {
-  background-color: @themeColorMiddle;
-}
-
-table tbody tr:nth-child(2n) {
-  background-color: @themeColorDark;
 }
 </style>

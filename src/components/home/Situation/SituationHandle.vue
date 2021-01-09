@@ -27,8 +27,8 @@ import Modal from "@/components/base/Modal.vue";
 import List from "@/components/base/List.vue";
 
 const conditionData = [
-  { name: "已处理", value: 330, themeColor: "#1772e9", isShow: false },
-  { name: "处理中", value: 100, themeColor: "#12f067", isShow: false },
+  { name: "已处理", value: 330, themeColor: "#1795e9", isShow: false },
+  { name: "处理中", value: 100, themeColor: "#9e175f", isShow: false },
   { name: "未处理", value: 110, themeColor: "#ca8622", isShow: false }
 ];
 

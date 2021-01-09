@@ -29,11 +29,47 @@
           <div class="box-border-2"></div>
         </div>
       </div>
-      <div class="mid-row"></div>
+      <div class="mid-row">
+        <div class="mid-top">
+          <china3d-map
+            className="first"
+            style="width: 100%; height: 100%"
+          ></china3d-map>
+        </div>
+        <div class="mid-bottom">
+          <!--          <div class="system-info">-->
+          <!--            <system-info :system-info-list="sysInfoList"></system-info>-->
+          <!--          </div>-->
+          <div class="list-area">
+            <div class="box list-container-1 ">
+              <node-list></node-list>
+            </div>
+            <div class="box list-container-2">
+              <message-box
+                :message="[
+                  { msg: '北京节点恢复正常', city: '北京', status: '正常' },
+                  { msg: '上海节点系统繁忙', city: '上海', status: '繁忙' },
+                  { msg: '云南节点发生故障', city: '云南', status: '故障' },
+                  { msg: '广州节点发生拥塞', city: '广州', status: '拥塞' },
+                  { msg: '新疆节点发生故障', city: '新疆', status: '故障' },
+                  { msg: '贵州节点发生故障', city: '贵州', status: '故障' },
+                  { msg: '青海节点发生故障', city: '青海', status: '故障' }
+                ]"
+              ></message-box>
+            </div>
+          </div>
+        </div>
+      </div>
       <div ref="sideRight" class="side-row magictime slideRightReturn">
         <div class="box box-4">
           <div class="box-border-1"></div>
           <div class="box-border-2"></div>
+          <location-distribution></location-distribution>
+        </div>
+        <div class="box box-4">
+          <div class="box-border-1"></div>
+          <div class="box-border-2"></div>
+          <type-distribution></type-distribution>
         </div>
         <div class="box-5">
           <situation-handle></situation-handle>
@@ -50,11 +86,17 @@
 
 <script>
 // @ is an alias to /src
-import Weather from "@/components/base/Weather";
 import Button from "@/components/base/Button";
+import Weather from "@/components/base/Weather";
 import PeopleContainer from "@/components/home/PeopleContainer";
+
+import China3dMap from "@/components/China3dMap";
+import MessageBox from "@/components/home/MessageBox";
+import NodeList from "@/components/home/NodeList";
+import LocationDistribution from "@/components/home/NodeDistribution/LocationDistribution";
+import TypeDistribution from "@/components/home/NodeDistribution/TypeDistribution";
 import SituationHandle from "@/components/home/Situation/SituationHandle";
-import FlowChart from "@/components/home/FlowChart";
+import FlowChart from "@/components/home/FlowChange";
 
 export default {
   name: "Home",
@@ -66,12 +108,17 @@ export default {
   components: {
     Button,
     Weather,
+    China3dMap,
+    NodeList,
+    MessageBox,
     PeopleContainer,
     SituationHandle,
-    FlowChart
+    FlowChart,
+    LocationDistribution,
+    TypeDistribution
   },
   methods: {
-    showLogo: function() {
+    showTitle: function() {
       let delay = 0.3;
       let revealText = document.querySelector(".head-logo");
       let letters = revealText.textContent.split("");
@@ -97,7 +144,7 @@ export default {
   mounted: function() {
     // ugly 的 代码 ，为了解决 css 中 position : fixed 与 animation 不兼容的问题所采取的不得已办法
     setTimeout(this.removeSideRowAnimation, 2000);
-    this.showLogo();
+    this.showTitle();
     this.switchComponent();
   },
   beforeDestroy() {
@@ -105,7 +152,7 @@ export default {
   }
 };
 </script>
-<style lang="less">
+<style lang="less" scoped>
 @import "~@/assets/css/home.less";
 @import "~@/assets/css/other/magic.css";
 </style>

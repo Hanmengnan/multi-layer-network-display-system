@@ -47,18 +47,18 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 @import "~@/assets/css/common";
 
 .people-area {
-  color: @defaultFontColor;
-  font-size: @defaultFontSize;
-  font-weight: @defaultFontWeight;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   width: 100%;
   height: 80%;
+  color: @defaultFontColor;
+  font-size: @defaultFontSize;
+  font-weight: @defaultFontWeight;
 
   .people-name {
     display: flex;

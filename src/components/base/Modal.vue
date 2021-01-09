@@ -6,7 +6,7 @@
         <div class="title">
           <slot name="title"></slot>
         </div>
-        <div class="iconfont cancel" @click="clickClose">&#xe661;</div>
+        <div class="iconfont cancel" @click="clickClose">&#xe600;</div>
       </div>
       <div class="slot-area">
         <slot></slot>
@@ -89,7 +89,7 @@ export default {
       flex: 1;
       .title > span {
         display: inline-block;
-        border-left: @titleDescribeSize solid @themeColorLight;
+        border-left: @titleDescribeSize solid @titleFontColor;
         padding: 5px;
       }
       .cancel {

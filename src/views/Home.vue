@@ -29,34 +29,23 @@
           <div class="box-border-2"></div>
         </div>
       </div>
-      <div class="mid-row">
-        <div class="mid-top">
-          <china3d-map
-            className="first"
-            style="width: 100%; height: 100%"
-          ></china3d-map>
-        </div>
-        <div class="mid-bottom">
-          <!--          <div class="system-info">-->
-          <!--            <system-info :system-info-list="sysInfoList"></system-info>-->
-          <!--          </div>-->
-          <div class="list-area">
-            <div class="box list-container-1 ">
-              <node-list></node-list>
-            </div>
-            <div class="box list-container-2">
-              <message-box
-                :message="[
-                  { msg: '北京节点恢复正常', city: '北京', status: '正常' },
-                  { msg: '上海节点系统繁忙', city: '上海', status: '繁忙' },
-                  { msg: '云南节点发生故障', city: '云南', status: '故障' },
-                  { msg: '广州节点发生拥塞', city: '广州', status: '拥塞' },
-                  { msg: '新疆节点发生故障', city: '新疆', status: '故障' },
-                  { msg: '贵州节点发生故障', city: '贵州', status: '故障' },
-                  { msg: '青海节点发生故障', city: '青海', status: '故障' }
-                ]"
-              ></message-box>
-            </div>
+      <div class="mid-bottom magictime slideDownReturn">
+        <div class="list-area">
+          <div class="box list-container-1 ">
+            <node-list></node-list>
+          </div>
+          <div class="box list-container-2">
+            <message-box
+              :message="[
+                { msg: '北京节点恢复正常', city: '北京', status: '正常' },
+                { msg: '上海节点系统繁忙', city: '上海', status: '繁忙' },
+                { msg: '云南节点发生故障', city: '云南', status: '故障' },
+                { msg: '广州节点发生拥塞', city: '广州', status: '拥塞' },
+                { msg: '新疆节点发生故障', city: '新疆', status: '故障' },
+                { msg: '贵州节点发生故障', city: '贵州', status: '故障' },
+                { msg: '青海节点发生故障', city: '青海', status: '故障' }
+              ]"
+            ></message-box>
           </div>
         </div>
       </div>
@@ -79,6 +68,12 @@
           <div class="box-border-2"></div>
           <flow-chart></flow-chart>
         </div>
+      </div>
+      <div class="map-background">
+        <china3d-map
+          className="first"
+          style="width: 100%; height: 100%"
+        ></china3d-map>
       </div>
     </div>
   </div>
@@ -152,7 +147,7 @@ export default {
   }
 };
 </script>
-<style lang="less" scoped>
+<style lang="less">
 @import "~@/assets/css/home.less";
 @import "~@/assets/css/other/magic.css";
 </style>

@@ -62,7 +62,7 @@ export default {
 .chart-box {
   height: 100%;
   width: 33.3%;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.1);
   position: relative;
 
   .box-border-1,

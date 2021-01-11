@@ -19,14 +19,26 @@
         <div class="box box-1">
           <div class="box-border-1"></div>
           <div class="box-border-2"></div>
+          <Legend class="legend-area" title-name="系统信息"></Legend>
+          <system-info
+            class="content-area"
+            :system-info-list="systemInfoList"
+            :state-info-list="stateInfoList"
+          ></system-info>
         </div>
         <div class="box box-2">
           <div class="box-border-1"></div>
           <div class="box-border-2"></div>
+          <Legend class="legend-area" title-name="性能参数"></Legend>
+          <GaugeChart
+            class="content-area"
+            :parameter-list="parameterList"
+          ></GaugeChart>
         </div>
         <div class="box box-3">
           <div class="box-border-1"></div>
           <div class="box-border-2"></div>
+          <Legend class="legend-area" title-name="节点健康状况"></Legend>
         </div>
       </div>
       <div class="mid-bottom magictime slideDownReturn">
@@ -53,20 +65,25 @@
         <div class="box box-4">
           <div class="box-border-1"></div>
           <div class="box-border-2"></div>
-          <location-distribution></location-distribution>
+          <Legend class="legend-area" title-name="节点分布情况"></Legend>
+          <div class="box-4-1">
+            <location-distribution></location-distribution>
+          </div>
+          <div class="box-4-2">
+            <type-distribution></type-distribution>
+          </div>
         </div>
-        <div class="box box-4">
+        <div class="box box-5">
           <div class="box-border-1"></div>
           <div class="box-border-2"></div>
-          <type-distribution></type-distribution>
-        </div>
-        <div class="box-5">
-          <situation-handle></situation-handle>
+          <Legend class="legend-area" title-name="情况处理"></Legend>
+          <situation-handle class="content-area"></situation-handle>
         </div>
         <div class="box box-6">
           <div class="box-border-1"></div>
           <div class="box-border-2"></div>
-          <flow-chart></flow-chart>
+          <Legend class="legend-area" title-name="日流量环比增长"></Legend>
+          <flow-chart class="content-area"></flow-chart>
         </div>
       </div>
       <div class="map-background">
@@ -81,10 +98,13 @@
 
 <script>
 // @ is an alias to /src
+import Legend from "@/components/base/Legend";
 import Button from "@/components/base/Button";
 import Weather from "@/components/base/Weather";
 import PeopleContainer from "@/components/home/PeopleContainer";
 
+import SystemInfo from "@/components/home/SystemInfo";
+import GaugeChart from "@/components/base/chart/GaugeChart";
 import China3dMap from "@/components/China3dMap";
 import MessageBox from "@/components/home/MessageBox";
 import NodeList from "@/components/home/NodeList";
@@ -97,12 +117,61 @@ export default {
   name: "Home",
   data() {
     return {
-      showWeather: true
+      showWeather: true,
+      systemInfoList: [
+        {
+          name: "系统名称",
+          value: "时空网络管理系统"
+        },
+        {
+          name: "系统版本",
+          value: "v2.1"
+        },
+        {
+          name: "系统运行时间",
+          value: "1d2h3m"
+        },
+        {
+          name: "系统代号",
+          value: "code71233"
+        }
+      ],
+      stateInfoList: [
+        {
+          name: "数据库",
+          status: "health"
+        },
+        {
+          name: "网络",
+          status: "health"
+        },
+        {
+          name: "数据服务集群",
+          status: "wrong"
+        }
+      ],
+      parameterList: [
+        {
+          name: "丢包率",
+          value: "0.2"
+        },
+        {
+          name: "时延",
+          value: "20"
+        },
+        {
+          name: "速率",
+          value: "1000"
+        }
+      ]
     };
   },
   components: {
+    Legend,
     Button,
     Weather,
+    SystemInfo,
+    GaugeChart,
     China3dMap,
     NodeList,
     MessageBox,

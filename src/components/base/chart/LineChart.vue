@@ -1,5 +1,5 @@
 <template>
-  <div ref="chartContainer" class="flow-chart"></div>
+  <div ref="chartContainer" class="chartContainer"></div>
 </template>
 
 <script>
@@ -22,6 +22,7 @@ export default {
       myChart: null,
       option: {
         title: {
+          show: false,
           text: this.title,
           left: "35%",
           textStyle: {
@@ -30,10 +31,10 @@ export default {
         },
         grid: {
           show: false,
-          left: "15%",
+          left: "12%",
           right: "5%",
           height: "70%",
-          top: "15%"
+          top: "5%"
         },
         tooltip: {
           trigger: "axis"
@@ -104,7 +105,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.flow-chart {
+.chartContainer {
   width: 100%;
   height: 100%;
 }

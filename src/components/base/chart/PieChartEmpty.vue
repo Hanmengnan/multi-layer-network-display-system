@@ -56,7 +56,7 @@ export default {
               fontWeight: defaultFontWeight
             },
             x: "47%",
-            y: "90%",
+            y: "70%",
             textAlign: "center",
             subtext: this.aimConditionNumber + "起"
           }
@@ -64,7 +64,7 @@ export default {
         series: [
           {
             type: "pie",
-            height: "80%",
+            height: "70%",
             radius: ["70%", "80%"],
             hoverAnimation: true,
             itemStyle: {

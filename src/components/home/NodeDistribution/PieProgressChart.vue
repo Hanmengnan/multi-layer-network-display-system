@@ -56,7 +56,8 @@ export default {
             show: false
           },
           axisLabel: {
-            color: defaultFontColor
+            color: defaultFontColor,
+            interval: 0
           },
           splitLine: {
             show: false

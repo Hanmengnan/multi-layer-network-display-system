@@ -28,7 +28,7 @@ export default {
           {
             name: this.parameterList[0].name,
             type: "gauge",
-            center: ["15%", "50%"],
+            center: ["15%", "40%"],
             radius: "50%",
             startAngle: -30,
             endAngle: 210,
@@ -39,7 +39,7 @@ export default {
                 name: this.parameterList[0].name
               }
             ],
-            max: 0.5,
+            max: 50,
             axisLine: {
               show: true,
               lineStyle: {
@@ -81,12 +81,10 @@ export default {
               show: true,
               fontSize: defaultFontSize,
               color: defaultFontColor,
-              offsetCenter: ["0", "90%"]
+              offsetCenter: ["0", "100%"]
             },
             detail: {
-              formatter: function(value) {
-                return Number(value) * 100 + "%";
-              },
+              formatter: "{value} %",
               fontSize: defaultFontSize,
               color: defaultFontColor
             }
@@ -94,6 +92,7 @@ export default {
           {
             name: this.parameterList[1].name,
             type: "gauge",
+            center: ["50%", "40%"],
             radius: "50%",
             startAngle: -30,
             endAngle: 210,
@@ -146,7 +145,7 @@ export default {
               show: true,
               fontSize: defaultFontSize,
               color: defaultFontColor,
-              offsetCenter: ["0", "90%"]
+              offsetCenter: ["0", "100%"]
             },
             detail: {
               formatter: "{value} ms",
@@ -158,7 +157,7 @@ export default {
             name: this.parameterList[2].name,
             type: "gauge",
             radius: "50%",
-            center: ["85%", "50%"],
+            center: ["85%", "40%"],
             startAngle: -30,
             endAngle: 210,
             clockwise: false,
@@ -210,7 +209,7 @@ export default {
               show: true,
               fontSize: defaultFontSize,
               color: defaultFontColor,
-              offsetCenter: ["0", "90%"]
+              offsetCenter: ["0", "100%"]
             },
             detail: {
               formatter: "{value} Mbit/s",

@@ -518,10 +518,11 @@ export const scatterData = data => {
   return res;
 };
 export const barData = data => {
+  let tempData = data.sort((a, b) => b.value - a.value).slice(0, 15);
   let res = [];
-  for (let i = 0; i < data.length; i++) {
-    res.push([data[i].value, data[i].name, data[i].value]);
+  for (let i = 0; i < tempData.length; i++) {
+    res.push([tempData[i].value, tempData[i].name, tempData[i].value]);
   }
-  console.log(res);
+
   return res;
 };

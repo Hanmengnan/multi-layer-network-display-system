@@ -19,7 +19,11 @@
         <div class="box box-1">
           <div class="box-border-1"></div>
           <div class="box-border-2"></div>
-          <Legend class="legend-area" title-name="系统信息"></Legend>
+          <Legend class="legend-area" title-name="系统信息">
+            <template v-slot:right>
+              <div class="iconfont">&#xe6c8;</div>
+            </template>
+          </Legend>
           <system-info
             class="content-area"
             :system-info-list="systemInfoList"
@@ -53,6 +57,11 @@
                 { msg: '广州节点发生拥塞', city: '广州', status: '拥塞' },
                 { msg: '新疆节点发生故障', city: '新疆', status: '故障' },
                 { msg: '贵州节点发生故障', city: '贵州', status: '故障' },
+                { msg: '青海节点发生故障', city: '青海', status: '故障' },
+                { msg: '青海节点发生故障', city: '青海', status: '故障' },
+                { msg: '青海节点发生故障', city: '青海', status: '故障' },
+                { msg: '青海节点发生故障', city: '青海', status: '故障' },
+                { msg: '青海节点发生故障', city: '青海', status: '故障' },
                 { msg: '青海节点发生故障', city: '青海', status: '故障' }
               ]"
             ></message-box>

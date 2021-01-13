@@ -55,7 +55,7 @@ export default {
   props: {
     isScroll: {
       type: Boolean,
-      default: true
+      default: false
     },
     header: {
       type: Array,
@@ -121,7 +121,7 @@ export default {
       let move = 0;
       if (this.activeIndex !== 0) {
         move = this.$refs.ele.offsetHeight / this.body.length; // 动态计算移动步长
-        // console.log(move)
+        console.log(move);
       }
       return -this.activeIndex * move + "px"; // 当前移动距离
     }
@@ -169,9 +169,13 @@ export default {
       };
     });
     this.bodyForShow = this.body.map(val => val);
+    console.log("mounted1");
+    console.log(this.isScroll);
     if (this.isScroll) {
+      console.log("mounted2");
       document.querySelector(".body").style.overflow = "scroll";
     } else {
+      console.log("mounted");
       timer = setInterval(() => {
         if (this.activeIndex < this.body.length) {
           // 最后一行滚动到顶端为止，若加上“-总行数”则只滚动到最后一行出现为止

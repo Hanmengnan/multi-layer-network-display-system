@@ -1,7 +1,12 @@
 <template>
-  <div>
+  <div class="legend-container">
+    <div class="setting">
+      <slot name="left"></slot>
+    </div>
     <div class="title" v-text="titleName"></div>
-    <slot class="icon"></slot>
+    <div class="setting">
+      <slot name="right"></slot>
+    </div>
   </div>
 </template>
 
@@ -19,12 +24,19 @@ export default {
 
 <style lang="less" scoped>
 @import "~@/assets/css/variable";
-.title {
-  color: @defaultFontColor;
-  font-size: @defaultFontSize;
-}
-.icon {
-  position: relative;
-  right: 5%;
+.legend-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  .title {
+    flex: 12;
+    color: @defaultFontColor;
+    font-size: @defaultFontSize;
+  }
+  .setting {
+    flex: 2;
+    color: @defaultFontColor;
+  }
 }
 </style>

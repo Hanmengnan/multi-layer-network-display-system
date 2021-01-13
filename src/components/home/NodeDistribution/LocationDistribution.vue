@@ -7,6 +7,8 @@ import echarts from "echarts";
 import { scatterData, barData, nodeData } from "@/assets/map/mapConstant";
 import mapJson from "@/assets/map/chinaDataV.json";
 import {
+  defaultFontColor,
+  defaultFontSize,
   themeColor1,
   themeColor2,
   themeColor3,
@@ -43,23 +45,17 @@ export default {
                 colorStops: [
                   {
                     offset: 0,
-                    color: "rgba(147, 235, 248, 0)" // 0% 处的颜色
+                    color: "rgba(255, 255, 255, 0)"
                   },
                   {
                     offset: 1,
-                    color: "rgba(147, 235, 248, .2)" // 100% 处的颜色
+                    color: "rgba(255, 255, 255, 0)"
                   }
-                ],
-                globalCoord: false // 缺省为 false
-              },
-              shadowColor: "rgba(128, 217, 248, 1)",
-              // shadowColor: 'rgba(255, 255, 255, 1)',
-              shadowOffsetX: -2,
-              shadowOffsetY: 2,
-              shadowBlur: 10
+                ]
+              }
             },
             emphasis: {
-              areaColor: "#389BB7",
+              areaColor: themeColor1,
               borderWidth: 0
             }
           }
@@ -77,14 +73,16 @@ export default {
           ],
           color: [themeColor2, themeColor3, themeColor5, themeColor1],
           textStyle: {
-            color: "#fff"
-          },
-          precision: 0
+            color: defaultFontColor
+          }
+        },
+        tooltip: {
+          trigger: "item"
         },
         grid: {
-          right: "1%",
-          top: "0%",
-          bottom: "0%",
+          right: "0%",
+          top: "5%",
+          bottom: "5%",
           width: "20%",
           containLabel: false
         },
@@ -93,37 +91,32 @@ export default {
         },
         yAxis: {
           type: "category",
+          inverse: true,
           axisLine: {
-            show: true,
-            lineStyle: {
-              color: "#ddd"
-            }
+            show: false
           },
           axisTick: {
-            show: false,
-            lineStyle: {
-              color: "#ddd"
-            }
+            show: false
           },
           axisLabel: {
             interval: 0,
-            textStyle: {
-              fontSize: 10,
-              color: "#ddd"
-            }
+            fontSize: defaultFontSize,
+            color: defaultFontColor
           },
-          data: nodeData.map(item => item.name)
+          data: barData(nodeData).map(item => item[1])
         },
         series: [
           {
-            name: "nodeHealth",
+            name: "节点数量",
             type: "scatter",
             coordinateSystem: "geo",
             data: scatterData(nodeData),
             encode: {
               value: 2
             },
-            symbolSize: 12,
+            symbolSize: function(val) {
+              return val[2] / 3;
+            },
             label: {
               normal: {
                 show: false
@@ -131,16 +124,10 @@ export default {
               emphasis: {
                 show: false
               }
-            },
-            itemStyle: {
-              emphasis: {
-                borderColor: "#fff",
-                borderWidth: 1
-              }
             }
           },
           {
-            name: "nodeHealth",
+            name: "节点数量",
             zlevel: 1.5,
             type: "bar",
             symbol: "none",

@@ -23,8 +23,8 @@
         </th>
       </thead>
     </table>
-    <div class="body">
-      <div class="scroll-content" :style="{ top }">
+    <div class="body" :style="{ overflow: this.isScroll }">
+      <div class="scroll-content" :style="{ top: top }">
         <table class="container">
           <tbody ref="ele">
             <tr
@@ -54,8 +54,8 @@ let timer;
 export default {
   props: {
     isScroll: {
-      type: Boolean,
-      default: false
+      type: String,
+      default: "hidden"
     },
     header: {
       type: Array,
@@ -92,15 +92,11 @@ export default {
           { code: "12", value: "黑龙江", status: "拥塞", color: "red " }
         ];
       }
-    },
-    viewHeight: {
-      // 可视范围
-      type: [Number, String],
-      default: "200px" // 暂定组件高度
     }
   },
   data() {
     return {
+      timer: null,
       activeIndex: 0,
       view: "",
       headerForShow: [],
@@ -121,7 +117,6 @@ export default {
       let move = 0;
       if (this.activeIndex !== 0) {
         move = this.$refs.ele.offsetHeight / this.body.length; // 动态计算移动步长
-        console.log(move);
       }
       return -this.activeIndex * move + "px"; // 当前移动距离
     }
@@ -160,7 +155,7 @@ export default {
     }
   },
   mounted() {
-    // this.view = {"height":this.viewHeight}
+    console.log("mount", this);
     this.headerForShow = this.header.map(val => {
       return {
         ...val,
@@ -169,10 +164,7 @@ export default {
       };
     });
     this.bodyForShow = this.body.map(val => val);
-    if (this.isScroll) {
-      document.querySelector(".body").style.overflow = "scroll";
-    } else {
-      console.log("mounted");
+    if (this.isScroll === "hidden") {
       timer = setInterval(() => {
         if (this.activeIndex < this.body.length) {
           // 最后一行滚动到顶端为止，若加上“-总行数”则只滚动到最后一行出现为止
@@ -184,6 +176,7 @@ export default {
     }
   },
   beforeDestroy() {
+    console.log("destroy", this);
     clearInterval(timer);
   }
 };
@@ -206,9 +199,11 @@ export default {
 .body {
   width: 100%;
   height: 99%;
-  overflow: hidden;
   position: relative;
   //position: absolute;
+}
+.body::-webkit-scrollbar {
+  display: none; /* Chrome Safari */
 }
 
 .table-title {

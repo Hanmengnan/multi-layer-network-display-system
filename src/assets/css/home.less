@@ -125,13 +125,13 @@
         }
       }
       .box-1 {
-        flex: 3;
+        flex: 3 3 percentage(3/ (3+3+5));
       }
       .box-2 {
-        flex: 3;
+        flex: 3 3 percentage(3/ (3+3+5));
       }
       .box-3 {
-        flex: 5;
+        flex: 5 5 percentage(5/ (3+3+5));
       }
       .box-4 {
         flex: 3;
@@ -146,7 +146,7 @@
         .mixin-width-height(100%, 1vw);
       }
       .content-area {
-        .mixin-width-height(100%, 100%-1vw);
+        .mixin-width-height(100%, calc(~"(100% - 1vw)"));
       }
     }
     .mid-bottom {

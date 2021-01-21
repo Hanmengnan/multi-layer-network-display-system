@@ -1,5 +1,5 @@
 <template>
-  <List :is-scroll="false" />
+  <List is-scroll="hidden" />
 </template>
 
 <script>

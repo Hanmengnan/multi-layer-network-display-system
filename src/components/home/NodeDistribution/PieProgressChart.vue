@@ -40,7 +40,7 @@ export default {
         grid: {
           left: "70%",
           right: "10%",
-          top: "20%",
+          top: "10%",
           bottom: "5%"
         },
         yAxis: {
@@ -70,8 +70,8 @@ export default {
           {
             name: this.chartName,
             type: "pie",
-            radius: "70%",
-            center: ["30%", "60%"],
+            radius: "60%",
+            center: ["25%", "50%"],
             hoverAnimation: false,
             minShowLabelAngle: 10,
             data: this.chartData,

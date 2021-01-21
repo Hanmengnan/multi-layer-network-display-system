@@ -64,17 +64,16 @@ export default {
           min: 0,
           max: Math.max(...nodeData.map(item => item.value)),
           pieces: [
-            { min: 50 }, // 不指定 max，表示 max 为无限大（Infinity）。
-            { min: 40, max: 50 },
-            { min: 30, max: 40 },
-            { min: 20, max: 30 },
-            { min: 10, max: 20 },
-            { max: 10 } // 不指定 min，表示 min 为无限大（-Infinity）。
+            { min: 45 }, // 不指定 max，表示 max 为无限大（Infinity）。
+            { min: 30, max: 45 },
+            { min: 15, max: 30 },
+            { max: 15 } // 不指定 min，表示 min 为无限大（-Infinity）。
           ],
           color: [themeColor2, themeColor3, themeColor5, themeColor1],
           textStyle: {
             color: defaultFontColor
-          }
+          },
+          bottom: 10
         },
         tooltip: {
           trigger: "item"

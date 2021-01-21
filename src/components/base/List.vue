@@ -169,10 +169,7 @@ export default {
       };
     });
     this.bodyForShow = this.body.map(val => val);
-    console.log("mounted1");
-    console.log(this.isScroll);
     if (this.isScroll) {
-      console.log("mounted2");
       document.querySelector(".body").style.overflow = "scroll";
     } else {
       console.log("mounted");

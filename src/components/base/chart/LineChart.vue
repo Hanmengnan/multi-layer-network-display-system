@@ -33,7 +33,7 @@ export default {
           show: false,
           left: "12%",
           right: "5%",
-          height: "70%",
+          height: "80%",
           top: "5%"
         },
         tooltip: {

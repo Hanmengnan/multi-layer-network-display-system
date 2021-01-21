@@ -15,7 +15,7 @@
         <template v-slot:title>
           <span>{{ tip.name }}事件一览</span>
         </template>
-        <List :header="titleList" :body="eventList[0]" />
+        <List :header="titleList" :body="eventList[0]" :is-scroll="true" />
       </modal>
     </div>
   </div>

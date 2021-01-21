@@ -64,7 +64,7 @@ export default {
   top: 0;
   background: rgba(0, 0, 0, 0.349);
   .container {
-    background: @themeColorDark;
+    background: @backgroundColor;
     border: 2px solid transparent;
     border-image: linear-gradient(
         45deg,
@@ -89,7 +89,7 @@ export default {
       flex: 1;
       .title > span {
         display: inline-block;
-        border-left: @titleDescribeSize solid @titleFontColor;
+        border-left: @borderWidth solid @titleFontColor;
         padding: 5px;
       }
       .cancel {

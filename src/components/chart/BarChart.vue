@@ -123,8 +123,8 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.chart-container {
-  width: 100%;
-  height: 100%;
+@import "~@/assets/css/mixin/base";
+.chartContainer {
+  .mixin-width-height();
 }
 </style>

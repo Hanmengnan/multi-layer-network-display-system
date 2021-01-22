@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import LineChart from "@/components/base/chart/LineChart";
+import LineChart from "@/components/chart/LineChart";
 
 const oneDay = 24 * 3600 * 1000;
 

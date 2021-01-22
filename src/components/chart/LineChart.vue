@@ -22,19 +22,14 @@ export default {
       myChart: null,
       option: {
         title: {
-          show: false,
-          text: this.title,
-          left: "35%",
-          textStyle: {
-            color: "#ff9900"
-          }
+          show: false
         },
         grid: {
           show: false,
           left: "12%",
           right: "5%",
-          height: "80%",
-          top: "5%"
+          top: "5%",
+          height: "80%"
         },
         tooltip: {
           trigger: "axis"
@@ -105,8 +100,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import "~@/assets/css/mixin/base";
 .chartContainer {
-  width: 100%;
-  height: 100%;
+  .mixin-width-height();
 }
 </style>

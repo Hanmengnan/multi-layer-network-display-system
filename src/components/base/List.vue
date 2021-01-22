@@ -50,7 +50,6 @@
 </template>
 
 <script>
-let timer;
 export default {
   props: {
     isScroll: {
@@ -165,7 +164,7 @@ export default {
     });
     this.bodyForShow = this.body.map(val => val);
     if (this.isScroll === "hidden") {
-      timer = setInterval(() => {
+      this.timer = setInterval(() => {
         if (this.activeIndex < this.body.length) {
           // 最后一行滚动到顶端为止，若加上“-总行数”则只滚动到最后一行出现为止
           this.activeIndex += 1;
@@ -177,7 +176,7 @@ export default {
   },
   beforeDestroy() {
     console.log("destroy", this);
-    clearInterval(timer);
+    clearInterval(this.timer);
   }
 };
 </script>

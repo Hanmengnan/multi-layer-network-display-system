@@ -13,9 +13,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import "~@/assets/css/mixin/base";
 .list-area {
-  width: 100%;
-  height: 90%;
-  max-height: 90%;
+  .mixin-width-height(@height: 90%);
 }
 </style>

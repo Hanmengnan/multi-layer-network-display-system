@@ -24,18 +24,16 @@ export default {
 
 <style lang="less" scoped>
 @import "~@/assets/css/variable";
+@import "~@/assets/css/mixin/base";
 .legend-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
+  .mixin-flex(@justify-content: space-between);
   .title {
-    flex: 12;
+    flex: 6;
     color: @defaultFontColor;
     font-size: @defaultFontSize;
   }
   .setting {
-    flex: 2;
+    flex: 1;
     color: @defaultFontColor;
   }
 }

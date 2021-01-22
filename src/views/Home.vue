@@ -109,7 +109,7 @@ import Weather from "@/components/base/Weather";
 import PeopleContainer from "@/components/home/PeopleContainer";
 
 import SystemInfo from "@/components/home/SystemInfo";
-import GaugeChart from "@/components/base/chart/GaugeChart";
+import GaugeChart from "@/components/chart/GaugeChart";
 import China3dMap from "@/components/China3dMap";
 import MessageBox from "@/components/home/MessageBox";
 import NodeList from "@/components/home/NodeList";

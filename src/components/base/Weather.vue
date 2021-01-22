@@ -13,7 +13,9 @@
         <div>
           <span>{{ right.weather }} {{ right.temperature }}</span>
         </div>
-        <span>{{ right.location }}</span>
+        <div>
+          <span>{{ right.location }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -116,57 +118,26 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/variable";
-
+@import "~@/assets/css/mixin/base";
 .weather-area {
-  width: 100%;
-  height: 100%;
+  .mixin-width-height();
   display: flex;
   position: relative;
+  font-size: @defaultFontSize;
+  color: @defaultFontColor;
 
   .weather-left {
+    .mixin-flex(@flex-direction: column, @justify-content: center);
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    .time {
-      font-size: @defaultFontSize;
-      color: rgb(233, 227, 227);
-    }
-
-    .date {
-      color: rgb(199, 199, 198);
-      font-size: @defaultFontColor;
-    }
   }
-
   .weather-right {
+    .mixin-flex(@justify-content: center);
     flex: 1;
-    display: flex;
-    align-items: center;
-
     img {
       width: 30%;
-      float: left;
     }
-
     .detail {
-      color: rgb(199, 199, 198);
-      float: right;
-      display: flex;
-      flex-direction: column;
-      text-align: left;
-      font-size: @defaultFontSize;
-
-      :nth-child(1) {
-        font-size: @defaultFontSize;
-        color: white;
-      }
-
-      :nth-child(3) {
-        color: white;
-      }
+      .mixin-flex(@flex-direction: column);
     }
   }
 }

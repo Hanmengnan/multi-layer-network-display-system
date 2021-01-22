@@ -136,11 +136,6 @@ export default {
       }
     };
   },
-  methods: {
-    sortCity: function(a, b) {
-      return b.value - a.value;
-    }
-  },
   mounted: function() {
     const chartArea = this.$refs.chartContainer;
     echarts.registerMap("china", mapJson);

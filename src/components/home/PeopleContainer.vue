@@ -49,27 +49,24 @@ export default {
 
 <style lang="less" scoped>
 @import "~@/assets/css/common";
-
+@import "~@/assets/css/mixin/base";
 .people-area {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  width: 100%;
-  height: 80%;
+  .mixin-flex(@justify-content: space-around);
+  .mixin-width-height(@height: 80%);
   color: @defaultFontColor;
   font-size: @defaultFontSize;
   font-weight: @defaultFontWeight;
 
   .people-name {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
+    .mixin-flex(
+      @flex-direction: column,
+      @justify-content: space-around,
+      @align-items: flex-start
+    );
   }
 
   img {
-    width: 14%;
-    height: 100%;
+    .mixin-width-height(@width: 14%, @height: 100%);
   }
 }
 </style>

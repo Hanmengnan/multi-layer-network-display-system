@@ -115,12 +115,9 @@ export default {
 
 <style lang="less" scoped>
 @import "~@/assets/css/variable.less";
-
+@import "~@/assets/css/mixin/base";
 .chart-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  .mixin-width-height();
+  .mixin-flex();
 }
 </style>

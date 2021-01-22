@@ -81,8 +81,6 @@ export default {
   overflow-y: hidden;
   height: 80%;
   margin: 20px;
-  min-height: 10%;
-  max-height: 80%;
   .scrollContent {
     display: flex;
     flex-direction: column;

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import PieChartEmpty from "@/components/base/chart/PieChartEmpty";
+import PieChartEmpty from "@/components/chart/PieChartEmpty";
 
 export default {
   name: "ChartContainer",

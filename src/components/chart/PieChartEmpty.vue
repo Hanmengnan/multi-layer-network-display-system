@@ -114,8 +114,8 @@ export default {
 
 <style lang="less" scoped>
 @import "~@/assets/css/variable.less";
+@import "~@/assets/css/mixin/base";
 .chartContainer {
-  width: 100%;
-  height: 100%;
+  .mixin-width-height();
 }
 </style>

@@ -1,0 +1,80 @@
+@import "./common";
+@import "./variable";
+@import "./mixin/base";
+
+.home {
+  .mixin-width-height();
+  .mixin-flex();
+  .side {
+    box-sizing: border-box;
+    .mixin-width-height(@width: 25%);
+    .mixin-flex(@flex-direction: column);
+
+    .side-header {
+      .mixin-width-height();
+      flex: 1;
+    }
+
+    .side-body {
+      .mixin-width-height();
+      .mixin-flex(@flex-direction: column);
+      flex: 7;
+      [class|="box"] {
+        .mixin-width-height();
+        position: relative;
+      }
+      .box-1 {
+        flex: 3;
+      }
+      .box-2 {
+        flex: 2;
+      }
+      .box-3 {
+        flex: 3;
+      }
+      .box-4 {
+        flex: 2;
+      }
+    }
+  }
+  .side-right {
+    margin-right: 10px;
+    .side-header {
+      margin: 10px 0 20px 0;
+    }
+  }
+  .side-left {
+    margin-left: 10px;
+    .side-header {
+      margin: 10px 0 20px 0;
+    }
+  }
+  .mid {
+    box-sizing: border-box;
+    .mixin-width-height(@width: 100%-25% * 2);
+    .mixin-flex(@flex-direction: column);
+    .mid-header {
+      flex: 3;
+      .mixin-width-height();
+      .mixin-flex(@justify-content: center);
+      font-size: @defaultFontSize*3;
+      color: @defaultFontColor;
+    }
+    .sub-header {
+      .mixin-flex();
+      flex: 2;
+      margin: 0 5px 0 5px;
+      border: @themeColor1 dashed 2px;
+      .weather-box {
+        flex: 1;
+      }
+      .switch-page {
+        flex: 1;
+      }
+    }
+    .mid-body {
+      .mixin-width-height();
+      flex: 15;
+    }
+  }
+}

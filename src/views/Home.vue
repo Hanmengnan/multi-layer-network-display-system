@@ -2,9 +2,9 @@
   <div class="home">
     <div class="head-area">
       <div class="head-network-switch">
-        <Button label="光网络"></Button>
-        <Button label="时频网络"></Button>
-        <Button label="数据网络"></Button>
+        <Button label="光网络" link="/light"></Button>
+        <Button label="时频网络" link="/time"></Button>
+        <Button label="数据网络" link="/data"></Button>
       </div>
       <div class="head-logo">
         <span>多层网络性能展示系统</span>

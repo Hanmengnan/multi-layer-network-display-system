@@ -2,6 +2,7 @@
   <button
     data-text="切换"
     class="btn btn-primary btn-ghost btn-border-stroke  btn-text-float-up"
+    @click="toHref(link)"
   >
     <div class="btn-borders">
       <div class="border-top"></div>
@@ -21,6 +22,15 @@ export default {
       type: String,
       required: true,
       default: ""
+    },
+    link: {
+      type: String,
+      required: true
+    }
+  },
+  methods: {
+    toHref: function(link) {
+      this.$router.push(link);
     }
   }
 };

@@ -18,6 +18,10 @@ export default {
     title: {
       type: String,
       required: true
+    },
+    chartSetting: {
+      type: Object,
+      required: true
     }
   },
   data() {
@@ -26,26 +30,36 @@ export default {
         title: {},
         color: themeColors,
         legend: {
-          show: true,
+          show: this.chartSetting.legendShow,
           left: "5%",
           textStyle: {
             color: defaultFontColor
           }
         },
         tooltip: {
-          trigger: "item"
+          trigger: "item",
+          position: [50, 20]
         },
         series: [
           {
             name: this.title,
             type: "pie",
-            radius: "70%",
-            center: ["20%", "60%"],
+            radius: this.chartSetting.radius,
+            center: ["40%", "50%"],
             hoverAnimation: false,
             minShowLabelAngle: 10,
             data: this.chartData,
             label: {
-              show: false,
+              show: true,
+              position: "center",
+              formatter: () =>
+                "利用率\n" +
+                String(
+                  (
+                    (this.chartData[0].value / this.chartData[1].value) *
+                    100
+                  ).toFixed(1) + "%"
+                ),
               color: defaultFontColor
             },
             labelLine: {

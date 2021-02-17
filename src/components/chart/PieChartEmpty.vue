@@ -19,6 +19,17 @@ let chartArea;
 export default {
   name: "process-chart",
   props: {
+    charSetting: {
+      type: Object,
+      required: false,
+      default() {
+        return {
+          legendShow: false,
+          titleShow: true,
+          radius: ["70%", "80%"]
+        };
+      }
+    },
     title: {
       type: String,
       required: true
@@ -48,6 +59,7 @@ export default {
         clockwise: true,
         title: [
           {
+            show: this.charSetting.titleShow,
             text: this.title,
             textStyle: {
               color: defaultFontColor,
@@ -56,7 +68,7 @@ export default {
               fontWeight: defaultFontWeight
             },
             x: "47%",
-            y: "70%",
+            y: "80%",
             textAlign: "center",
             subtext: this.aimConditionNumber + "起"
           }
@@ -64,8 +76,7 @@ export default {
         series: [
           {
             type: "pie",
-            height: "70%",
-            radius: ["70%", "80%"],
+            radius: this.charSetting.radius,
             hoverAnimation: true,
             itemStyle: {
               borderColor: this.themeColor

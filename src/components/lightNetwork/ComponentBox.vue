@@ -63,7 +63,9 @@ export default {
   }
   .body {
     width: 100%;
-    height: 80%;
+    height: 85%;
+    overflow: hidden;
+    margin-top: 5px;
   }
 }
 </style>

@@ -29,7 +29,7 @@ export default {
           left: "12%",
           right: "5%",
           top: "5%",
-          height: "80%"
+          height: "70%"
         },
         tooltip: {
           trigger: "axis"

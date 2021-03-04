@@ -4,17 +4,89 @@
 
 <script>
 import echarts from "echarts";
+import { themeColors } from "@/assets/js/variable";
 
 export default {
   name: "LineChart",
   props: {
-    title: {
-      type: String,
-      required: true
+    charSetting: {
+      type: Object,
+      required: false,
+      default: function() {
+        return {
+          title: {
+            show: false
+          },
+          dataZoom: [
+            {
+              type: "inside"
+            }
+          ],
+          tooltip: {
+            trigger: "axis"
+          },
+          grid: {
+            show: false,
+            left: "5%",
+            right: "12%",
+            top: "8%",
+            height: "75%"
+          },
+          xAxis: {
+            type: "category",
+            axisLabel: {
+              color: themeColors[0]
+            },
+            axisLine: {
+              show: false,
+              lineStyle: {
+                color: "white"
+              }
+            },
+            axisTick: {
+              show: false
+            },
+            axisPointer: {
+              show: true,
+              type: "none"
+            }
+          },
+          yAxis: {
+            type: "value",
+            position: "left",
+            axisLabel: {
+              color: themeColors[0]
+            },
+            axisLine: {
+              show: false,
+              lineStyle: {
+                color: "grey"
+              }
+            },
+            axisTick: {
+              show: false
+            },
+            splitLine: {
+              show: true,
+              lineStyle: {
+                color: "rgba(255,255,255,0.1)"
+              }
+            }
+          }
+        };
+      }
     },
-    listData: {
+    charData: {
       type: Array,
       required: true
+    },
+    charAxisData: {
+      type: Array,
+      required: true
+    },
+    chartName: {
+      type: Array,
+      required: false
     }
   },
   data() {
@@ -24,64 +96,63 @@ export default {
         title: {
           show: false
         },
-        grid: {
-          show: false,
-          left: "12%",
-          right: "5%",
-          top: "5%",
-          height: "70%"
-        },
-        tooltip: {
-          trigger: "axis"
-        },
         dataZoom: [
           {
             type: "inside"
           }
         ],
+        tooltip: {
+          trigger: "axis"
+        },
+        grid: {
+          show: false,
+          left: "5%",
+          right: "12%",
+          top: "8%",
+          height: "75%"
+        },
         xAxis: {
-          type: "time",
+          type: "category",
+          data: this.charAxisData,
           axisLabel: {
             color: "#2292DD"
           },
           axisLine: {
-            show: true,
+            show: false,
             lineStyle: {
               color: "white"
             }
           },
-          splitLine: {
+          axisTick: {
             show: false
+          },
+          splitLine: {
+            show: this.charSetting.xSplitLine
+          },
+          axisPointer: {
+            show: true,
+            type: "none"
           }
         },
         yAxis: {
           type: "value",
+          position: "right",
           axisLabel: {
             color: "#2292DD"
           },
           axisLine: {
-            show: true,
+            show: false,
             lineStyle: {
               color: "grey"
             }
           },
-          splitLine: {
-            show: true,
-            lineStyle: {
-              color: "rgba(255,255,255,0.1)"
-            }
-          }
+          axisTick: {
+            show: false,
+            alignWithLabel: true
+          },
+          splitLine: this.charSetting.yAxis.splitLine
         },
-        series: [
-          {
-            name: "light",
-            type: "line",
-            color: "#2B91D5",
-            showSymbol: false,
-            smooth: true,
-            data: this.listData
-          }
-        ]
+        series: this.seriesData()
       }
     };
   },
@@ -89,6 +160,21 @@ export default {
     const chartArea = this.$refs.chartContainer;
     this.myChart = echarts.init(chartArea);
     this.myChart.setOption(this.option);
+  },
+  methods: {
+    seriesData: function() {
+      let tempList = [];
+      this.charData.forEach((item, index) => {
+        tempList.push({
+          name: this.chartName[index],
+          type: "line",
+          color: themeColors[index],
+          smooth: true,
+          data: item
+        });
+      });
+      return tempList;
+    }
   },
   watch: {
     listData: function(newVal) {

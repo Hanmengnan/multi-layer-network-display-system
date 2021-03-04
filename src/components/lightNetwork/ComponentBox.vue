@@ -31,7 +31,7 @@ export default {
 @import "~@/assets/css/variable";
 .container {
   .mixin-width-height();
-  .mixin-flex(@flex-direction: column);
+  .mixin-flex(@flex-direction: column, @justify-content: flex-start);
   .header {
     .mixin-flex();
     position: relative;

@@ -2,8 +2,8 @@
   <div class="home">
     <div class="head-area">
       <div class="head-network-switch">
-        <Button label="光网络" link="/light"></Button>
         <Button label="时频网络" link="/time"></Button>
+        <Button label="光网络" link="/light"></Button>
         <Button label="数据网络" link="/data"></Button>
       </div>
       <div class="head-logo">
@@ -88,7 +88,12 @@
           <div class="box-border-1"></div>
           <div class="box-border-2"></div>
           <Legend class="legend-area" title-name="日流量环比增长"></Legend>
-          <flow-chart class="content-area"></flow-chart>
+          <line-chart
+            class="content-area"
+            :char-data="flowChange.chartData"
+            :char-axis-data="flowChange.charAxisData"
+            :chart-name="flowChange.chartName"
+          ></line-chart>
         </div>
       </div>
       <div class="map-background">
@@ -116,7 +121,7 @@ import NodeList from "@/components/home/NodeList";
 import TypeDistribution from "@/components/home/NodeDistribution/TypeDistribution";
 import LocationDistribution from "@/components/home/NodeDistribution/LocationDistribution";
 import SituationHandle from "@/components/home/Situation/SituationHandle";
-import FlowChart from "@/components/home/FlowChange";
+import LineChart from "@/components/chart/LineChart";
 
 export default {
   name: "Home",
@@ -168,10 +173,17 @@ export default {
           name: "速率",
           value: "1000"
         }
-      ]
+      ],
+      flowChange: {
+        chartSetting: {},
+        charAxisData: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+        chartData: [[820, 820, 1290, 1330, 934]],
+        chartName: ["流量"]
+      }
     };
   },
   components: {
+    LineChart,
     Legend,
     Button,
     Weather,
@@ -182,7 +194,6 @@ export default {
     MessageBox,
     PeopleContainer,
     SituationHandle,
-    FlowChart,
     TypeDistribution,
     LocationDistribution
   },

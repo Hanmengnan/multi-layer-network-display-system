@@ -11,10 +11,11 @@
     .mixin-flex(@flex-direction: column);
 
     .side-header {
-      .mixin-width-height(@height: 10%);
+      .mixin-width-height(@height: 12%);
     }
 
     .side-body {
+
       .mixin-width-height(@height: 85%);
       .mixin-flex(@flex-direction: column);
 
@@ -93,12 +94,12 @@
         .mixin-flex(@flex-direction: column);
         .link-name-area {
           .mixin-width-height(@height: 10%);
-          .mixin-flex(@justify-content: flex-start);
+          .mixin-flex(@justify-content: space-around);
           box-sizing: border-box;
           font-size: @titleFontSize;
           color: @defaultFontColor;
           margin-left: 10px;
-          margin-bottom: 5px;
+          margin-bottom: 10px;
         }
         .link-info-area {
           .mixin-width-height(@height: 30%);
@@ -146,13 +147,13 @@
   .side-right {
     margin-right: 10px;
     .side-header {
-      margin: 10px 0 20px 0;
+      margin: 10px 0 10px 0;
     }
   }
   .side-left {
     margin-left: 10px;
     .side-header {
-      margin: 10px 0 20px 0;
+      margin: 10px 0 10px 0;
     }
   }
   .mid {

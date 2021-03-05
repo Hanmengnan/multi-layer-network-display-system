@@ -36,7 +36,7 @@ export default {
     .mixin-flex();
     position: relative;
     width: 100%;
-    height: 5vh;
+    height: 4vh;
     background-color: rgba(0, 0, 0, 0.2);
 
     .header-title {
@@ -44,21 +44,24 @@ export default {
       font-size: @defaultFontSize*1.3;
       color: @defaultFontColor;
     }
+    .header-button {
+      margin-right: 30px;
+    }
     .border-left {
       position: absolute;
       top: 0;
       left: 0;
-      border: 12px solid transparent;
-      border-left: @themeColor3 solid 12px;
-      border-top: @themeColor3 solid 12px;
+      border: 8px solid transparent;
+      border-left: @themeColor3 solid 8px;
+      border-top: @themeColor3 solid 8px;
     }
     .border-right {
       position: absolute;
       top: 0;
       right: 0;
       height: 3vh;
-      border-left: 3vh solid @themeColor1;
-      border-bottom: 2vh solid transparent;
+      border-left: 2vh solid @themeColor1;
+      border-bottom: 1vh solid transparent;
     }
   }
   .body {

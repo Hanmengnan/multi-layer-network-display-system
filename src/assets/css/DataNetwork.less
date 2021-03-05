@@ -15,7 +15,6 @@
     }
 
     .side-body {
-
       .mixin-width-height(@height: 85%);
       .mixin-flex(@flex-direction: column);
 
@@ -24,6 +23,10 @@
         position: relative;
         .container {
           .mixin-width-height();
+        }
+        .icon-display {
+          .mixin-flex();
+          color: white;
         }
       }
       .box-1 {

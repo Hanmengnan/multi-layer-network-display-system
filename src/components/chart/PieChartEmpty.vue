@@ -40,11 +40,11 @@ export default {
       default: "#1772e9"
     },
     aimConditionNumber: {
-      type: Number,
+      type: String,
       required: true
     },
     conditionNumber: {
-      type: Number,
+      type: String,
       required: true
     },
     clickEvent: {

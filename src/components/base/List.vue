@@ -154,7 +154,6 @@ export default {
     }
   },
   mounted() {
-    console.log("mount", this);
     this.headerForShow = this.header.map(val => {
       return {
         ...val,
@@ -175,7 +174,6 @@ export default {
     }
   },
   beforeDestroy() {
-    console.log("destroy", this);
     clearInterval(this.timer);
   }
 };

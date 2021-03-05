@@ -4,103 +4,224 @@
 
 <script>
 import echart from "echarts";
-import { lineChartColor } from "@/assets/js/variable.js";
+import { themeColors } from "@/assets/js/variable.js";
 
 let chart;
 
 export default {
   name: "bar-chart",
   props: {
-    chartData: {
-      type: Array,
+    direction: {
+      type: Boolean,
       required: true
+    },
+    stack: {
+      type: Boolean,
+      required: false,
+      default: false
     },
     title: {
       type: String,
+      required: false
+    },
+    dataZoom: {
+      type: Object,
+      required: false
+    },
+    tooltip: {
+      type: Object,
+      required: false,
+      default: () => {
+        return {
+          trigger: "axis"
+        };
+      }
+    },
+    grid: {
+      type: Object,
+      required: false,
+      default: () => {
+        return {
+          show: false,
+          left: "5%",
+          right: "12%",
+          top: "10%",
+          height: "75%"
+        };
+      }
+    },
+    xAxisType: {
+      type: String,
+      required: false,
+      default: "category"
+    },
+    xAxisLabelColor: {
+      type: String,
+      required: false,
+      default: themeColors[0]
+    },
+    xAxisPointer: {
+      type: Object,
+      required: false,
+      default: () => {
+        return {
+          show: true,
+          type: "none"
+        };
+      }
+    },
+    yAxisType: {
+      type: String,
+      required: false,
+      default: "value"
+    },
+    yAxisPosition: {
+      type: String,
+      required: false,
+      default: "right"
+    },
+    yAxisLabelColor: {
+      type: String,
+      required: false,
+      default: themeColors[0]
+    },
+    yAxisPointer: {
+      type: Object,
+      required: false,
+      default: () => {
+        return {
+          show: true,
+          type: "none"
+        };
+      }
+    },
+    ySplitLineStyle: {
+      type: Object,
+      required: false,
+      default: () => {
+        return {
+          lineStyle: {
+            color: "rgba(255,255,255,0.05)",
+            width: 1
+          }
+        };
+      }
+    },
+    charData: {
+      type: Array,
       required: true
     },
-    xAxisColor: {
-      type: String,
-      required: false,
-      default: "grey"
+    charAxisData: {
+      type: Array,
+      required: true
     },
-    yAxisColor: {
-      type: String,
-      required: false,
-      default: "grey"
+    chartName: {
+      type: Array,
+      required: false
     }
   },
   data() {
     return {
-      options: {
-        color: [lineChartColor],
-        tooltip: {
-          trigger: "axis"
-        },
-        title: {
-          text: this.title,
-          x: "center",
-          y: 20,
-          textStyle: {
-            color: "grey"
-          }
-        },
-        visualMap: {
-          show: false,
-          min: 10,
-          max: 50,
-          // Map the score column to color
-          dimension: 0,
-          inRange: {
-            color: ["#21DEF4", "#06354E"]
-          }
-        },
-        yAxis: {
-          type: "category",
-          data: this.chartData.map(val => {
-            return val.name;
-          }),
-          axisLine: {
-            show: true,
-            lineStyle: {
-              color: this.yAxisColor
-            }
-          },
-          splitLine: {
-            show: false
-          }
-        },
-        xAxis: {
-          type: "value",
-          axisLine: {
-            show: true,
-            lineStyle: {
-              color: this.xAxisColor
-            }
-          }
-        },
-        series: [
-          {
-            name: this.title,
-            type: "bar",
-            data: this.chartData.map(val => {
-              return val.value;
-            }),
-            animationDelay: function(idx) {
-              return idx * 10 + 100;
-            }
-          }
-        ],
-        animationEasing: "elasticOut",
-        animationDelayUpdate: function(idx) {
-          return idx * 5;
-        }
-      }
+      options: this.chartOption()
     };
   },
   mounted() {
     chart = echart.init(this.$refs.chartContainer);
     chart.setOption(this.options);
+  },
+  methods: {
+    chartOption: function() {
+      let option = {};
+      if (this.title !== undefined) {
+        option.title = {
+          show: true,
+          text: this.title
+        };
+      } else {
+        option.title = { show: false };
+      }
+      if (this.dataZoom !== undefined) {
+        option.dataZoom = this.dataZoom;
+      }
+      if (this.tooltip !== undefined) {
+        option.tooltip = this.tooltip;
+      }
+      option.dataZoom = {
+        type: "inside",
+        filterMode: "none"
+      };
+      option.grid = this.grid;
+      if (this.direction) {
+        option.grid.right = "25%";
+      }
+      option.xAxis = {
+        type: this.xAxisType,
+        data: this.charAxisData,
+        axisLabel: {
+          color: this.xAxisLabelColor
+        },
+        axisLine: {
+          show: false
+        },
+        axisTick: {
+          show: false
+        },
+        axisPointer: this.xAxisPointer,
+        splitLine: {
+          show: false
+        }
+      };
+      if (this.direction) {
+        option.xAxis.type = this.yAxisType;
+        option.xAxis.axisLabel = { show: false };
+      }
+
+      option.yAxis = {
+        type: this.yAxisType,
+        data: this.charData,
+        axisLabel: {
+          color: this.yAxisLabelColor
+        },
+        axisLine: {
+          show: false
+        },
+        axisTick: {
+          show: false
+        },
+        position: this.yAxisPosition,
+        splitLine: this.ySplitLineStyle
+      };
+      if (this.direction) {
+        option.yAxis.type = this.xAxisType;
+        option.yAxis.data = this.charAxisData;
+      }
+      option.series = this.seriesData();
+      return option;
+    },
+    seriesData: function() {
+      let tempList = [];
+      this.charData.forEach((item, index) => {
+        let obj = {
+          name: this.chartName[index],
+          type: "bar",
+          color: themeColors[index],
+          smooth: true,
+          barWidth: String(100 / this.charData.length + 5) + "%",
+          data: item
+        };
+        if (this.stack) {
+          obj.stack = "Total";
+        }
+        if (this.direction) {
+          obj.label = {
+            show: true,
+            position: "insideRight"
+          };
+        }
+        tempList.push(obj);
+      });
+      return tempList;
+    }
   },
   watch: {
     chartData: {

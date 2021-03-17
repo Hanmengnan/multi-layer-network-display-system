@@ -12,6 +12,7 @@
 
     .side-header {
       .mixin-width-height(@height: 12%);
+      box-sizing: border-box;
     }
 
     .side-body {
@@ -141,8 +142,8 @@
         overflow: hidden;
         .log-container {
           box-sizing: border-box;
-          background-color: rgba(0, 0, 0, 0.2);
-          border: @themeColor1 dotted 2px;
+          background-color: rgba(0, 0, 0, 0.1);
+          //border: @themeColor1 dotted 2px;
         }
       }
     }
@@ -150,31 +151,38 @@
   .side-right {
     margin-right: 10px;
     .side-header {
-      margin: 10px 0 10px 0;
+      padding: 10px 0 0 10px;
     }
   }
   .side-left {
     margin-left: 10px;
+
     .side-header {
-      margin: 10px 0 10px 0;
+      padding: 10px 10px 0 0;
     }
   }
   .mid {
     box-sizing: border-box;
-    .mixin-width-height(@width: 100%-25% * 2);
+    .mixin-width-height(@width: 100%-25% * 2-2%);
     .mixin-flex(@flex-direction: column);
+    border-right: #0c73f1 solid 2px;
+    border-left: #0c73f1 solid 2px;
+    margin: 0 5px 0 5px;
     .mid-header {
       flex: 3;
       .mixin-width-height();
       .mixin-flex(@justify-content: center);
+      box-sizing: border-box;
       font-size: @defaultFontSize*3;
       color: @defaultFontColor;
+
     }
     .sub-header {
       .mixin-flex();
+      .mixin-width-height();
       flex: 2;
-      margin: 0 5px 0 5px;
-      border: @themeColor1 dashed 2px;
+      border-top: #0c73f1 dashed 2px;
+      border-bottom: #0c73f1 dashed 2px;
       .weather-box {
         flex: 1;
       }

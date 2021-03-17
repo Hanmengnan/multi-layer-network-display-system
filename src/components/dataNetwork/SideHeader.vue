@@ -34,8 +34,8 @@ export default {
 
   .border-1 {
     position: absolute;
-    width: 30px;
-    height: 30px;
+    width: 15px;
+    height: 15px;
     top: 0;
     left: 0;
     border-top: #1795e9 solid 5px;
@@ -43,8 +43,8 @@ export default {
   }
   .border-2 {
     position: absolute;
-    width: 30px;
-    height: 30px;
+    width: 15px;
+    height: 15px;
     top: 0;
     right: 0;
     border-top: #1795e9 solid 5px;
@@ -52,8 +52,8 @@ export default {
   }
   .border-3 {
     position: absolute;
-    width: 30px;
-    height: 30px;
+    width: 15px;
+    height: 15px;
     bottom: 0;
     left: 0;
 
@@ -62,8 +62,8 @@ export default {
   }
   .border-4 {
     position: absolute;
-    width: 30px;
-    height: 30px;
+    width: 15px;
+    height: 15px;
     bottom: 0;
     right: 0;
     border-bottom: #1795e9 solid 5px;

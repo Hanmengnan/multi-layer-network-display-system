@@ -66,7 +66,7 @@
       </div>
     </div>
     <div class="mid">
-      <div class="mid-header">
+      <div class="mid-header ">
         数据传输网络
       </div>
       <div class="sub-header">
@@ -81,6 +81,7 @@
       </div>
       <div class="mid-body">
         <China3dMap
+          class="magictime puffIn"
           className="first"
           style="width: 100%; height: 100%"
         ></China3dMap>
@@ -88,7 +89,9 @@
     </div>
     <div class="side side-right">
       <div class="side-header">
-        <SideHeader :title="!switchInfo ? '链路情况' : '节点情况'"></SideHeader>
+        <SideHeader
+          :title="!switchState ? '链路情况' : '节点情况'"
+        ></SideHeader>
       </div>
       <div class="side-body">
         <div class="box-3">
@@ -105,7 +108,7 @@
             </template>
             <template slot="body">
               <div class="log-container container">
-                <List></List>
+                <error-alarm :error-list="errorList"></error-alarm>
               </div>
             </template>
           </ComponentBox>
@@ -121,18 +124,18 @@ import SideHeader from "@/components/dataNetwork/SideHeader";
 import Weather from "@/components/base/Weather";
 import Button from "@/components/base/Button";
 import China3dMap from "@/components/China3dMap";
-import List from "@/components/base/List";
 import PieChartEmpty from "@/components/chart/PieChartEmpty";
 import LineChart from "@/components/chart/LineChart";
 import InfoBox from "@/components/dataNetwork/InfoBox";
+import ErrorAlarm from "@/components/dataNetwork/ErrorAlarm";
 
 export default {
   name: "DataNetwork",
   components: {
+    ErrorAlarm,
     InfoBox,
     LineChart,
     PieChartEmpty,
-    List,
     Weather,
     SideHeader,
     ComponentBox,
@@ -164,7 +167,37 @@ export default {
         charAxisData: ["Mon", "Tue", "Wed", "Thu", "Fri"],
         chartData: [[820, 820, 1290, 1330, 934]],
         chartName: ["流量"]
-      }
+      },
+      errorList: [
+        {
+          level: "橙色预警",
+          data: "太原-西安 链路故障"
+        },
+        {
+          level: "红色预警",
+          data: "太原-西安 链路故障"
+        },
+        {
+          level: "普通预警",
+          data: "太原-西安 链路故障"
+        },
+        {
+          level: "普通预警",
+          data: "太原-西安 链路故障"
+        },
+        {
+          level: "普通预警",
+          data: "太原-西安 链路故障"
+        },
+        {
+          level: "橙色预警",
+          data: "太原-西安 链路故障"
+        },
+        {
+          level: "普通预警",
+          data: "太原-西安 链路故障"
+        }
+      ]
     };
   },
   methods: {}

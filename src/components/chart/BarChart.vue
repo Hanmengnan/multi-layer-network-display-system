@@ -1,5 +1,5 @@
 <template>
-  <div ref="chartContainer" class="chartContainer"></div>
+  <div ref="chartContainer" style="width: 100%;height: 100%"></div>
 </template>
 
 <script>
@@ -7,6 +7,7 @@ import echart from "echarts";
 import { themeColors } from "@/assets/js/variable.js";
 
 let chart;
+let timer = null;
 
 export default {
   name: "bar-chart",
@@ -80,6 +81,11 @@ export default {
       required: false,
       default: "right"
     },
+    yAxisLabelFontSize: {
+      type: Number,
+      required: false,
+      default: 12
+    },
     yAxisLabelColor: {
       type: String,
       required: false,
@@ -125,9 +131,10 @@ export default {
       options: this.chartOption()
     };
   },
-  mounted() {
-    chart = echart.init(this.$refs.chartContainer);
-    chart.setOption(this.options);
+  computed: {
+    newChartData: function() {
+      return this.charData;
+    }
   },
   methods: {
     chartOption: function() {
@@ -142,21 +149,24 @@ export default {
       }
       if (this.dataZoom !== undefined) {
         option.dataZoom = this.dataZoom;
+      } else {
+        option.dataZoom = {
+          type: "inside",
+          filterMode: "none"
+        };
       }
       if (this.tooltip !== undefined) {
         option.tooltip = this.tooltip;
       }
-      option.dataZoom = {
-        type: "inside",
-        filterMode: "none"
-      };
+
       option.grid = this.grid;
       if (this.direction) {
         option.grid.right = "25%";
       }
+
       option.xAxis = {
         type: this.xAxisType,
-        data: this.charAxisData,
+
         axisLabel: {
           color: this.xAxisLabelColor
         },
@@ -174,13 +184,16 @@ export default {
       if (this.direction) {
         option.xAxis.type = this.yAxisType;
         option.xAxis.axisLabel = { show: false };
+        option.xAxis.axisPointer = { show: false };
+      } else {
+        option.xAxis.data = this.charAxisData;
       }
 
       option.yAxis = {
         type: this.yAxisType,
-        data: this.charData,
         axisLabel: {
-          color: this.yAxisLabelColor
+          color: this.yAxisLabelColor,
+          fontSize: this.yAxisLabelFontSize
         },
         axisLine: {
           show: false
@@ -206,7 +219,7 @@ export default {
           type: "bar",
           color: themeColors[index],
           smooth: true,
-          barWidth: String(100 / this.charData.length + 5) + "%",
+          barWidth: String(100 / this.charData[0].length + 25) + "%",
           data: item
         };
         if (this.stack) {
@@ -224,28 +237,24 @@ export default {
     }
   },
   watch: {
-    chartData: {
-      handler(newval) {
-        this.options.yAxis.data = newval.map(val => {
-          return val.name;
-        });
-        this.options.series[0].data = newval.map(val => {
-          return val.value;
-        });
-        chart.setOption(this.options);
+    newChartData() {
+      if (this.direction) {
+        this.options.yAxis.data = this.charAxisData;
+      } else {
+        this.options.xAxis.data = this.charAxisData;
       }
-    },
-    title(newval) {
-      this.options.title.text = newval;
-      this.options.series[0].name = newval;
+      this.options.series = this.seriesData();
       chart.setOption(this.options);
     }
+  },
+
+  mounted() {
+    chart = echart.init(this.$refs.chartContainer);
+    chart.setOption(this.options);
+  },
+  beforeDestroy() {
+    setInterval(timer);
   }
 };
 </script>
-<style lang="less" scoped>
-@import "~@/assets/css/mixin/base";
-.chartContainer {
-  .mixin-width-height();
-}
-</style>
+<style lang="less" scoped></style>

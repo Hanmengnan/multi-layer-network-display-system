@@ -27,8 +27,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "~@/assets/css/mixin/base";
-@import "~@/assets/css/variable";
+@import "~@/assets/css/mixin/base.less";
+@import "~@/assets/css/variable.less";
 .container {
   .mixin-width-height();
   .mixin-flex(@flex-direction: column, @justify-content: flex-start);

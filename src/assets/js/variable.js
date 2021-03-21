@@ -17,6 +17,7 @@ export const themeColor6 = "#9704bb";
 export const themeColor7 = "#081ca1";
 export const themeColor8 = "#e32068";
 export const themeColor9 = "#40444b";
+export const themeColor10 = "#e00a4e";
 export const themeColors = [
   "#1795e9",
   "#9e175f",

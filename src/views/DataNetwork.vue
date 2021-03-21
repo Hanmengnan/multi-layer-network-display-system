@@ -119,7 +119,7 @@
 </template>
 
 <script>
-import ComponentBox from "@/components/dataNetwork/ComponentBox";
+import ComponentBox from "@/components/base/ComponentBox";
 import SideHeader from "@/components/dataNetwork/SideHeader";
 import Weather from "@/components/base/Weather";
 import Button from "@/components/base/Button";
@@ -205,5 +205,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "~@/assets/css/DataNetwork";
+@import "~@/assets/css/dataNetwork.less";
 </style>

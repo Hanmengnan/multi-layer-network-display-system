@@ -1,0 +1,344 @@
+@import "./common.less";
+@import "./variable.less";
+@import "./mixin/base";
+
+.home {
+  .mixin-flex();
+  .mixin-width-height();
+
+  .side {
+    .mixin-flex(@flex-direction: column);
+    flex: 2 2 25%;
+    height: 100%;
+    padding-right: 5px;
+    border-right: @themeColor1 2px solid;
+
+    [class|="box"] {
+      padding: 2%;
+      box-sizing: border-box;
+    }
+
+    .box-1 {
+      flex: 1;
+      width: 100%;
+    }
+
+    .box-2 {
+      flex: 1;
+      width: 100%;
+    }
+
+    .box-3 {
+      flex: 1;
+      width: 100%;
+    }
+  }
+
+  .main {
+    .mixin-flex(@flex-direction: column);
+    flex: 6 6 75%;
+    height: 100%;
+
+    .header {
+      .mixin-flex();
+      flex: 1.5;
+      width: 100%;
+      font-size: @titleFontSize;
+      color: @defaultFontColor;
+
+      .title {
+        flex: 5;
+      }
+
+      .weather {
+        flex: 2;
+      }
+    }
+    .sub-header {
+      .mixin-flex();
+      flex: 1;
+      width: 100%;
+      box-sizing: border-box;
+      border-top: @borderColor 2px solid;
+      border-bottom: @borderColor 2px solid;
+      color: @defaultFontColor;
+      & > div {
+        flex: 1;
+        margin: 0 10px;
+        padding: 0 10px;
+        font-size: @titleFontSize*0.5;
+        border-left: @themeColor9 2px solid;
+        border-right: @themeColor9 2px solid;
+      }
+    }
+    .body {
+      flex: 10;
+      width: 100%;
+    }
+  }
+}
+
+.lightPage {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  position: relative;
+  // 标题
+  .topSpace {
+    position: absolute;
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+    height: 10%;
+
+    img {
+      position: absolute;
+      margin: auto;
+      max-width: 100%;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    span {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: @titleFontSize * 2;
+      color: white;
+    }
+  }
+
+  // 侧边栏区域
+  .sideBar {
+    flex: 2;
+    position: relative;
+    margin-top: 11px;
+    padding: 34px 14px 0 14px;
+
+    &.sideBarLeft {
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0, 22, 44, 0.5) 50%,
+        transparent 100%
+      );
+      border-right: 2px transparent solid;
+      border-image: linear-gradient(0deg, #21def4, #00000002 90%) 1 10;
+
+      &::before {
+        content: "";
+        position: absolute;
+        display: inline-block;
+        right: 0;
+        overflow: visible;
+        width: 2px;
+        height: 95%;
+        background: linear-gradient(
+          to top,
+          transparent 0%,
+          #21def4 15%,
+          #00000002 30%
+        );
+        margin-right: 8px;
+      }
+
+      .box1 {
+        flex: 3;
+        position: relative;
+        top: 1%;
+      }
+
+      .box2 {
+        flex: 3;
+      }
+
+      .box3 {
+        flex: 2;
+      }
+    }
+  }
+
+  .mainBar {
+    flex: 6;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+
+    .topBar {
+      flex: 1 1 auto;
+      display: flex;
+      align-items: flex-end;
+      margin: 20px 0;
+      z-index: 2;
+
+      .info {
+        height: 30%;
+        flex: 6;
+        position: relative;
+        display: flex;
+
+        .info-card {
+          color: @titleFontColor;
+          font-size: @titleFontSize;
+          font-weight: @defaultFontWeight;
+          position: relative;
+          display: flex;
+          height: 100%;
+          background-image: linear-gradient(
+            to bottom,
+            rgba(0, 22, 44, 1),
+            rgba(0, 22, 44, 0.295)
+          );
+          flex: 1;
+          align-items: center;
+          justify-content: center;
+
+          .iconfont {
+            font-size: @titleFontSize;
+          }
+        }
+
+        .info-card:hover {
+          cursor: pointer;
+          background-image: linear-gradient(
+            to bottom,
+            rgba(0, 22, 44, 0.288),
+            rgba(0, 22, 44, 0)
+          );
+          font-weight: 650;
+          border-bottom: @titleFontSize solid @themeColor1;
+        }
+
+        .info-card-odd {
+          border: transparent @titleFontSize / 2 solid;
+          border-image: linear-gradient(
+              45deg,
+              #21def4,
+              #00000002 20%,
+              #00000002 80%,
+              #21def4 100%
+            )
+            1 10;
+        }
+
+        .info-card-even {
+          border: @titleFontSize / 2 solid;
+          border-image: linear-gradient(
+              135deg,
+              #21def4,
+              #00000002 20%,
+              #00000002 80%,
+              #21def4 100%
+            )
+            1 10;
+        }
+      }
+
+      .weather {
+        flex: 3;
+        width: 100%;
+        height: 60%;
+        border: solid @titleFontSize / 2 #06354e;
+        position: relative;
+        margin-left: 20px;
+
+        .wborder {
+          position: absolute;
+          width: 20px;
+          height: 20px;
+        }
+
+        .wborder1 {
+          top: 0;
+          left: 0;
+          border-top: solid @titleFontSize #21def4;
+          border-left: solid @titleFontSize #21def4;
+        }
+
+        .wborder2 {
+          top: 0;
+          right: 0;
+          border-top: solid @titleFontSize #21def4;
+          border-right: solid @titleFontSize #21def4;
+        }
+
+        .wborder3 {
+          bottom: 0;
+          left: 0;
+          border-bottom: solid @titleFontSize #21def4;
+          border-left: solid @titleFontSize #21def4;
+        }
+
+        .wborder4 {
+          bottom: 0;
+          right: 0;
+          border-bottom: solid @titleFontSize #21def4;
+          border-right: solid @titleFontSize #21def4;
+        }
+
+        .weatherComponets {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+
+    .mapArea {
+      flex: 18 1 auto;
+      margin-right: 10px;
+      z-index: 1;
+      position: relative;
+      overflow: hidden;
+
+      .item {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        transform: scale(0.33);
+        transition: all 0.8s;
+      }
+
+      .one {
+        z-index: 2;
+      }
+
+      .two {
+        z-index: 1;
+      }
+    }
+  }
+
+  // 侧边栏公共样式
+  .box {
+    overflow: hidden;
+
+    .boxTitle {
+      background: #06354e;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+
+      .titles {
+        color: @titleFontColor;
+        font-size: @titleFontSize;
+        font-weight: @titleFontWeight;
+        padding: 5px;
+
+        &::before {
+          content: "";
+          display: inline-block;
+          width: @defaultFontSize / 2;
+          height: @defaultFontSize / 2;
+          background: #21def4;
+          border-radius: 2px;
+          margin: 0 10px 5px 10px;
+        }
+      }
+    }
+  }
+}

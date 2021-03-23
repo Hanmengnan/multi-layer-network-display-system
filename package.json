@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "cesium": "^1.79.1",
     "core-js": "^3.6.5",
     "echarts": "^4.9.0",
     "echarts-gl": "^1.1.2",

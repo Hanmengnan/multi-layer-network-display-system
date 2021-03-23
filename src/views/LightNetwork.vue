@@ -71,7 +71,22 @@
         </div>
       </div>
       <div class="body">
-        <div></div>
+        <div class="map-area">
+          <div
+            class="item one"
+            style="transform: translate(35.5%,33.5%) scale(0.42)"
+            @dblclick="clickChart('1')"
+          >
+            <EchartsMap v-model="selector" />
+          </div>
+          <div
+            class="item two active"
+            @dblclick="clickChart('2')"
+            style="transform: translate(0,0) scale(1)"
+          >
+            <Map :status="selector" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -88,8 +103,11 @@ import LoadMonitor from "@/components/lightNetwork/LoadMonitor";
 import NetworkRunningConfig from "@/components/lightNetwork/NetworkRuningConfig";
 import NetStatus from "@/components/lightNetwork/NetStatus";
 import SelectDown from "@/components/base/SelectDown";
+import EchartsMap from "@/components/lightNetwork/EchartsMap";
+import Map from "@/components/lightNetwork/Map";
 
 import { CITYMAP, LINKMAP } from "@/util";
+
 export default {
   name: "LightNetwork",
   components: {
@@ -102,7 +120,8 @@ export default {
     SelectDown,
     ControlCenter,
     BandMonitor,
-
+    EchartsMap,
+    Map,
     Weather
   },
   data() {
@@ -145,6 +164,36 @@ export default {
         return `${CITYMAP[link[0]]}-${CITYMAP[link[1]]}`;
       });
     }
+  },
+  methods: {
+    init() {
+      this.items = document.querySelectorAll(".item");
+      for (let i = 0; i < this.items.length; i++) {
+        this.items[i].dataset.order = i + 1;
+      }
+    },
+    clickChart(clickIndex) {
+      let activeItem = document.querySelector(".active");
+      let activeIndex = activeItem.dataset.order;
+      let clickItem = this.items[clickIndex - 1];
+      if (activeIndex === clickIndex) {
+        return;
+      }
+      activeItem.classList.remove("active");
+      clickItem.classList.add("active");
+      this.setStyle(clickItem, activeItem);
+    },
+    setStyle(el1, el2) {
+      let transform1 = el1.style.transform;
+      let transform2 = el2.style.transform;
+      el1.style.transform = transform2;
+      el2.style.transform = transform1;
+      el1.style.zIndex = 1;
+      el2.style.zIndex = 2;
+    }
+  },
+  mounted() {
+    this.init();
   }
 };
 </script>

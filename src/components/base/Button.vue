@@ -47,8 +47,8 @@ export default {
   --ease-out-delay: var(--ease-in-duration);
   --ease-out-exponential: cubic-bezier(0.19, 1, 0.22, 1);
   position: relative;
-  padding: 0.5rem 2rem;
-  font-size: @defaultFontSize;
+  //padding: 0.5rem 0.5rem;
+  font-size: @defaultFontSize*1.2;
   color: white;
   overflow: hidden;
   cursor: pointer;

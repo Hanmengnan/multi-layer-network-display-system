@@ -13,7 +13,9 @@
         </div>
       </div>
     </div>
-    <List is-scroll="scroll" :header="header" :body="selectBody" />
+    <div class="list-body">
+      <List is-scroll="scroll" :header="header" :body="selectBody" />
+    </div>
   </div>
 </template>
 
@@ -94,7 +96,6 @@ export default {
               })
           );
         });
-        console.log(this.selectBody);
       }
     }
   },
@@ -120,17 +121,17 @@ export default {
 @import "~@/assets/css/variable.less";
 
 .container {
+  height: 90%;
   color: @defaultFontColor;
   font-size: @defaultFontSize;
   .precision {
     position: relative;
     display: flex;
-    height: 30%;
-    margin-top: 3%;
-    margin-bottom: 3%;
+    height: 5%;
+    padding-bottom: 10%;
+    padding-top: 2%;
     .title {
-      flex: 1;
-      font-weight: @defaultFontWeight * 1.5;
+      flex: 2;
     }
     .select {
       //background-color: @themeColorMiddle;
@@ -142,8 +143,11 @@ export default {
     }
     .select:hover {
       cursor: pointer;
-      font-weight: @defaultFontWeight * 1.5;
     }
+  }
+  .list-body {
+    width: 100%;
+    height: 85%;
   }
 }
 </style>

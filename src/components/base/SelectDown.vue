@@ -25,8 +25,6 @@
 </template>
 
 <script>
-import { themeColor1 } from "@/assets/js/variable.js";
-
 export default {
   name: "select-down",
   props: {
@@ -41,7 +39,7 @@ export default {
     themeColor: {
       type: String,
       required: false,
-      default: themeColor1
+      default: "rgba(0,0,0,0.2)"
     },
     selectList: {
       type: Array,
@@ -91,11 +89,10 @@ export default {
     overflow: scroll;
 
     .selector-item {
-      border-left: @titleFontSize transparent solid;
+      border-left: 2px transparent solid;
 
       &:hover {
-        font-weight: @titleFontWeight;
-        border-left: @titleFontSize @defaultFontColor solid;
+        border-left: 2px @themeColor4 solid;
       }
 
       &:active {
@@ -103,7 +100,7 @@ export default {
       }
 
       &.selected {
-        border-left: @titleFontSize @defaultFontColor solid;
+        border-left: 2px @themeColor4 solid;
       }
     }
   }

@@ -40,17 +40,23 @@
 
     .header {
       .mixin-flex();
+      position: relative;
       flex: 1.5;
       width: 100%;
       font-size: @titleFontSize;
       color: @defaultFontColor;
 
       .title {
-        flex: 5;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
       }
 
       .weather {
-        flex: 2;
+        position: absolute;
+        right: 0;
+        width: 30%;
       }
     }
 

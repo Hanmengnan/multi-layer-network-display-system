@@ -1,8 +1,11 @@
 @import "./variable";
 @import "./mixin/base";
+@import "./common";
+
 .home {
   .mixin-width-height();
   .mixin-flex();
+
   .side {
     .mixin-flex(@flex-direction: column);
     .mixin-width-height(@width: 25%);
@@ -10,14 +13,19 @@
     .weather-area {
       height: 10%;
     }
+
     [class|="box"] {
       width: 100%;
+
       .box-title {
         background: @themeColor1;
+        height: 10%;
+
         .title {
           color: @defaultFontColor;
           font-size: @defaultFontSize*1.5;
         }
+
         .title:before {
           content: "";
           display: inline-block;
@@ -29,148 +37,132 @@
         }
       }
     }
+
     .box-1 {
       flex: 3;
     }
+
     .box-2 {
-      flex: 3;
+      flex: 0 0 30%;
     }
+
     .box-3 {
       flex: 4;
     }
   }
+
   .main {
     .mixin-flex(@flex-direction: column);
     .mixin-width-height(@width: 75%);
+    margin-left: 10px;
+
     .header {
-      flex: 2;
+      flex: 1;
+      width: 100%;
       color: @defaultFontColor;
       font-size: @titleFontSize;
       font-weight: @titleFontWeight;
-      z-index: 2;
+      text-align: center;
+      background-image: url("~@/assets/img/header.png");
+      background-size: 100% 100%;
     }
+
     .header-nav {
-      flex: 2;
-      .mixin-flex();
-      z-index: 2;
-    }
-    .body {
-      height: 70%;
+      .mixin-flex(@justify-content: flex-start);
+      box-sizing: border-box;
       width: 100%;
-      z-index: 1;
-    }
-  }
-}
-
-
-.mainBar {
-  flex: 6;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  margin-left: 15px;
-  .topBar {
-    flex: 1 1 auto;
-    display: flex;
-    align-items: flex-end;
-    margin: 20px 0;
-    z-index: 2;
-    .infobar {
-      flex: 2;
-      width: 100%;
-      height: 73%;
-      position: relative;
-      top: 20px;
-      background-color: #000c1a;
-      .mixin-flex();
-      .selector {
-        .mixin-width-height();
-        .mixin-flex();
-        .titleFontStyle(@font-size: @titleFontSize * 1.3);
-        flex: 2;
-        .title {
-          flex: 1;
-        }
-        .base {
-          flex: 2;
-          .mixin-flex(@justify-content: space-around);
-          .defaultFontStyle(@font-size: @defaultFontSize * 1.3);
-          .selected {
-            border-bottom: 2px @defaultFontColor solid
-          }
-          div:hover {
-            font-weight: @titleFontWeight;
-            cursor: pointer;
-          }
-        }
-      }
-      .menu {
-        .mixin-width-height();
-        .mixin-flex(@justify-content: center);
-        flex: 1;
-        .iconfont {
-          .titleFontStyle(@font-size: @titleFontSize * 1.3);
-        }
-      }
-    }
-    .weather {
       flex: 1;
-      width: 100%;
-      height: 60%;
-      border: solid @titleFontSize/2 #06354E;
-      position: relative;
-      margin-left: 20px;
-      margin-top: 25px;
-      .weatherComponets {
-        width: 100%;
-        height: 100%;
+      color: @defaultFontColor*1.5;
+
+      .selector {
+        .mixin-flex(@justify-content: space-around);
+        .mixin-width-height(@width: 50%);
+
+        .title {
+          flex: 2;
+          text-align: left;
+          font-size: @defaultFontSize*1.5;
+          margin-left: 30px;
+        }
+
+        .base {
+          .mixin-flex(@justify-content: space-around);
+          flex: 5;
+          font-size: @defaultFontSize*1.2;
+        }
+        .selected{
+          border-bottom: 3px @themeColor4 solid ;
+        }
       }
-      background-color: #000c1a;
+
+      .selector:after {
+        content: "";
+        height: 80%;
+        border: 2px @defaultFontColor solid;
+      }
+
+      .menu {
+        .mixin-width-height(@width: 50%);
+        .mixin-flex(@justify-content: space-around);
+      }
     }
-  }
-  .mapArea {
-    flex: 18 1 auto;
-    margin-right: 10px;
-    z-index: 1;
-    position: relative;
-    overflow: hidden;
-    .map {
-      z-index: 1
-    }
-    .tooltip {
-      .mixin-width-height(@width: 20%,@height: 20%);
-      .mixin-flex(@flex-direction: column,@justify-content: center,@align-items: center);
-      .titleFontStyle();
-      position: absolute;
-      background-color: fade(@themeColor3, 80%);
-      border: fade(@themeColor3, 80%) 2px solid;
-      border-radius: 5%;
-      left: 0;
-      bottom: 0;
-      z-index: 2;
-      div {
-        width: 100%;
-        margin-left: 10px;
-        .mixin-flex();
-        .iconfont {
-          font-size: @titleFontSize * 2;
-          &.busy, &.top {
-            color: yellow;
-          }
-          &.error, &.second {
-            color: red;
-          }
-          &.normal {
-            color: green;
+
+    .body {
+      height: 85%;
+      width: 100%;
+
+      .mapArea {
+        .mixin-width-height();
+        z-index: 1;
+        position: relative;
+        overflow: hidden;
+
+        .map {
+          z-index: 1;
+        }
+
+        .tooltip {
+          .mixin-width-height(@width: 15%, @height: 20%);
+          .mixin-flex(
+            @flex-direction: column,
+            @justify-content: space-around,
+            @align-items: center
+          );
+          .titleFontStyle(@font-size: @defaultFontSize*1.4);
+          position: absolute;
+          background-color: fade(@themeColor1, 40%);
+          border: fade(@themeColor1, 40%) 2px solid;
+          border-radius: 5%;
+          right: 0;
+          bottom: 0;
+          z-index: 2;
+
+          div {
+            width: 100%;
+            margin-left: 10px;
+            .mixin-flex();
+
+            .iconfont {
+              width: 40%;
+              font-size: @titleFontSize;
+
+              &.busy,
+              &.top {
+                color: @themeColor11;
+              }
+
+              &.error,
+              &.second {
+                color: @themeColor10;
+              }
+
+              &.normal {
+                color: @themeColor5;
+              }
+            }
           }
         }
       }
-    }
-    .slidebuttom-enter-active {
-      animation: slideButtomUp 1.5s 1;
-    }
-    .slidebuttom-leave-active {
-      animation: slideButtomDown 1.5s 1;
     }
   }
 }

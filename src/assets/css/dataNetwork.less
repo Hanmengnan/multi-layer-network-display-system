@@ -175,7 +175,6 @@
       box-sizing: border-box;
       font-size: @defaultFontSize*3;
       color: @defaultFontColor;
-
     }
     .sub-header {
       .mixin-flex();
@@ -188,6 +187,13 @@
       }
       .switch-page {
         flex: 1;
+        height: 100%;
+        .mixin-flex(@justify-content: space-around);
+        &:before {
+          content: "";
+          height: 80%;
+          border: 1px @borderColor solid;
+        }
       }
     }
     .mid-body {

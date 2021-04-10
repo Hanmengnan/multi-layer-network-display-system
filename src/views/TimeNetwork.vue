@@ -30,31 +30,62 @@
       </div>
     </div>
     <div class="main">
+      <div class="header">时频传输网络</div>
+      <div class="header-nav">
+        <div class="selector">
+          <div class="title">授时信号源:</div>
+          <div class="base">
+            <div
+              :class="
+                `iconfont ${this.selected === 'ground' ? 'selected' : ''}`
+              "
+              @click="
+                () => {
+                  this.selected = 'ground';
+                }
+              "
+            >
+              &#xe95c; 地面最高基准
+            </div>
+            <div
+              :class="`iconfont ${this.selected === 'sky' ? 'selected' : ''}`"
+              @click="
+                () => {
+                  this.selected = 'sky';
+                }
+              "
+            >
+              &#xe60b; 天基卫星信号
+            </div>
+          </div>
+        </div>
+        <div class="menu">
+          <Button label="主页面" link="/"> </Button>
+          <Button label="光网络" link="/light"></Button>
+          <Button label="数据网络" link="/data"></Button>
+        </div>
+      </div>
       <div class="body">
         <div class="mapArea">
-          <!-- 全国地图组件 -->
-          <!-- <china-map></china-map> -->
           <MapGISL7Time className="map"></MapGISL7Time>
-          <transition name="slidebuttom" mode="out-in">
-            <div class="tooltip" v-if="true">
-              <div>
-                <div>正常:</div>
-                <div class="iconfont normal">&#xe605;</div>
-              </div>
-              <div>
-                <div>繁忙:</div>
-                <div class="iconfont busy">&#xe605;</div>
-              </div>
-              <div>
-                <div>异常:</div>
-                <div class="iconfont error">&#xe605;</div>
-              </div>
-              <div>
-                <div>最高基准站:</div>
-                <div class="iconfont error">&#xe605;</div>
-              </div>
+          <div class="tooltip" v-if="true">
+            <div>
+              <div>正常:</div>
+              <div class="iconfont normal">&#xe605;</div>
             </div>
-          </transition>
+            <div>
+              <div>繁忙:</div>
+              <div class="iconfont busy">&#xe605;</div>
+            </div>
+            <div>
+              <div>异常:</div>
+              <div class="iconfont error">&#xe605;</div>
+            </div>
+            <div>
+              <div>最高基准站:</div>
+              <div class="iconfont top">&#xe64c;</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -67,9 +98,12 @@ import Weather from "@/components/base/Weather";
 import PrecisionList from "@/components/timeNetwork/PrecisionList";
 import BarChart from "@/components/chart/BarChart";
 import MapGISL7Time from "@/components/MapGISL7Time";
+import Button from "@/components/base/Button";
+
 export default {
   name: "TimeNetwork",
   components: {
+    Button,
     MapGISL7Time,
     BarChart,
     PrecisionList,
@@ -81,7 +115,7 @@ export default {
       selected: "ground",
       networkInfo: {
         chartData: [[120, 150, 200, 300]],
-        chartName: "",
+        chartName: ["站点数量"],
         chartAxisData: ["最高精度", "超高精度", "次高精度", "时间网关"]
       }
     };

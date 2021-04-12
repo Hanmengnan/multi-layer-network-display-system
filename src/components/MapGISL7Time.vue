@@ -228,8 +228,8 @@ export default {
       logoVisible: false,
       map: new GaodeMap({
         pitch: 55,
-        style: "amap://styles/099ed915ac47ee2dee464d6977a5aeeb",
-        token: "f1e37759855b0c49a602a51160924c9b",
+        style: "amap://styles/95af509712b1c1482568c22fb6a48ba1",
+        token: "a127225eb0a00482236e3bed17d51c9f",
         center: [116.408414, 39.896061],
         zoom: 5.5,
         minZoom: 5.5

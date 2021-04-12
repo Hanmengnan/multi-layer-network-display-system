@@ -39,7 +39,7 @@ export default {
     themeColor: {
       type: String,
       required: false,
-      default: "rgba(0,0,0,0.2)"
+      default: "rgba(0,0,0,0.3)"
     },
     selectList: {
       type: Array,
@@ -67,10 +67,12 @@ export default {
 @import "~@/assets/css/variable.less";
 
 .select-down {
+  position: relative;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 3;
 
   span {
     display: inline-block;
@@ -81,7 +83,7 @@ export default {
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-height: 300%;
+    max-height: 500%;
     left: 0;
     top: 100%;
     padding: 5px 0;
@@ -92,7 +94,7 @@ export default {
       border-left: 2px transparent solid;
 
       &:hover {
-        border-left: 2px @themeColor4 solid;
+        border-left: 2px @themeColor1 solid;
       }
 
       &:active {
@@ -100,7 +102,7 @@ export default {
       }
 
       &.selected {
-        border-left: 2px @themeColor4 solid;
+        border-left: 2px @themeColor1 solid;
       }
     }
   }

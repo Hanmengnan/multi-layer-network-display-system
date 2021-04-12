@@ -189,13 +189,11 @@ export default {
 
 .container {
   margin: auto;
-  height: 100%;
   width: 100%;
 }
 
 .body {
   width: 100%;
-  height: 99%;
   position: relative;
   //position: absolute;
 }
@@ -224,6 +222,7 @@ export default {
   // border-radius: 10%;
   .input-area {
     width: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
   }
 
   // left: 25%;

@@ -65,14 +65,13 @@ export default {
   .mixin-flex(@flex-direction: column, @justify-content: center);
   .mixin-width-height();
   color: @defaultFontColor;
-  font-size: @titleFontSize;
+  font-size: @defaultFontSize;
   font-weight: @titleFontWeight;
 
   .card-area {
     .mixin-flex();
     .mixin-width-height(@height: 80%);
     position: relative;
-    font-size: @defaultFontSize;
     font-weight: @defaultFontWeight;
 
     .card {
@@ -83,13 +82,13 @@ export default {
       padding: 20px 5px;
 
       .title {
-        font-size: @defaultFontSize * 1.2;
+        font-size: @defaultFontSize*1.1;
       }
 
       .text {
         display: flex;
         flex-direction: column;
-        font-size: @defaultFontSize*1.1;
+        font-size: @defaultFontSize;
 
         .value {
           color: green;

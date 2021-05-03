@@ -46,7 +46,6 @@
       </div>
       <div class="sub-header">
         <div @click="selector = 'node'">
-          <div></div>
           <select-down
             v-model="selector"
             title="节点查询"
@@ -54,7 +53,6 @@
           ></select-down>
         </div>
         <div @click="selector = '-'">
-          <div></div>
           <select-down
             v-model="selector"
             title="链路查询"

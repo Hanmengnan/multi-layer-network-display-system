@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="box">
     <div class="header">
       <div class="border-left"></div>
       <div class="border-right"></div>
@@ -29,7 +29,7 @@ export default {
 <style lang="less" scoped>
 @import "~@/assets/css/mixin/base.less";
 @import "~@/assets/css/variable.less";
-.container {
+.box {
   .mixin-width-height();
   .mixin-flex(@flex-direction: column, @justify-content: flex-start);
   .header {

@@ -7,8 +7,8 @@
     <div class="container">
       <BarChart
         :direction="true"
-        :char-data="chartData"
-        :char-axis-data="chartAxisData"
+        :chart-data="chartData"
+        :chart-axis-data="chartAxisData"
         :chart-name="chartName"
         :x-axis-pointer="chartSetting.xAxisPointer"
         :tooltip="chartSetting.tooltip"

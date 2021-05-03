@@ -1,7 +1,8 @@
 @import "./variable";
 
 html,
-body {
+body,
+dir {
   padding: 0;
   margin: 0;
   width: 100%;
@@ -16,13 +17,14 @@ body {
 }
 
 @font-face {
-  font-family: 'iconfont';  /* project id 2305569 */
-  src: url('//at.alicdn.com/t/font_2305569_a1ewfumj7bs.eot');
-  src: url('//at.alicdn.com/t/font_2305569_a1ewfumj7bs.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_2305569_a1ewfumj7bs.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_2305569_a1ewfumj7bs.woff') format('woff'),
-  url('//at.alicdn.com/t/font_2305569_a1ewfumj7bs.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_2305569_a1ewfumj7bs.svg#iconfont') format('svg');
+  font-family: "iconfont"; /* project id 2305569 */
+  src: url("//at.alicdn.com/t/font_2305569_a1ewfumj7bs.eot");
+  src: url("//at.alicdn.com/t/font_2305569_a1ewfumj7bs.eot?#iefix")
+      format("embedded-opentype"),
+    url("//at.alicdn.com/t/font_2305569_a1ewfumj7bs.woff2") format("woff2"),
+    url("//at.alicdn.com/t/font_2305569_a1ewfumj7bs.woff") format("woff"),
+    url("//at.alicdn.com/t/font_2305569_a1ewfumj7bs.ttf") format("truetype"),
+    url("//at.alicdn.com/t/font_2305569_a1ewfumj7bs.svg#iconfont") format("svg");
 }
 
 .iconfont {
@@ -52,6 +54,73 @@ body {
   border-radius: 1em;
   background-color: rgba(50, 50, 50, 0.1);
 }
+
+@-webkit-keyframes slideRight {
+  0% {
+    transform-origin: 0 0;
+    transform: translateX(0%);
+  }
+  100% {
+    transform-origin: 0 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes slideRight {
+  0% {
+    transform-origin: 0 0;
+    transform: translateX(0%);
+  }
+  100% {
+    transform-origin: 0 0;
+    transform: translateX(100%);
+  }
+}
+
+@-webkit-keyframes slideRightReturn {
+  0% {
+    transform-origin: 0 0;
+    transform: translateX(100%);
+  }
+  100% {
+    transform-origin: 0 0;
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slideRightReturn {
+  0% {
+    transform-origin: 0 0;
+    transform: translateX(100%);
+  }
+  100% {
+    transform-origin: 0 0;
+    transform: translateX(0%);
+  }
+}
+
+@-webkit-keyframes slideDown {
+  0% {
+    transform-origin: 0 0;
+    transform: translateY(0%);
+  }
+  100% {
+    transform-origin: 0 0;
+    transform: translateY(100%);
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    transform-origin: 0 0;
+    transform: translateY(0%);
+  }
+  100% {
+    transform-origin: 0 0;
+    transform: translateY(100%);
+  }
+}
+
 
 @-webkit-keyframes slideDownReturn {
   0% {

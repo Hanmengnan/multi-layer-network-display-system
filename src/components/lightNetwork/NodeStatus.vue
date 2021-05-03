@@ -89,14 +89,14 @@ export default {
   .mixin-width-height();
   color: @defaultFontColor;
   font-size: @defaultFontSize;
-  font-weight: @titleFontWeight;
+  font-weight: @defaultFontWeight;
 
   .left {
     .mixin-flex(@flex-direction: column);
     .mixin-width-height(@width: 35%, @height: 80%);
 
     .iconfont {
-      font-size: @titleFontSize*1.5;
+      font-size: @titleFontSize*2;
 
       &.city {
         color: @themeColor1;

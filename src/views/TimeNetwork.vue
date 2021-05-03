@@ -8,9 +8,9 @@
         </div>
         <bar-chart
           :direction="false"
-          :char-data="networkInfo.chartData"
+          :chart-data="networkInfo.chartData"
           :chart-name="networkInfo.chartName"
-          :char-axis-data="networkInfo.chartAxisData"
+          :chart-axis-data="networkInfo.chartAxisData"
         ></bar-chart>
       </div>
       <div class="box-2">
@@ -60,9 +60,15 @@
           </div>
         </div>
         <div class="menu">
-          <Button label="主页面" link="/"> </Button>
-          <Button label="光网络" link="/light"></Button>
-          <Button label="数据网络" link="/data"></Button>
+          <Button label="主页面" :clickEvent="toHref.bind(this, '/')"> </Button>
+          <Button
+            label="光网络"
+            :clickEvent="toHref.bind(this, '/light')"
+          ></Button>
+          <Button
+            label="数据网络"
+            :clickEvent="toHref.bind(this, '/data')"
+          ></Button>
         </div>
       </div>
       <div class="body">

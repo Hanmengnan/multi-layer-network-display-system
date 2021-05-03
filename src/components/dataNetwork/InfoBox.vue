@@ -17,8 +17,8 @@
           :stack="true"
           :direction="true"
           :chart-name="nodeLinkLoad.chartName"
-          :char-data="nodeLinkLoad.chartData"
-          :char-axis-data="nodeLinkLoad.charAxisData"
+          :chart-data="nodeLinkLoad.chartData"
+          :chart-axis-data="nodeLinkLoad.charAxisData"
           :tooltip="nodeLinkLoad.chartSetting.tooltip"
           :x-axis-pointer="nodeLinkLoad.chartSetting.xAxisPointer"
         ></bar-chart>
@@ -40,8 +40,8 @@
           :stack="true"
           :direction="false"
           :chart-name="messageSource.chartName"
-          :char-data="messageSource.chartData"
-          :char-axis-data="messageSource.charAxisData"
+          :chart-data="messageSource.chartData"
+          :chart-axis-data="messageSource.charAxisData"
         ></bar-chart>
       </div>
     </div>

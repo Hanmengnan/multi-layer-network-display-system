@@ -192,8 +192,9 @@ export default {
     }
   },
   watch: {
-    listData: function(newVal) {
-      this.option.series[0].data = newVal;
+    charData: function() {
+      this.option.series = this.seriesData();
+      this.option.xAxis.data = this.charAxisData;
       this.myChart.setOption(this.option);
     }
   }

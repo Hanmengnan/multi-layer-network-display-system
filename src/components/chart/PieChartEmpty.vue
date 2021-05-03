@@ -40,11 +40,11 @@ export default {
       default: "#1772e9"
     },
     aimConditionNumber: {
-      type: String,
+      type: Number,
       required: true
     },
     conditionNumber: {
-      type: String,
+      type: Number,
       required: true
     },
     clickEvent: {
@@ -84,7 +84,10 @@ export default {
             data: [
               {
                 name: "aim",
-                value: (this.aimConditionNumber / this.conditionNumber) * 100,
+                value: this.percent(
+                  this.aimConditionNumber,
+                  this.conditionNumber
+                ),
                 itemStyle: {
                   color: this.themeColor
                 }
@@ -92,7 +95,8 @@ export default {
               {
                 name: "other",
                 value:
-                  100 - (this.aimConditionNumber / this.conditionNumber) * 100,
+                  100 -
+                  this.percent(this.aimConditionNumber, this.conditionNumber),
                 itemStyle: {
                   color: "#ffffff"
                 }
@@ -116,9 +120,31 @@ export default {
       }
     };
   },
+  methods: {
+    percent: function(aim, total) {
+      return (aim / total) * 100;
+    },
+    updateChart: function() {
+      this.options.series[0].data[0].value = this.percent(
+        this.aimConditionNumber,
+        this.conditionNumber
+      );
+      this.options.series[0].data[1].value =
+        100 - this.percent(this.aimConditionNumber, this.conditionNumber);
+      chartArea.setOption(this.options);
+    }
+  },
   mounted() {
     chartArea = echarts.init(this.$refs.chartContainer);
     chartArea.setOption(this.options);
+  },
+  watch: {
+    aimConditionNumber() {
+      this.updateChart();
+    },
+    conditionNumber() {
+      this.updateChart();
+    }
   }
 };
 </script>

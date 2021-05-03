@@ -62,7 +62,7 @@ export default {
     }
 
     .iconfont {
-      font-size: @titleFontSize;
+      font-size: @titleFontSize*1.5;
       font-weight: @titleFontWeight;
 
       &.work {
@@ -81,7 +81,7 @@ export default {
 
     .iconfont {
       color: @themeColor1;
-      font-size: @titleFontSize;
+      font-size: @titleFontSize*2;
       font-weight: @titleFontWeight;
 
       &.city {

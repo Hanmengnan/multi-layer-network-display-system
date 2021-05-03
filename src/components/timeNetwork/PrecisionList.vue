@@ -101,7 +101,6 @@ export default {
   },
   methods: {
     chooseRange(data) {
-      // console.log(data);
       this.selectTitle = data;
       let parttern = /\d+/g;
       this.range = [];

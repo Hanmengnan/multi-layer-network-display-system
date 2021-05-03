@@ -18,7 +18,7 @@
         {{ item.level }}
       </div>
       <div>{{ item.data }}</div>
-      <div>详情</div>
+      <div @click="linkDetailShow" style="cursor: pointer;">详情</div>
     </div>
   </div>
 </template>
@@ -30,6 +30,11 @@ export default {
     errorList: {
       type: Array,
       required: true
+    },
+    linkDetailShow: {
+      type: Function,
+      required: false,
+      default: () => {}
     }
   }
 };

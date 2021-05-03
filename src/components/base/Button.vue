@@ -2,7 +2,7 @@
   <button
     data-text="切换"
     class="btn btn-primary btn-ghost btn-border-stroke  btn-text-float-up"
-    @click="toHref(link)"
+    @click="clickEvent()"
   >
     <div class="btn-borders">
       <div class="border-top"></div>
@@ -23,16 +23,12 @@ export default {
       required: true,
       default: ""
     },
-    link: {
-      type: String,
+    clickEvent: {
+      type: Function,
       required: true
     }
   },
-  methods: {
-    toHref: function(link) {
-      this.$router.push(link);
-    }
-  }
+  methods: {}
 };
 </script>
 
@@ -47,14 +43,12 @@ export default {
   --ease-out-delay: var(--ease-in-duration);
   --ease-out-exponential: cubic-bezier(0.19, 1, 0.22, 1);
   position: relative;
-  //padding: 0.5rem 0.5rem;
   font-size: @defaultFontSize*1.2;
   color: white;
   overflow: hidden;
   cursor: pointer;
   white-space: nowrap;
   transition: 0.25s;
-  height: 60%;
   border: none;
 
   &-ghost {

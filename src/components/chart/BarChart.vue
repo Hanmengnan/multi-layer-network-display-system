@@ -113,11 +113,11 @@ export default {
         };
       }
     },
-    charData: {
+    chartData: {
       type: Array,
       required: true
     },
-    charAxisData: {
+    chartAxisData: {
       type: Array,
       required: true
     },
@@ -131,11 +131,7 @@ export default {
       options: this.chartOption()
     };
   },
-  computed: {
-    newChartData: function() {
-      return this.charData;
-    }
-  },
+  computed: {},
   methods: {
     chartOption: function() {
       let option = {};
@@ -186,7 +182,7 @@ export default {
         option.xAxis.axisLabel = { show: false };
         option.xAxis.axisPointer = { show: false };
       } else {
-        option.xAxis.data = this.charAxisData;
+        option.xAxis.data = this.chartAxisData;
       }
 
       option.yAxis = {
@@ -206,20 +202,20 @@ export default {
       };
       if (this.direction) {
         option.yAxis.type = this.xAxisType;
-        option.yAxis.data = this.charAxisData;
+        option.yAxis.data = this.chartAxisData;
       }
       option.series = this.seriesData();
       return option;
     },
     seriesData: function() {
       let tempList = [];
-      this.charData.forEach((item, index) => {
+      this.chartData.forEach((item, index) => {
         let obj = {
           name: this.chartName[index],
           type: "bar",
           color: themeColors[index],
           smooth: true,
-          barWidth: String(100 / this.charData[0].length + 25) + "%",
+          barWidth: String(100 / this.chartData[0].length + 25) + "%",
           data: item
         };
         if (this.stack) {
@@ -228,7 +224,14 @@ export default {
         if (this.direction) {
           obj.label = {
             show: true,
-            position: "insideRight"
+            position: "insideRight",
+            formatter: function(params) {
+              if (params.value > 0) {
+                return params.value;
+              } else {
+                return "";
+              }
+            }
           };
         }
         tempList.push(obj);
@@ -237,14 +240,17 @@ export default {
     }
   },
   watch: {
-    newChartData() {
-      if (this.direction) {
-        this.options.yAxis.data = this.charAxisData;
-      } else {
-        this.options.xAxis.data = this.charAxisData;
+    chartData: {
+      deep: true,
+      handler: function() {
+        if (this.direction) {
+          this.options.yAxis.data = this.chartAxisData;
+        } else {
+          this.options.xAxis.data = this.chartAxisData;
+        }
+        this.options.series = this.seriesData();
+        chart.setOption(this.options);
       }
-      this.options.series = this.seriesData();
-      chart.setOption(this.options);
     }
   },
 

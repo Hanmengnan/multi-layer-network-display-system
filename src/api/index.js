@@ -22,6 +22,14 @@ import {
   dataNetworkLinkInfoMockData
 } from "./mock/data";
 
+import {
+  timeColumnMockData,
+  timeListMockData,
+  timeStationMockData
+} from "./mock/time";
+
+import { NodesMockData, LinksMockData } from "./mock/nodeAndLink";
+
 const BASE_URL = "";
 
 const devMode = false;
@@ -39,6 +47,17 @@ instance.interceptors.response.use(
   }
 );
 
+export const websocket = new WebSocket("ws://localhost:8070/ws");
+
+//common
+export const getNodes = () => {
+  return devMode ? NodesMockData() : instance.get(`${BASE_URL}/api/nodeList`);
+};
+
+export const getLinks = () => {
+  return devMode ? LinksMockData() : instance.get(`${BASE_URL}/api/linkList`);
+};
+
 // home
 export const initHomePage = () => {
   return instance.get(`${BASE_URL}/api/home`);
@@ -54,22 +73,29 @@ export const getEventList = () => {
     : instance.post(`${BASE_URL}/api/eventList`);
 };
 
-export const getNodeList = () => {
+export const getNodeList = operate => {
   return devMode
     ? nodeListMockData()
-    : instance.get(`${BASE_URL}/api/nodeList`);
+    : // eslint-disable-next-line no-unused-vars
+      new Promise((resolve, reject) => {
+        let websocket = new WebSocket("ws://localhost:8070/nodeList");
+        websocket.onmessage = function(res) {
+          operate(JSON.parse(res.data));
+        };
+      });
 };
 
-export const getBasicInfo = () => {
+// eslint-disable-next-line no-unused-vars
+export const getNetInfo = operate => {
   return devMode
     ? basicInfoMockData()
-    : instance.post(`${BASE_URL}/api/basicInfo`);
+    : instance.get(`${BASE_URL}/api/netInfo`);
 };
 
 export const getFlowInfo = () => {
   return devMode
     ? FlowInfoMockData()
-    : instance.post(`${BASE_URL}/api/flowInfo`);
+    : instance.get(`${BASE_URL}/api/flowInfo`);
 };
 
 // light
@@ -114,19 +140,19 @@ export const getNodeBand = ({ node }) => {
 export const getDataNetInfo = () => {
   return devMode
     ? dataNetInfoMockData()
-    : instance.get(`${BASE_URL}/api/DataNetInfo`);
+    : instance.get(`${BASE_URL}/api/dataNetInfo`);
 };
 
 export const getDataNetWorkFlowData = () => {
   return devMode
     ? dataNetFlowMockData()
-    : instance.post(`${BASE_URL}/api/DataNetFlow`);
+    : instance.get(`${BASE_URL}/api/flowInfo`);
 };
 
 export const getDataNetworkNodeInfo = ({ nodeId }) => {
   return devMode
     ? dataNetworkNodeInfoMockData()
-    : instance.post(`${BASE_URL}/api/DataNetNodeInfo`, {
+    : instance.post(`${BASE_URL}/api/dataNetNodeInfo`, {
         nodeId
       });
 };
@@ -134,8 +160,25 @@ export const getDataNetworkNodeInfo = ({ nodeId }) => {
 export const getDataNetworkLinkInfo = ({ linkId }) => {
   return devMode
     ? dataNetworkLinkInfoMockData()
-    : instance.post(`${BASE_URL}/api/DataNetLinkInfo`, {
+    : instance.post(`${BASE_URL}/api/dataNetLinkInfo`, {
         linkId
       });
 };
 // time
+export const getTimeColumn = () => {
+  return devMode
+    ? timeColumnMockData()
+    : instance.post(`${BASE_URL}/api/timeComumn`);
+};
+
+export const getTimeList = () => {
+  return devMode
+    ? timeListMockData()
+    : instance.post(`${BASE_URL}/api/timeList`);
+};
+
+export const getTimeStation = () => {
+  return devMode
+    ? timeStationMockData()
+    : instance.post(`${BASE_URL}/api/timeStation`);
+};

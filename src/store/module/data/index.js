@@ -4,17 +4,13 @@ import {
   UPDATE_FLOWINFO_MUTATION,
   UPDATE_NODEINFO_MUTATION,
   UPDATE_LINKINFO_MUTATION,
-  // eslint-disable-next-line no-unused-vars
   UPDATE_NODES_MUTATION,
-  // eslint-disable-next-line no-unused-vars
   UPDATE_LINKS_MUTATION,
   UPDATE_NETINFO_ACTION,
   UPDATE_FLOWINFO_ACTION,
   UPDATE_NODEINFO_ACTION,
   UPDATE_LINKINFO_ACTION,
-  // eslint-disable-next-line no-unused-vars
   UPDATE_NODES_ACTION,
-  // eslint-disable-next-line no-unused-vars
   UPDATE_LINKS_ACTION
 } from "./constant";
 
@@ -22,7 +18,9 @@ import {
   getDataNetInfo,
   getDataNetWorkFlowData,
   getDataNetworkNodeInfo,
-  getDataNetworkLinkInfo
+  getDataNetworkLinkInfo,
+  getNodes,
+  getLinks
 } from "../../../api";
 
 export default {
@@ -50,8 +48,29 @@ export default {
         ]
       };
     },
+    [UPDATE_NODES_MUTATION](state, { data }) {
+      state.nodes = data;
+    },
+    [UPDATE_LINKS_MUTATION](state, { data }) {
+      state.links = data;
+    },
     [UPDATE_FLOWINFO_MUTATION](state, { data }) {
-      state.flowInfo = { ...data };
+      state.flowInfo = {
+        charAxisData: {
+          day: data.day
+            .map(res => new Date(Date.parse(res.time)).toLocaleDateString())
+            .reverse(),
+          week: data.week
+            .map(res => new Date(Date.parse(res.time)).toLocaleDateString())
+            .reverse(),
+          month: data.month.map(res => res.time).reverse()
+        },
+        chartData: {
+          day: [data.day.map(res => res.flowData).reverse()],
+          week: [data.week.map(res => res.flowData).reverse()],
+          month: [data.month.map(res => res.flowData).reverse()]
+        }
+      };
     },
     [UPDATE_NODEINFO_MUTATION](state, { data }) {
       state.nodeInfo = {
@@ -88,8 +107,8 @@ export default {
     },
     [UPDATE_LINKINFO_MUTATION](state, { data }) {
       state.linkInfo = {
-        start: data.basicInfo.start,
-        end: data.basicInfo.end,
+        start: data.basicInfo.node1Name,
+        end: data.basicInfo.node2Name,
         infoData: [
           { title: "运行状态", num: "正常" },
           { title: "带宽", num: data.basicInfo.contain },
@@ -116,6 +135,7 @@ export default {
   actions: {
     // eslint-disable-next-line no-unused-vars
     async [INIT_LIGHT_ACTION]({ dispatch }) {},
+
     // eslint-disable-next-line no-unused-vars
     async [UPDATE_NETINFO_ACTION]({ dispatch, commit }, payload) {
       // payload使用
@@ -126,16 +146,18 @@ export default {
         data
       });
     },
+
     // eslint-disable-next-line no-unused-vars
     async [UPDATE_FLOWINFO_ACTION]({ dispatch, commit }, payload) {
       // payload使用
       // 异步API
       let data = null;
-      await getDataNetWorkFlowData().then();
+      await getDataNetWorkFlowData().then(res => (data = res));
       commit(UPDATE_FLOWINFO_MUTATION, {
         data
       });
     },
+
     // eslint-disable-next-line no-unused-vars
     async [UPDATE_NODEINFO_ACTION]({ dispatch, commit }, nodeId) {
       // payload使用
@@ -148,6 +170,7 @@ export default {
         data
       });
     },
+
     // eslint-disable-next-line no-unused-vars
     async [UPDATE_LINKINFO_ACTION]({ dispatch, commit }, linkId) {
       // payload使用
@@ -157,6 +180,24 @@ export default {
         linkId
       }).then(res => (data = res));
       commit(UPDATE_LINKINFO_MUTATION, {
+        data
+      });
+    },
+
+    // eslint-disable-next-line no-unused-vars
+    async [UPDATE_NODES_ACTION]({ dispatch, commit }) {
+      let data = null;
+      await getNodes().then(res => (data = res.nodeList));
+      commit(UPDATE_NODES_MUTATION, {
+        data
+      });
+    },
+
+    // eslint-disable-next-line no-unused-vars
+    async [UPDATE_LINKS_ACTION]({ dispatch, commit }) {
+      let data = null;
+      await getLinks().then(res => (data = res.linkList));
+      commit(UPDATE_LINKS_MUTATION, {
         data
       });
     }

@@ -6,12 +6,11 @@
         :key="`${val}/${idx}`"
         class="scrollItem"
       >
-        <span v-if="val.city"
-          >{{ val.msg.split(val.city)[0]
-          }}<em :style="`color: ${coutColor(val.status)}`">{{ val.city }} </em
-          >{{ val.msg.split(val.city)[1] }}</span
-        >
-        <span v-else>{{ val.msg }}</span>
+        <span>
+          <span :style="`color: ${coutColor(val.state)}`">{{ val.city }} </span
+          >节点系统
+          <span :style="`color: ${coutColor(val.state)}`">{{ val.state }}</span>
+        </span>
       </div>
     </div>
   </div>
@@ -23,13 +22,13 @@ import {
   themeColor3,
   themeColor5,
   themeColor8,
-  themeColor9
+  themeColor10
 } from "@/assets/js/variable";
 
 export default {
   name: "message-box",
   props: {
-    message: {
+    nodeList: {
       type: Array,
       default: () => {
         return [
@@ -40,9 +39,20 @@ export default {
       }
     }
   },
+  computed: {
+    message() {
+      return this.nodeList.map(val => {
+        return {
+          msg: `${val.name}节点系统${val.state}`,
+          city: val.name,
+          state: val.state
+        };
+      });
+    }
+  },
   methods: {
-    coutColor(status) {
-      switch (status) {
+    coutColor(state) {
+      switch (state) {
         case "正常":
           return themeColor5;
         case "拥塞":
@@ -50,20 +60,23 @@ export default {
         case "繁忙":
           return themeColor3;
         default:
-          return themeColor9;
+          return themeColor10;
       }
     }
   },
   mounted() {
-    let bias = 0;
-    const innerHeight = this.$refs.scrollContent.offsetHeight;
-    const outterHeight = this.$refs.container.offsetHeight;
-    const width = 3;
-    timer = setInterval(() => {
-      if (bias <= innerHeight - outterHeight + width) bias += width;
-      else bias = 0;
-      this.$refs.scrollContent.style.top = `-${bias}px`;
-    }, 200);
+    setTimeout(() => {
+      let bias = 0;
+      const innerHeight = this.$refs.scrollContent.offsetHeight;
+      const outterHeight = this.$refs.container.offsetHeight;
+      const width = 3;
+
+      timer = setInterval(() => {
+        if (bias <= innerHeight - outterHeight + width) bias += width;
+        else bias = 0;
+        this.$refs.scrollContent.style.top = `-${bias}px`;
+      }, 200);
+    }, 1000);
   },
   beforeDestroy() {
     clearInterval(timer);
@@ -81,12 +94,14 @@ export default {
   overflow-y: hidden;
   height: 80%;
   margin: 20px;
+
   .scrollContent {
     display: flex;
     flex-direction: column;
     justify-content: center;
     position: relative;
     transition: top 0.3s;
+
     .scrollItem {
       overflow: visible;
       margin-top: 20px;

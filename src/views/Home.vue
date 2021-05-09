@@ -35,8 +35,8 @@
           </Legend>
           <system-info
             class="content-area"
-            :system-info-list="systemInfoList"
-            :state-info-list="stateInfoList"
+            :system-info-list="this.sysInfo.infoList"
+            :state-info-list="this.sysInfo.stateList"
           ></system-info>
         </div>
         <div class="box box-2">
@@ -58,22 +58,7 @@
             <node-list></node-list>
           </div>
           <div class="box list-container-2">
-            <message-box
-              :message="[
-                { msg: '北京节点恢复正常', city: '北京', status: '正常' },
-                { msg: '上海节点系统繁忙', city: '上海', status: '繁忙' },
-                { msg: '云南节点发生故障', city: '云南', status: '故障' },
-                { msg: '广州节点发生拥塞', city: '广州', status: '拥塞' },
-                { msg: '新疆节点发生故障', city: '新疆', status: '故障' },
-                { msg: '贵州节点发生故障', city: '贵州', status: '故障' },
-                { msg: '青海节点发生故障', city: '青海', status: '故障' },
-                { msg: '青海节点发生故障', city: '青海', status: '故障' },
-                { msg: '青海节点发生故障', city: '青海', status: '故障' },
-                { msg: '青海节点发生故障', city: '青海', status: '故障' },
-                { msg: '青海节点发生故障', city: '青海', status: '故障' },
-                { msg: '青海节点发生故障', city: '青海', status: '故障' }
-              ]"
-            ></message-box>
+            <message-box :node-list="this.nodeList"></message-box>
           </div>
         </div>
       </div>
@@ -131,6 +116,18 @@ import TypeDistribution from "@/components/home/NodeDistribution/TypeDistributio
 import LocationDistribution from "@/components/home/NodeDistribution/LocationDistribution";
 import SituationHandle from "@/components/home/Situation/SituationHandle";
 import LineChart from "@/components/chart/LineChart";
+
+import { createNamespacedHelpers } from "vuex";
+import {
+  UPDATE_SYSINFO_ACTION,
+  UPDATE_EVENTLIST_ACTION,
+  UPDATE_NODELIST_ACTION,
+  UPDATE_NETINFO_ACTION,
+  UPDATE_FLWOINFO_ACTION,
+  UPDATE_LINKLIST_ACTION
+} from "@/store/module/home/constant";
+
+const { mapState, mapActions } = createNamespacedHelpers("home");
 
 export default {
   name: "Home",
@@ -206,6 +203,16 @@ export default {
     TypeDistribution,
     LocationDistribution
   },
+  computed: {
+    ...mapState({
+      sysInfo: state => state.sysinfo,
+      eventList: state => state.eventList,
+      nodeList: state => state.nodeList,
+      basicInfo: state => state.basicInfo,
+      flowInfo: state => state.flowInfo,
+      linkList: state => state.linkList
+    })
+  },
   methods: {
     toHref: function(link) {
       this.$router.push(link);
@@ -231,9 +238,26 @@ export default {
     removeSideRowAnimation: function() {
       this.$refs.sideRight.classList.remove("magictime");
       this.$refs.sideLeft.classList.remove("magictime");
+    },
+    ...mapActions({
+      getSysInfo: UPDATE_SYSINFO_ACTION,
+      getEventList: UPDATE_EVENTLIST_ACTION,
+      getNodeList: UPDATE_NODELIST_ACTION,
+      getBasicInfo: UPDATE_NETINFO_ACTION,
+      getFlowInfo: UPDATE_FLWOINFO_ACTION,
+      getLinkList: UPDATE_LINKLIST_ACTION
+    }),
+    async initData() {
+      this.getSysInfo();
+      this.getEventList();
+      this.getNodeList();
+      this.getBasicInfo();
+      this.getFlowInfo();
+      this.getLinkList();
     }
   },
   mounted: function() {
+    this.initData();
     // ugly 的 代码 ，为了解决 css 中 position : fixed 与 animation 不兼容的问题所采取的不得已办法
     setTimeout(this.removeSideRowAnimation, 2000);
     this.showTitle();

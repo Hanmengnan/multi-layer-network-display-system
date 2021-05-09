@@ -36,11 +36,13 @@ export default {
   props: {
     systemInfoList: {
       type: Array,
-      required: true
+      required: false,
+      default: () => []
     },
     stateInfoList: {
       type: Array,
-      required: true
+      required: false,
+      default: () => []
     }
   },
   methods: {

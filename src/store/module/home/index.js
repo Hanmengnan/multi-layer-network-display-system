@@ -2,22 +2,25 @@ import {
   UPDATE_SYSINFO_MUTATION,
   UPDATE_EVENTLIST_MUTATION,
   UPDATE_NODELIST_MUTATION,
-  UPDATE_BASICINFO_MUTATION,
+  UPDATE_LINKLIST_MUTATION,
+  UPDATE_NETINFO_MUTATION,
   UPDATE_FLWOINFO_MUTATION,
   INIT_HOME_ACTION,
   UPDATE_SYSINFO_ACTION,
   UPDATE_EVENTLIST_ACTION,
   UPDATE_NODELIST_ACTION,
-  UPDATE_BASICINFO_ACTION,
-  UPDATE_FLWOINFO_ACTION
+  UPDATE_NETINFO_ACTION,
+  UPDATE_FLWOINFO_ACTION,
+  UPDATE_LINKLIST_ACTION
 } from "./constant";
 
 import {
   getEventList,
   getSysInfo,
-  getNodeList,
-  getBasicInfo,
-  getFlowInfo
+  getNetInfo,
+  getFlowInfo,
+  getLinks,
+  getNodes
 } from "../../../api";
 
 export default {
@@ -26,42 +29,56 @@ export default {
     sysinfo: [],
     eventList: [],
     nodeList: [],
+    linkList: [],
     basicInfo: {},
     flowInfo: []
   }),
   mutations: {
     [UPDATE_SYSINFO_MUTATION](state, { data }) {
-      state.sysinfo = [
-        {
-          name: "系统名称",
-          value: data.systemName
-        },
-        {
-          name: "系统版本",
-          value: data.version
-        },
-        {
-          name: "系统运行时间",
-          value: "90天"
-        },
-        {
-          name: "系统代号",
-          value: data.code
-        },
-        {
-          name: "数据库",
-          status: data.state.database
-        },
-        {
-          name: "网络",
-          status: data.state.network
-        },
-        {
-          name: "数据服务集群",
-          status: data.state.cluster
-        }
-      ];
-      console.log(state.sysinfo);
+      state.sysinfo = {
+        infoList: [
+          {
+            name: "系统名称",
+            value: data.systemName
+          },
+          {
+            name: "系统版本",
+            value: data.version
+          },
+          {
+            name: "系统运行时间",
+            value: (() => {
+              return (
+                Math.floor(
+                  (Date.now() - Date.parse(data.startTime)) /
+                    1000 /
+                    60 /
+                    60 /
+                    24
+                ) + "天"
+              );
+            })()
+          },
+          {
+            name: "系统代号",
+            value: data.code
+          }
+        ],
+        stateList: [
+          {
+            name: "数据库",
+            status: data.state.database
+          },
+          {
+            name: "网络",
+            status: data.state.network
+          },
+          {
+            name: "数据服务集群",
+            status: data.state.cluster
+          }
+        ]
+      };
     },
     [UPDATE_EVENTLIST_MUTATION](state, { data }) {
       state.eventList = [...data];
@@ -69,11 +86,25 @@ export default {
     [UPDATE_NODELIST_MUTATION](state, { data }) {
       state.nodeList = [...data];
     },
-    [UPDATE_BASICINFO_MUTATION](state, { data }) {
-      state.basicInfo = { ...state.basicInfo, ...data };
+    [UPDATE_LINKLIST_MUTATION](state, { data }) {
+      state.linkList = [...data];
+    },
+    [UPDATE_NETINFO_MUTATION](state, { data }) {
+      state.basicInfo = data;
     },
     [UPDATE_FLWOINFO_MUTATION](state, { data }) {
-      state.flowInfo = [...data];
+      state.flowInfo = data.day
+        .map(item => {
+          return {
+            date: new Date(Date.parse(item.time))
+              .toLocaleDateString("zh-CN", {
+                dateStyle: "short"
+              })
+              .substr(5),
+            value: item.dailyGrowth
+          };
+        })
+        .reverse();
     }
   },
   actions: {
@@ -84,9 +115,7 @@ export default {
       // 异步API
       let data = null;
       await getSysInfo().then(res => (data = res));
-      commit(UPDATE_SYSINFO_MUTATION, {
-        data
-      });
+      commit(UPDATE_SYSINFO_MUTATION, { data });
     },
     // eslint-disable-next-line no-unused-vars
     async [UPDATE_EVENTLIST_ACTION]({ dispatch, commit }, payload) {
@@ -100,23 +129,26 @@ export default {
     async [UPDATE_NODELIST_ACTION]({ dispatch, commit }, payload) {
       // 异步API
       let data = null;
-      data = await getNodeList().then(res => (data = res.nodeList));
-      commit(UPDATE_NODELIST_MUTATION, {
-        data
-      });
+      await getNodes().then(res => (data = res.nodeList));
+      commit(UPDATE_NODELIST_MUTATION, { data });
     },
     // eslint-disable-next-line no-unused-vars
-    async [UPDATE_BASICINFO_ACTION]({ dispatch, commit }, payload) {
+    async [UPDATE_LINKLIST_ACTION]({ dispatch, commit }, payload) {
       // 异步API
-      let { data } = await getBasicInfo();
-      commit(UPDATE_BASICINFO_MUTATION, {
-        data
-      });
+      let data = null;
+      await getLinks().then(res => (data = res.linkList));
+      commit(UPDATE_LINKLIST_MUTATION, { data });
+    },
+    // eslint-disable-next-line no-unused-vars
+    async [UPDATE_NETINFO_ACTION]({ dispatch, commit }, payload) {
+      // 异步API
+      await getNetInfo(data => commit(UPDATE_NETINFO_MUTATION, { data }));
     },
     // eslint-disable-next-line no-unused-vars
     async [UPDATE_FLWOINFO_ACTION]({ dispatch, commit }, payload) {
       // 异步API
-      let data = await getFlowInfo();
+      let data = null;
+      await getFlowInfo().then(res => (data = res));
       commit(UPDATE_FLWOINFO_MUTATION, {
         data
       });

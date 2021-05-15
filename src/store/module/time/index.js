@@ -1,19 +1,17 @@
 import {
-  UPDATE_TIMECOLUMN_MUTATION,
+  UPDATE_TIMENODESTATISTICS_MUTATION,
   UPDATE_TIMELIST_MUTATION,
   UPDATE_TIMESTATION_MUTATION,
-  UPDATE_NODES_MUTATION,
-  UPDATE_LINKS_MUTATION,
-  UPDATE_TIMECOLUMN_ACTION,
-  UPDATE_TIMELIST_ACTION,
+  UPDATE_NODELIST_MUTATION,
+  UPDATE_LINKLIST_MUTATION,
+  UPDATE_TIMENODESTATISTICS_ACTION,
   UPDATE_TIMESTATION_ACTION,
-  UPDATE_LINKS_ACTION,
-  UPDATE_NODES_ACTION
+  UPDATE_NODELIST_ACTION,
+  UPDATE_LINKLIST_ACTION
 } from "./constant.js";
 
 import {
-  getTimeColumn,
-  getTimeList,
+  getTimeNetNodeStatistic,
   getTimeStation,
   getNodes,
   getLinks
@@ -22,62 +20,94 @@ import {
 export default {
   namespaced: true,
   state: () => ({
+    nodeStatistic: {
+      chartAxisData: [],
+      chartData: [[]],
+      chartName: []
+    },
     timeColumn: [],
     timeList: [],
-    timeStation: [],
-    nodes: [],
-    links: []
+    timeStation: {
+      route: [],
+      station: []
+    },
+    nodeList: [],
+    linkList: []
   }),
   mutations: {
-    [UPDATE_TIMECOLUMN_MUTATION](state, { data }) {
-      state.timeColumn = [...data];
+    [UPDATE_TIMENODESTATISTICS_MUTATION](state, { data }) {
+      state.nodeStatistic = {
+        chartAxisData: Object.keys(data),
+        chartData: [Object.values(data)],
+        chartName: ["站点数量"]
+      };
     },
     [UPDATE_TIMELIST_MUTATION](state, { data }) {
       state.timeList = [...data];
     },
     [UPDATE_TIMESTATION_MUTATION](state, { data }) {
-      state.timeStation = [...data];
+      let tmp = new Set();
+      data.forEach(route => {
+        route.forEach(item => tmp.add(item));
+      });
+      state.timeStation = {
+        route: data.map(route => {
+          let routeList = [];
+          for (let i = 1; i < route.length; ++i) {
+            routeList.push({
+              source: route[i - 1],
+              target: route[i]
+            });
+          }
+          return routeList;
+        }),
+        station: Array.from(tmp)
+      };
     },
-    [UPDATE_NODES_MUTATION](state, { data }) {
-      state.nodes = [...data];
+    [UPDATE_NODELIST_MUTATION](state, { data }) {
+      state.nodeList = data;
     },
-    [UPDATE_LINKS_MUTATION](state, { data }) {
-      state.links = [...data];
+    [UPDATE_LINKLIST_MUTATION](state, { data }) {
+      state.linkList = data;
     }
   },
   actions: {
     // eslint-disable-next-line no-unused-vars
-    async [UPDATE_TIMECOLUMN_ACTION]({ dispatch, commit }, payload) {
-      let { data } = await getTimeColumn();
-      commit(UPDATE_TIMECOLUMN_MUTATION, {
-        data
-      });
-    },
-    // eslint-disable-next-line no-unused-vars
-    async [UPDATE_TIMELIST_ACTION]({ dispatch, commit }, payload) {
-      let { data } = await getTimeList();
-      commit(UPDATE_TIMELIST_MUTATION, {
+    async [UPDATE_TIMENODESTATISTICS_ACTION]({ dispatch, commit }, payload) {
+      let data = null;
+      await getTimeNetNodeStatistic().then(res => (data = res));
+      commit(UPDATE_TIMENODESTATISTICS_MUTATION, {
         data
       });
     },
     // eslint-disable-next-line no-unused-vars
     async [UPDATE_TIMESTATION_ACTION]({ dispatch, commit }, payload) {
-      let { data } = await getTimeStation();
+      let data = null;
+      await getTimeStation(payload.start, payload.end).then(res => {
+        data = res.route;
+      });
+
       commit(UPDATE_TIMESTATION_MUTATION, {
         data
       });
     },
     // eslint-disable-next-line no-unused-vars
-    async [UPDATE_LINKS_ACTION]({ dispatch, commit }, payload) {
-      let { data } = await getLinks();
-      commit(UPDATE_LINKS_MUTATION, {
+    async [UPDATE_NODELIST_ACTION]({ dispatch, commit }, payload) {
+      // payload使用
+      // 异步API
+      let data = null;
+      await getNodes().then(res => (data = res.nodeList));
+      commit(UPDATE_NODELIST_MUTATION, {
         data
       });
     },
     // eslint-disable-next-line no-unused-vars
-    async [UPDATE_NODES_ACTION]({ dispatch, commit }, payload) {
-      let { data } = await getNodes();
-      commit(UPDATE_NODES_MUTATION, {
+    async [UPDATE_LINKLIST_ACTION]({ dispatch, commit }, payload) {
+      // payload使用
+      // 异步API
+      let data = null;
+      await getLinks().then(res => (data = res.linkList));
+      commit(UPDATE_LINKLIST_MUTATION, {
         data
       });
     }

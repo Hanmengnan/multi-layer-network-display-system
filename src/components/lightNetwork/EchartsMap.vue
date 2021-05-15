@@ -600,9 +600,7 @@ export default {
 
     myChart.setOption(option);
     myChart.on("click", params => {
-      // console.log(myChart.convertFromPixel('geo', [params.event.offsetX, params.event.offsetY]));
       if (params.componentSubType === "effectScatter") {
-        // console.log('点击了城市'+params.data.name)
         this.innerStatus = params.data.name;
       } else if (params.componentSubType === "lines") {
         console.log("点击了线");
@@ -612,7 +610,6 @@ export default {
             _this.geoCoordMap[key].toString() ==
             params.data.coords[0].toString()
           ) {
-            console.log(key);
             line = line + key + "-";
           } else if (
             _this.geoCoordMap[key].toString() ==

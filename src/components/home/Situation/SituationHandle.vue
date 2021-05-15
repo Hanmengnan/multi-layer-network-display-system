@@ -1,21 +1,25 @@
 <template>
   <div class="chart-container">
     <situation-chart-container
-      v-for="(tip, key) in tips"
+      v-for="(tip, key) in conditionData"
       :key="key"
       :title="tip.name"
       :themeColor="tip.themeColor"
       :aimConditionNumber="tip.value"
       :clickEvent="showModal"
-      :conditionNumber="tips.reduce((pre, val) => pre + val.value, 0)"
-      :index="markIndex(key, tips.length)"
+      :conditionNumber="conditionData.reduce((pre, val) => pre + val.value, 0)"
+      :index="markIndex(key, conditionData.length)"
     />
-    <div v-for="tip in tips" :key="tip.id">
+    <div v-for="tip in showSwitch" :key="tip.id">
       <modal v-model="tip.isShow">
         <template v-slot:title>
           <span>{{ tip.name }}事件一览</span>
         </template>
-        <List :header="titleList" :body="eventList[0]" is-scroll="scroll" />
+        <List
+          :header="titleList"
+          :body="eventMap[tip.label]"
+          is-scroll="scroll"
+        />
       </modal>
     </div>
   </div>
@@ -26,21 +30,21 @@ import SituationChartContainer from "@/components/home/Situation/SituationChartC
 import Modal from "@/components/base/Modal.vue";
 import List from "@/components/base/List.vue";
 
-const conditionData = [
-  { name: "已处理", value: 330, themeColor: "#1795e9", isShow: false },
-  { name: "处理中", value: 100, themeColor: "#9e175f", isShow: false },
-  { name: "未处理", value: 110, themeColor: "#ca8622", isShow: false }
-];
-
 export default {
   components: {
     SituationChartContainer,
     Modal,
     List
   },
+  props: {
+    eventMap: {
+      type: Object,
+      required: false,
+      default: () => {}
+    }
+  },
   data() {
     return {
-      tips: conditionData,
       titleList: [
         { value: "序号" },
         { value: "事件类型" },
@@ -91,13 +95,39 @@ export default {
         ],
         [],
         []
+      ],
+      showSwitch: [
+        { name: "未处理", isShow: false, label: "unhandled" },
+        { name: "处理中", isShow: false, label: "handling" },
+        { name: "已处理", isShow: false, label: "handled" }
       ]
     };
   },
+  computed: {
+    conditionData: function() {
+      return [
+        {
+          name: "已处理",
+          value: this.eventMap.handled.length,
+          themeColor: "#1795e9"
+        },
+        {
+          name: "处理中",
+          value: this.eventMap.handling.length,
+          themeColor: "#11e0e0"
+        },
+        {
+          name: "未处理",
+          value: this.eventMap.unhandled.length,
+          themeColor: "#e26f0d"
+        }
+      ];
+    }
+  },
   methods: {
     showModal(name) {
-      this.tips.forEach(tip => {
-        if (tip.name === name) tip.isShow = true;
+      this.showSwitch.forEach(condition => {
+        if (condition.name === name) condition.isShow = true;
       });
     },
     markIndex(id, num) {
@@ -116,6 +146,7 @@ export default {
 <style lang="less" scoped>
 @import "~@/assets/css/variable.less";
 @import "~@/assets/css/mixin/base";
+
 .chart-container {
   .mixin-width-height();
   .mixin-flex();

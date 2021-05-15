@@ -98,11 +98,13 @@ export default {
     },
     charData: {
       type: Array,
-      required: true
+      required: false,
+      default: () => []
     },
     charAxisData: {
       type: Array,
-      required: true
+      required: false,
+      default: () => []
     },
     chartName: {
       type: Array,
@@ -192,8 +194,8 @@ export default {
     }
   },
   watch: {
-    charData: function() {
-      this.option.series = this.seriesData();
+    charAxisData: function() {
+      this.option = this.chartOption();
       this.option.xAxis.data = this.charAxisData;
       this.myChart.setOption(this.option);
     }

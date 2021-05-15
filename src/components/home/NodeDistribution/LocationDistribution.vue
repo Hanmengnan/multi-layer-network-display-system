@@ -4,7 +4,7 @@
 
 <script>
 import echarts from "echarts";
-import { scatterData, barData, nodeData } from "@/assets/map/mapConstant";
+import { scatterData } from "@/assets/map/mapConstant";
 import mapJson from "@/assets/map/chinaDataV.json";
 import {
   defaultFontColor,
@@ -19,6 +19,13 @@ let myChart;
 
 export default {
   name: "GeoChart",
+  props: {
+    chartData: {
+      type: Array,
+      require: false,
+      default: () => []
+    }
+  },
   data() {
     return {
       option: {
@@ -62,7 +69,7 @@ export default {
         },
         visualMap: {
           min: 0,
-          max: Math.max(...nodeData.map(item => item.value)),
+          max: Math.max(...this.chartData.map(item => item.value)),
           pieces: [
             { min: 45 }, // 不指定 max，表示 max 为无限大（Infinity）。
             { min: 30, max: 45 },
@@ -102,14 +109,14 @@ export default {
             fontSize: defaultFontSize,
             color: defaultFontColor
           },
-          data: barData(nodeData).map(item => item[1])
+          data: this.chartData.map(item => item.name)
         },
         series: [
           {
             name: "节点数量",
             type: "scatter",
             coordinateSystem: "geo",
-            data: scatterData(nodeData),
+            data: scatterData(this.chartData),
             encode: {
               value: 2
             },
@@ -130,7 +137,7 @@ export default {
             zlevel: 1.5,
             type: "bar",
             symbol: "none",
-            data: barData(nodeData)
+            data: this.chartData.map(item => item.value)
           }
         ]
       }
@@ -141,6 +148,17 @@ export default {
     echarts.registerMap("china", mapJson);
     myChart = echarts.init(chartArea);
     myChart.setOption(this.option);
+  },
+  watch: {
+    chartData: {
+      deep: true,
+      handler: function() {
+        this.option.yAxis.data = this.chartData.map(item => item.name);
+        this.option.series[0].data = scatterData(this.chartData);
+        this.option.series[1].data = this.chartData.map(item => item.value);
+        myChart.setOption(this.option);
+      }
+    }
   }
 };
 </script>

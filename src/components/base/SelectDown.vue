@@ -14,11 +14,11 @@
     >
       <div
         :class="`selector-item ${item === selectVal ? 'selected' : ''}`"
-        v-for="item in selectList"
-        :key="`${item.key}:${item}`"
-        @click="selectVal = item"
+        v-for="(item, index) in selectList"
+        :key="index"
+        @click="selectVal = item.id"
       >
-        <div>{{ item }}</div>
+        <div>{{ item.name }}</div>
       </div>
     </div>
   </div>
@@ -57,7 +57,7 @@ export default {
       this.selectVal = newVal;
     },
     selectVal(newVal) {
-      this.$emit("input", newVal);
+      this.$emit("input", newVal.toString());
     }
   }
 };

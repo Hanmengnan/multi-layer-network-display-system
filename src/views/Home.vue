@@ -43,22 +43,28 @@
           <div class="box-border-1"></div>
           <div class="box-border-2"></div>
           <Legend class="legend-area" title-name="节点类型分布"></Legend>
-          <type-distribution class="content-area"></type-distribution>
+          <type-distribution
+            class="content-area"
+            :chart-data="typeStatistics"
+          ></type-distribution>
         </div>
         <div class="box box-3">
           <div class="box-border-1"></div>
           <div class="box-border-2"></div>
           <Legend class="legend-area" title-name="节点地区分布"></Legend>
-          <location-distribution class="content-area"></location-distribution>
+          <location-distribution
+            class="content-area"
+            :chart-data="areaStatistics"
+          ></location-distribution>
         </div>
       </div>
       <div class="mid-bottom magictime slideDownReturn">
         <div class="list-area">
           <div class="box list-container-1 ">
-            <node-list></node-list>
+            <node-list :node-list="nodeList"></node-list>
           </div>
           <div class="box list-container-2">
-            <message-box :node-list="this.nodeList"></message-box>
+            <message-box :node-list="nodeList"></message-box>
           </div>
         </div>
       </div>
@@ -69,14 +75,17 @@
           <Legend class="legend-area" title-name="性能参数"></Legend>
           <GaugeChart
             class="content-area"
-            :parameter-list="parameterList"
+            :parameter-list="this.netInfo"
           ></GaugeChart>
         </div>
         <div class="box box-5">
           <div class="box-border-1"></div>
           <div class="box-border-2"></div>
           <Legend class="legend-area" title-name="情况处理"></Legend>
-          <situation-handle class="content-area"></situation-handle>
+          <situation-handle
+            :event-map="eventMap"
+            class="content-area"
+          ></situation-handle>
         </div>
         <div class="box box-6">
           <div class="box-border-1"></div>
@@ -84,8 +93,8 @@
           <Legend class="legend-area" title-name="日流量环比增长"></Legend>
           <line-chart
             class="content-area"
-            :char-data="flowChange.chartData"
-            :char-axis-data="flowChange.charAxisData"
+            :char-data="flowInfo.chartData"
+            :char-axis-data="flowInfo.charAxisData"
             :chart-name="flowChange.chartName"
           ></line-chart>
         </div>
@@ -120,8 +129,8 @@ import LineChart from "@/components/chart/LineChart";
 import { createNamespacedHelpers } from "vuex";
 import {
   UPDATE_SYSINFO_ACTION,
-  UPDATE_EVENTLIST_ACTION,
   UPDATE_NODELIST_ACTION,
+  UPDATE_NODESTATISTICS_ACTION,
   UPDATE_NETINFO_ACTION,
   UPDATE_FLWOINFO_ACTION,
   UPDATE_LINKLIST_ACTION
@@ -134,52 +143,6 @@ export default {
   data() {
     return {
       showWeather: true,
-      systemInfoList: [
-        {
-          name: "系统名称",
-          value: "时空网络管理系统"
-        },
-        {
-          name: "系统版本",
-          value: "v2.1"
-        },
-        {
-          name: "系统运行时间",
-          value: "1d2h3m"
-        },
-        {
-          name: "系统代号",
-          value: "code71233"
-        }
-      ],
-      stateInfoList: [
-        {
-          name: "数据库",
-          status: "health"
-        },
-        {
-          name: "网络",
-          status: "health"
-        },
-        {
-          name: "数据服务集群",
-          status: "wrong"
-        }
-      ],
-      parameterList: [
-        {
-          name: "丢包率",
-          value: "12"
-        },
-        {
-          name: "时延",
-          value: "20"
-        },
-        {
-          name: "速率",
-          value: "1000"
-        }
-      ],
       flowChange: {
         chartSetting: {},
         charAxisData: ["Mon", "Tue", "Wed", "Thu", "Fri"],
@@ -205,12 +168,14 @@ export default {
   },
   computed: {
     ...mapState({
-      sysInfo: state => state.sysinfo,
-      eventList: state => state.eventList,
+      sysInfo: state => state.sysInfo,
+      eventMap: state => state.eventMap,
       nodeList: state => state.nodeList,
-      basicInfo: state => state.basicInfo,
+      netInfo: state => state.netInfo,
       flowInfo: state => state.flowInfo,
-      linkList: state => state.linkList
+      linkList: state => state.linkList,
+      typeStatistics: state => state.typeStatistics,
+      areaStatistics: state => state.areaStatistics
     })
   },
   methods: {
@@ -241,16 +206,16 @@ export default {
     },
     ...mapActions({
       getSysInfo: UPDATE_SYSINFO_ACTION,
-      getEventList: UPDATE_EVENTLIST_ACTION,
       getNodeList: UPDATE_NODELIST_ACTION,
       getBasicInfo: UPDATE_NETINFO_ACTION,
       getFlowInfo: UPDATE_FLWOINFO_ACTION,
-      getLinkList: UPDATE_LINKLIST_ACTION
+      getLinkList: UPDATE_LINKLIST_ACTION,
+      getNodeTypeStatistics: UPDATE_NODESTATISTICS_ACTION
     }),
     async initData() {
       this.getSysInfo();
-      this.getEventList();
       this.getNodeList();
+      this.getNodeTypeStatistics();
       this.getBasicInfo();
       this.getFlowInfo();
       this.getLinkList();

@@ -28,6 +28,13 @@ export default {
     SelectDown,
     List
   },
+  props: {
+    nodeList: {
+      type: Array,
+      require: false,
+      default: () => []
+    }
+  },
   data() {
     return {
       header: [
@@ -36,39 +43,14 @@ export default {
         { value: "类型" },
         { value: "误差" }
       ],
-      body: [
-        {
-          code: "0001",
-          value: "北京",
-          type: "最高基准站",
-          error: "0",
-          color: "white"
-        },
-        {
-          code: "0013",
-          value: "上海",
-          type: "超高精度",
-          error: "5ns",
-          color: "white"
-        },
-        {
-          code: "0018",
-          value: "甘肃",
-          type: "超高精度",
-          error: "6ns",
-          color: "white"
-        },
-        {
-          code: "0020",
-          value: "武汉",
-          type: "超高精度",
-          error: "9ns",
-          color: "white"
-        }
-      ],
+      selector: "",
       selectTitle: "下拉选择",
       selectBody: [],
-      source: ["误差0 - 10ns", "误差0 - 5ns"], //temp
+      body: [],
+      source: [
+        { name: "误差0 - 10ns", id: "0-10" },
+        { name: "误差0 - 5ns", id: "0-5" }
+      ],
       range: []
     };
   },
@@ -97,6 +79,20 @@ export default {
           );
         });
       }
+    },
+    nodeList: {
+      deep: true,
+      handler: function() {
+        this.body = this.nodeList.map(val => {
+          return {
+            code: val.id,
+            value: val.name,
+            type: val.type,
+            error: val.error + "ns",
+            color: "white"
+          };
+        });
+      }
     }
   },
   methods: {
@@ -107,11 +103,18 @@ export default {
       let item = "";
       while ((item = parttern.exec(data)) != null)
         this.range.push(Number(item[0]));
-      console.log(this.range);
     }
   },
   mounted() {
-    this.selectBody = this.body.map(val => val);
+    this.selectBody = this.nodeList.map(val => {
+      return {
+        code: val.id,
+        value: val.name,
+        type: val.type,
+        error: val.error + "ns",
+        color: "white"
+      };
+    });
   }
 };
 </script>
@@ -123,15 +126,18 @@ export default {
   height: 90%;
   color: @defaultFontColor;
   font-size: @defaultFontSize;
+
   .precision {
     position: relative;
     display: flex;
     height: 5%;
-    padding-bottom: 10%;
+    padding-bottom: 8%;
     padding-top: 2%;
+
     .title {
       flex: 2;
     }
+
     .select {
       //background-color: @themeColorMiddle;
       position: relative;
@@ -140,13 +146,16 @@ export default {
       justify-content: center;
       z-index: 1;
     }
+
     .select:hover {
       cursor: pointer;
     }
   }
+
   .list-body {
     width: 100%;
-    height: auto;
+    height: 70%;
+    overflow: scroll;
   }
 }
 </style>

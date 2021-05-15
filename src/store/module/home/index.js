@@ -2,6 +2,7 @@ import {
   UPDATE_SYSINFO_MUTATION,
   UPDATE_EVENTLIST_MUTATION,
   UPDATE_NODELIST_MUTATION,
+  UPDATE_NODESTATISTICS_MUTATION,
   UPDATE_LINKLIST_MUTATION,
   UPDATE_NETINFO_MUTATION,
   UPDATE_FLWOINFO_MUTATION,
@@ -9,6 +10,7 @@ import {
   UPDATE_SYSINFO_ACTION,
   UPDATE_EVENTLIST_ACTION,
   UPDATE_NODELIST_ACTION,
+  UPDATE_NODESTATISTICS_ACTION,
   UPDATE_NETINFO_ACTION,
   UPDATE_FLWOINFO_ACTION,
   UPDATE_LINKLIST_ACTION
@@ -20,22 +22,29 @@ import {
   getNetInfo,
   getFlowInfo,
   getLinks,
-  getNodes
+  getNodes,
+  getNodeStatistics
 } from "../../../api";
 
 export default {
   namespaced: true,
   state: () => ({
-    sysinfo: [],
-    eventList: [],
+    sysInfo: [],
+    eventMap: {
+      handled: [],
+      handling: [],
+      unhandled: []
+    },
     nodeList: [],
     linkList: [],
-    basicInfo: {},
-    flowInfo: []
+    netInfo: [],
+    flowInfo: {},
+    typeStatistics: [],
+    areaStatistics: []
   }),
   mutations: {
     [UPDATE_SYSINFO_MUTATION](state, { data }) {
-      state.sysinfo = {
+      state.sysInfo = {
         infoList: [
           {
             name: "系统名称",
@@ -81,30 +90,60 @@ export default {
       };
     },
     [UPDATE_EVENTLIST_MUTATION](state, { data }) {
-      state.eventList = [...data];
+      state.eventMap = data;
     },
     [UPDATE_NODELIST_MUTATION](state, { data }) {
       state.nodeList = [...data];
+    },
+    [UPDATE_NODESTATISTICS_MUTATION](state, { data }) {
+      let tmp = [];
+      state.areaStatistics = [];
+      for (let item in data.typeStatistics) {
+        tmp.push({
+          name: item,
+          value: data.typeStatistics[item]
+        });
+      }
+      state.typeStatistics = tmp;
+      tmp = [];
+      for (let item in data.areaStatistics) {
+        tmp.push({
+          name: item,
+          value: data.areaStatistics[item]
+        });
+      }
+      state.areaStatistics = tmp;
     },
     [UPDATE_LINKLIST_MUTATION](state, { data }) {
       state.linkList = [...data];
     },
     [UPDATE_NETINFO_MUTATION](state, { data }) {
-      state.basicInfo = data;
+      state.netInfo = [
+        {
+          name: "利用率",
+          value: data.utilization
+        },
+        {
+          name: "相应时间",
+          value: data.responseTime
+        },
+        {
+          name: "连通性",
+          value: data.connectivity
+        }
+      ];
     },
     [UPDATE_FLWOINFO_MUTATION](state, { data }) {
-      state.flowInfo = data.day
-        .map(item => {
-          return {
-            date: new Date(Date.parse(item.time))
-              .toLocaleDateString("zh-CN", {
-                dateStyle: "short"
-              })
-              .substr(5),
-            value: item.dailyGrowth
-          };
-        })
-        .reverse();
+      state.flowInfo = {
+        charAxisData: data.day.map(item =>
+          new Date(Date.parse(item.time))
+            .toLocaleDateString("zh-CN", {
+              dateStyle: "short"
+            })
+            .substr(5)
+        ),
+        chartData: [data.day.map(item => item.dailyGrowth).reverse()]
+      };
     }
   },
   actions: {
@@ -131,6 +170,12 @@ export default {
       let data = null;
       await getNodes().then(res => (data = res.nodeList));
       commit(UPDATE_NODELIST_MUTATION, { data });
+    },
+    // eslint-disable-next-line no-unused-vars
+    async [UPDATE_NODESTATISTICS_ACTION]({ dispatch, commit }, payload) {
+      let data = null;
+      await getNodeStatistics().then(res => (data = res));
+      commit(UPDATE_NODESTATISTICS_MUTATION, { data });
     },
     // eslint-disable-next-line no-unused-vars
     async [UPDATE_LINKLIST_ACTION]({ dispatch, commit }, payload) {

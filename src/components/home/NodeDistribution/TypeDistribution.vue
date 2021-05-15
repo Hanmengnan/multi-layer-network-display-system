@@ -1,6 +1,6 @@
 <template>
   <pie-progress-chart
-    :chart-data="typeData"
+    :chart-data="chartData"
     :chart-name="chartName"
   ></pie-progress-chart>
 </template>
@@ -10,14 +10,16 @@ import PieProgressChart from "@/components/home/NodeDistribution/PieProgressChar
 
 export default {
   name: "TypeDistribution",
+  props: {
+    chartData: {
+      type: Array,
+      require: false,
+      default: () => []
+    }
+  },
   data() {
     return {
-      chartName: "类型分布",
-      typeData: [
-        { name: "光节点", value: 30 },
-        { name: "电中继站", value: 20 },
-        { name: "业务上下站", value: 40 }
-      ]
+      chartName: "类型分布"
     };
   },
   components: {

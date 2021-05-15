@@ -14,8 +14,6 @@ import {
   defaultFontWeight
 } from "@/assets/js/variable.js";
 
-let chartArea;
-
 export default {
   name: "process-chart",
   props: {
@@ -55,6 +53,7 @@ export default {
   },
   data() {
     return {
+      chart: null,
       options: {
         clockwise: true,
         title: [
@@ -131,12 +130,12 @@ export default {
       );
       this.options.series[0].data[1].value =
         100 - this.percent(this.aimConditionNumber, this.conditionNumber);
-      chartArea.setOption(this.options);
+      this.chart.setOption(this.options);
     }
   },
   mounted() {
-    chartArea = echarts.init(this.$refs.chartContainer);
-    chartArea.setOption(this.options);
+    this.chart = echarts.init(this.$refs.chartContainer);
+    this.chart.setOption(this.options);
   },
   watch: {
     aimConditionNumber() {
@@ -152,6 +151,7 @@ export default {
 <style lang="less" scoped>
 @import "~@/assets/css/variable.less";
 @import "~@/assets/css/mixin/base";
+
 .chartContainer {
   .mixin-width-height();
 }

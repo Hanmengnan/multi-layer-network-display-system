@@ -10,6 +10,8 @@ Vue.prototype.widgets = widgets;
 
 Vue.config.productionTip = false;
 
+store.dispatch("webSocketHandle");
+
 new Vue({
   router,
   store,

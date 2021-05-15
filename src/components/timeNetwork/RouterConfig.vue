@@ -5,27 +5,34 @@
         <SelectDown
           :title="start === '' ? '起点选择' : `起点: ${start}`"
           v-model="start"
-          :selectList="['北京', '天津', '天津']"
+          :selectList="nodeList"
         />
       </div>
       <div class="end">
         <SelectDown
           :title="end === '' ? '终点选择' : `终点: ${end}`"
           v-model="end"
-          :selectList="['杭州']"
+          :selectList="nodeList"
           v-show="start !== ''"
         />
       </div>
       <div class="router">
+        <div
+          style="display: inline"
+          v-show="show"
+          @click="queryFunc({ start, end })"
+        >
+          路径
+        </div>
         <SelectDown
-          :title="pathId === '' ? '路径选择' : pathId"
+          :title="pathId"
           v-model="pathId"
-          :selectList="['路径1', '路径2']"
-          v-show="end !== ''"
+          :selectList="routes"
+          v-show="!show"
         />
       </div>
     </div>
-    <div id="topography"></div>
+    <div class="" id="topography"></div>
   </div>
 </template>
 
@@ -38,106 +45,89 @@ export default {
   components: {
     SelectDown
   },
+  props: {
+    nodeList: {
+      type: Array,
+      required: true
+    },
+    stationList: {
+      type: Array,
+      require: false,
+      default: () => []
+    },
+    routeList: {
+      type: Array,
+      require: false,
+      default: () => []
+    },
+    queryFunc: {
+      type: Function,
+      required: false,
+      default: () => function() {}
+    }
+  },
   data() {
     return {
-      start: "北京",
-      end: "杭州",
-      pathId: "路径1"
+      show: true,
+      start: "未选择",
+      end: "未选择",
+      pathId: "未选择",
+      station: [],
+      routes: [],
+      option: {}
     };
   },
+  computed: {},
   methods: {
+    routeOption() {
+      let res = [];
+      this.routeList.forEach((route, index) => {
+        res = res.concat(
+          route.map(item => {
+            return {
+              source: item.source,
+              target: item.target,
+              lineStyle: {
+                color:
+                  this.pathId === (index + 1).toString() ? "#005f00" : "grey",
+                width: 4
+              }
+            };
+          })
+        );
+      });
+      return res;
+    },
     draw() {
-      const myChart = echarts.init(document.getElementById("topography"));
-      const option = {
+      this.option = {
         tooltip: {},
         animationDurationUpdate: 1500,
         animationEasingUpdate: "quinticInOut",
         series: [
           {
             type: "graph",
-            layout: "none",
-            width: "60%",
-            height: "65%",
-            symbolSize: 50,
+            layout: "force",
+            force: {
+              edgeLength: 70,
+              layoutAnimation: true,
+              gravity: 0.1,
+              repulsion: 200
+            },
+            symbolSize: 30,
+            draggable: true,
             roam: false,
             label: {
               show: true
             },
             edgeSymbol: ["circle"],
             edgeSymbolSize: [4, 10],
-            data: [
-              {
-                name: "武汉",
-                x: 300,
-                y: 300
-              },
-              {
-                name: "上海",
-                x: 800,
-                y: 300
-              },
-              {
-                name: "北京",
-                x: 550,
-                y: 100
-              },
-              {
-                name: "南京",
-                x: 400,
-                y: 500
-              },
-              {
-                name: "杭州",
-                x: 650,
-                y: 530
-              }
-            ],
-            links: [
-              {
-                source: "北京",
-                target: "武汉",
-                label: {
-                  show: false
-                },
-                lineStyle: {
-                  curveness: 0,
-                  width: 4,
-                  color: this.pathId === "路径2" ? "#005f00" : "grey"
-                }
-              },
-              {
-                source: "武汉",
-                target: "南京",
-                lineStyle: {
-                  color: this.pathId === "路径2" ? "#005f00" : "grey",
-                  width: 4
-                }
-              },
-              {
-                source: "杭州",
-                target: "南京",
-                lineStyle: {
-                  color: this.pathId === "路径2" ? "#005f00" : "grey",
-                  width: 4
-                }
-              },
-              {
-                source: "杭州",
-                target: "上海",
-                lineStyle: {
-                  color: this.pathId === "路径1" ? "#005f00" : "grey",
-                  width: 4
-                }
-              },
-              {
-                source: "北京",
-                target: "上海",
-                lineStyle: {
-                  color: this.pathId === "路径1" ? "#005f00" : "grey",
-                  width: 4
-                }
-              }
-            ],
+            edgeLabel: {
+              fontSize: 20
+            },
+            data: this.stationList.map(item => {
+              return { name: item };
+            }),
+            links: this.routeOption(),
             lineStyle: {
               opacity: 1,
               width: 2,
@@ -146,15 +136,37 @@ export default {
           }
         ]
       };
-      myChart.setOption(option);
+      const myChart = echarts.init(document.getElementById("topography"));
+      myChart.setOption(this.option);
     }
   },
   mounted() {
     this.draw();
   },
   watch: {
+    start() {
+      this.show = true;
+    },
+    end() {
+      this.show = true;
+    },
     pathId() {
       this.draw();
+    },
+    routeList: {
+      deep: true,
+      handler: function() {
+        this.routes = this.routeList.map((item, index) => {
+          return { name: "路径" + (index + 1), id: index + 1 };
+        });
+        this.show = false;
+      }
+    },
+    stationList: {
+      deep: true,
+      handler: function() {
+        this.draw();
+      }
     }
   }
 };
@@ -171,25 +183,27 @@ export default {
   .selector {
     .mixin-flex(@justify-content: space-around);
     .mixin-width-height(@height: 10%);
-    z-index: 5;
+
     .start {
       .mixin-width-height(@height: auto);
       .defaultFontStyle();
       position: relative;
     }
+
     .end {
       .mixin-width-height(@height: auto);
       .defaultFontStyle();
       position: relative;
     }
+
     .router {
       .mixin-width-height(@height: auto);
       .defaultFontStyle();
       position: relative;
     }
   }
+
   #topography {
-    z-index: 2;
     .mixin-width-height(@height: 90%);
   }
 }

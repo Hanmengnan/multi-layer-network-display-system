@@ -56,6 +56,11 @@ export default {
       required: false,
       default: "category"
     },
+    xAxisLabelFontSize: {
+      type: Number,
+      required: false,
+      default: 12
+    },
     xAxisLabelColor: {
       type: String,
       required: false,
@@ -164,7 +169,9 @@ export default {
         type: this.xAxisType,
 
         axisLabel: {
-          color: this.xAxisLabelColor
+          interval: 0,
+          color: this.xAxisLabelColor,
+          fontSize: this.xAxisLabelFontSize
         },
         axisLine: {
           show: false
@@ -240,15 +247,15 @@ export default {
     }
   },
   watch: {
-    chartData: {
+    chartAxisData: {
       deep: true,
       handler: function() {
+        this.options = this.chartOption();
         if (this.direction) {
           this.options.yAxis.data = this.chartAxisData;
         } else {
           this.options.xAxis.data = this.chartAxisData;
         }
-        this.options.series = this.seriesData();
         chart.setOption(this.options);
       }
     }

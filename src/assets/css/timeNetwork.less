@@ -19,7 +19,7 @@
 
       .box-title {
         background: @themeColor1;
-        height: 10%;
+        height: 3vh;
 
         .title {
           color: @defaultFontColor;
@@ -39,15 +39,16 @@
     }
 
     .box-1 {
-      flex: 3;
+      .mixin-width-height(@height: 30%);
     }
 
     .box-2 {
-      flex: 0 0 30%;
+      .mixin-width-height(@height: 30%);
+      overflow: hidden;
     }
 
     .box-3 {
-      flex: 4;
+      .mixin-width-height(@height: 40%);
     }
   }
 
@@ -90,8 +91,8 @@
           flex: 5;
           font-size: @defaultFontSize*1.2;
         }
-        .selected{
-          border-bottom: 3px @themeColor4 solid ;
+        .selected {
+          border-bottom: 3px @themeColor4 solid;
         }
       }
 

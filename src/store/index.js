@@ -7,6 +7,7 @@ import data from "./module/data";
 import time from "./module/time";
 import { websocket } from "@/api";
 import {
+  UPDATE_EVENTLIST_MUTATION,
   UPDATE_NETINFO_MUTATION,
   UPDATE_NODELIST_MUTATION
 } from "@/store/module/home/constant";
@@ -35,6 +36,8 @@ export default new Vuex.Store({
           case "nodeList":
             commit("home/" + UPDATE_NODELIST_MUTATION, { data });
             break;
+          case "situation":
+            commit("home/" + UPDATE_EVENTLIST_MUTATION, { data });
         }
       };
     }

@@ -5,7 +5,7 @@
         <component-box title-name="光网络节点设备状态">
           <template slot="body">
             <node-status
-              :node-city="nodeCity"
+              :node-city="selector"
               v-if="viewStatus === 'node'"
             ></node-status>
             <link-status
@@ -45,19 +45,19 @@
         </div>
       </div>
       <div class="sub-header">
-        <div @click="selector = 'node'">
-          <select-down
-            v-model="selector"
-            title="节点查询"
-            :select-list="cities"
-          ></select-down>
-        </div>
-        <div @click="selector = '-'">
-          <select-down
-            v-model="selector"
+        <div class="info-card info-card-even">
+          <SelectDown
             title="链路查询"
-            :select-list="links"
-          ></select-down>
+            v-model="selector"
+            :selectList="linkList"
+          />
+        </div>
+        <div class="info-card info-card-odd">
+          <SelectDown
+            title="节点查询"
+            v-model="selector"
+            :selectList="nodeList"
+          />
         </div>
         <div>
           <div></div>
@@ -82,7 +82,7 @@
             @dblclick="clickChart('2')"
             style="transform: translate(0,0) scale(1)"
           >
-            <Map :status="selector" />
+            <Map :status="selector" :nodes="nodeList" :links="linkList" />
           </div>
         </div>
       </div>
@@ -104,8 +104,22 @@ import SelectDown from "@/components/base/SelectDown";
 import EchartsMap from "@/components/lightNetwork/EchartsMap";
 import Map from "@/components/lightNetwork/Map";
 
-import { CITYMAP, LINKMAP } from "@/util";
+import {
+  UPDATE_NETINFO_ACTION,
+  UPDATE_NODEINFO_ACTION,
+  UPDATE_LINKINFO_ACTION,
+  UPDATE_BANDINFO_ACTION,
+  UPDATE_NODEBAND_ACTION,
+  UPDATE_NODELIST_ACTION,
+  UPDATE_LINKLIST_ACTION
+} from "../store/module/light/constant";
 
+import { CITYMAP } from "@/util";
+import { createNamespacedHelpers } from "vuex";
+
+const { mapState, mapActions } = createNamespacedHelpers("light");
+
+let timer;
 export default {
   name: "LightNetwork",
   components: {
@@ -125,53 +139,51 @@ export default {
   data() {
     return {
       selector: "",
-      linkInfo: {
-        startName: "北京",
-        startType: "业务上下站",
-        endName: "天津",
-        endType: "业务上下站",
-        linkType: "OTN光中继站",
-        linkNum: 8,
-        linkStatus: "正常"
-      },
-      nodeCity: "北京",
-      nodeInfo: {
-        name: "北京",
-        type: "上下业务站",
-        level: "1",
-        timer: "13:57:48.145",
-        deep: 4,
-        color: "xyz-a",
-        router: "NetEngine5000E",
-        owner: "张三",
-        tel: "010-1234567"
-      }
+      items: [],
+      coordinates: [116.155512, 39.905093],
+      citys: Object.values(CITYMAP)
+      // links: LINKMAP.map(link => {
+      //   return `${CITYMAP[link[0]]}-${CITYMAP[link[1]]}`
+      // })
     };
   },
   computed: {
     viewStatus() {
+      if (this.selector === "乌鲁木齐") return "net";
+      if (this.selector === "哈密-乌鲁木齐") return "net";
       if (this.selector === "") return "net";
       if (this.selector.includes("-")) return "link";
       return "node";
     },
-    cities: function() {
-      return Object.values(CITYMAP);
-    },
-    links: function() {
-      return LINKMAP.map(link => {
-        return `${CITYMAP[link[0]]}-${CITYMAP[link[1]]}`;
-      });
-    }
+    ...mapState({
+      netInfo: state => state.netInfo,
+      nodeInfo: state => state.nodeInfo,
+      linkInfo: state => state.linkInfo,
+      bandInfo: state => state.bandInfo,
+      nodeband: state => state.nodeband,
+      linkList: state => state.linkList,
+      nodeList: state => state.nodeList
+    })
+  },
+  mounted() {
+    this.init();
+    this.getNetInfo();
+    this.getBandInfo("");
+    this.getNodes();
+    this.getLinks();
+    // timer = setInterval(() => {
+    //   this.getBandInfo("");
+    // }, 3000);
   },
   methods: {
     init() {
-      this.items = document.querySelectorAll(".item");
+      this.items = document.querySelectorAll(".mapArea .item");
       for (let i = 0; i < this.items.length; i++) {
         this.items[i].dataset.order = i + 1;
       }
     },
     clickChart(clickIndex) {
-      let activeItem = document.querySelector(".active");
+      let activeItem = document.querySelector(".mapArea .active");
       let activeIndex = activeItem.dataset.order;
       let clickItem = this.items[clickIndex - 1];
       if (activeIndex === clickIndex) {
@@ -188,10 +200,44 @@ export default {
       el2.style.transform = transform1;
       el1.style.zIndex = 1;
       el2.style.zIndex = 2;
-    }
+    },
+    ...mapActions({
+      getNetInfo: UPDATE_NETINFO_ACTION,
+      getNodeInfo: UPDATE_NODEINFO_ACTION,
+      getLinkInfo: UPDATE_LINKINFO_ACTION,
+      getBandInfo: UPDATE_BANDINFO_ACTION,
+      getNodeBand: UPDATE_NODEBAND_ACTION,
+      getNodes: UPDATE_NODELIST_ACTION,
+      getLinks: UPDATE_LINKLIST_ACTION
+    })
   },
-  mounted() {
-    this.init();
+  watch: {
+    selector: {
+      deep: true,
+      handler(newval) {
+        if (newval.includes("-")) {
+          timer && clearInterval(timer);
+          this.getLinkInfo(newval);
+          this.getBandInfo(newval);
+          timer = setInterval(() => {
+            this.getBandInfo(newval);
+          }, 3000);
+        } else if (newval === "") {
+          timer && clearInterval(timer);
+          this.getBandInfo(newval);
+          timer = setInterval(() => {
+            this.getBandInfo(newval);
+          }, 3000);
+        } else {
+          timer && clearInterval(timer);
+          this.getNodeInfo(newval);
+          this.getNodeBand(newval);
+          timer = setInterval(() => {
+            this.getNodeBand(newval);
+          }, 3000);
+        }
+      }
+    }
   }
 };
 </script>

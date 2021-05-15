@@ -2,7 +2,6 @@ import axios from "axios";
 import {
   sysInfoMockData,
   eventListMockData,
-  nodeListMockData,
   basicInfoMockData,
   FlowInfoMockData
 } from "./mock/home";
@@ -22,11 +21,7 @@ import {
   dataNetworkLinkInfoMockData
 } from "./mock/data";
 
-import {
-  timeColumnMockData,
-  timeListMockData,
-  timeStationMockData
-} from "./mock/time";
+import { timeColumnMockData, timeStationMockData } from "./mock/time";
 
 import { NodesMockData, LinksMockData } from "./mock/nodeAndLink";
 
@@ -73,16 +68,10 @@ export const getEventList = () => {
     : instance.post(`${BASE_URL}/api/eventList`);
 };
 
-export const getNodeList = operate => {
+export const getNodeStatistics = () => {
   return devMode
-    ? nodeListMockData()
-    : // eslint-disable-next-line no-unused-vars
-      new Promise((resolve, reject) => {
-        let websocket = new WebSocket("ws://localhost:8070/nodeList");
-        websocket.onmessage = function(res) {
-          operate(JSON.parse(res.data));
-        };
-      });
+    ? eventListMockData()
+    : instance.get(`${BASE_URL}/api/nodeStatistics`);
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -100,7 +89,9 @@ export const getFlowInfo = () => {
 
 // light
 export const getLightNetInfo = () => {
-  return devMode ? netInfoMockData() : instance.post(`${BASE_URL}/api/netInfo`);
+  return devMode
+    ? netInfoMockData()
+    : instance.post(`${BASE_URL}/api/lightNetInfo`);
 };
 
 export const getNodeInfo = ({ name }) => {
@@ -123,7 +114,7 @@ export const getLinkInfo = ({ name }) => {
 export const getBandInfo = ({ target }) => {
   return devMode
     ? bandInfoMockData()
-    : instance.post(`${BASE_URL}/api/bandInfo`, {
+    : instance.post(`${BASE_URL}/api/lightNetBandSet`, {
         target
       });
 };
@@ -131,7 +122,7 @@ export const getBandInfo = ({ target }) => {
 export const getNodeBand = ({ node }) => {
   return devMode
     ? nodeBandMockData()
-    : instance.post(`${BASE_URL}/api/nodeBand`, {
+    : instance.post(`${BASE_URL}/api/lightNetBandUse`, {
         node
       });
 };
@@ -165,20 +156,14 @@ export const getDataNetworkLinkInfo = ({ linkId }) => {
       });
 };
 // time
-export const getTimeColumn = () => {
+export const getTimeNetNodeStatistic = () => {
   return devMode
     ? timeColumnMockData()
-    : instance.post(`${BASE_URL}/api/timeComumn`);
+    : instance.get(`${BASE_URL}/api/timeNetNodeStatistics`);
 };
 
-export const getTimeList = () => {
-  return devMode
-    ? timeListMockData()
-    : instance.post(`${BASE_URL}/api/timeList`);
-};
-
-export const getTimeStation = () => {
+export const getTimeStation = (start, end) => {
   return devMode
     ? timeStationMockData()
-    : instance.post(`${BASE_URL}/api/timeStation`);
+    : instance.post(`${BASE_URL}/api/timeNetRoute`, { start, end });
 };

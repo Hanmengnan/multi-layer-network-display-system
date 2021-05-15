@@ -25,9 +25,7 @@ export default {
       options: {
         color: themeColors,
         legend: {
-          data: this.chartData.map(val => {
-            return val.name;
-          }),
+          data: this.getDataTitle(),
           show: true,
           left: "5%",
           textStyle: {
@@ -45,9 +43,7 @@ export default {
         },
         yAxis: {
           type: "category",
-          data: this.chartData.map(val => {
-            return val.name;
-          }),
+          data: this.getDataTitle(),
           inverse: true,
           axisLine: {
             show: false
@@ -121,6 +117,13 @@ export default {
       }
     };
   },
+  methods: {
+    getDataTitle: function() {
+      return this.chartData.map(item => {
+        return item.name;
+      });
+    }
+  },
   mounted() {
     const chartArea = this.$refs.chartContainer;
     mychart = echarts.init(chartArea);
@@ -129,7 +132,11 @@ export default {
   watch: {
     chartData: {
       handler(newVal) {
+        this.options.legend.data = this.getDataTitle();
+        this.options.yAxis.data = this.getDataTitle();
+
         this.options.series[0].data = newVal;
+        this.options.series[1].data = newVal;
         mychart.setOption(this.options);
       },
       deep: true

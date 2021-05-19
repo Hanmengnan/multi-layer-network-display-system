@@ -1,13 +1,14 @@
 <template>
   <div class="main-area">
     <div class="card-area">
-      <div class="card" v-for="card in cards" :key="card.name">
-        <div class="title">{{ card.name }}</div>
-        <div :class="`iconfont ${card.className}`">{{ card.iconCode }}</div>
+      <div class="card" v-for="type in nodeStatistics" :key="type.name">
+        <div class="title">{{ type.name }}</div>
+        <div :class="`iconfont ${type.className}`">{{ type.iconCode }}</div>
         <div class="text">
-          <span class="value">{{ card.value }}</span>
-          <span class="status">{{ card.status }}</span>
-          <span class="bfb">{{ card.baifenbi }}</span>
+          <span class="value">{{ type.value }}</span>
+          <span class="status" v-if="type.name !== '故障节点'">状态正常</span>
+          <span class="status" v-if="type.name === '故障节点'">节点比例</span>
+          <span class="bfb">{{ type.percent }}</span>
         </div>
       </div>
     </div>
@@ -17,6 +18,13 @@
 <script>
 export default {
   name: "lightNetwork-NetStatus",
+  props: {
+    nodeStatistics: {
+      type: Array,
+      required: false,
+      default: () => []
+    }
+  },
   data() {
     return {
       cards: [
@@ -61,6 +69,7 @@ export default {
 <style lang="less" scoped>
 @import "~@/assets/css/variable.less";
 @import "~@/assets/css/mixin/base";
+
 .main-area {
   .mixin-flex(@flex-direction: column, @justify-content: center);
   .mixin-width-height();

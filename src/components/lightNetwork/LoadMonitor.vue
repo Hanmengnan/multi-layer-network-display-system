@@ -1,7 +1,7 @@
 <template>
   <div class="load-monitor">
     <div class="lines">
-      <div v-for="line in showList" :key="line.name" class="line">
+      <div v-for="line in overload" :key="line.name" class="line">
         <LineProcess
           :title="line.name"
           :value="line.value"
@@ -23,11 +23,19 @@
 <script>
 import LineProcess from "@/components/base/LineProcess.vue";
 import { themeColor5, themeColor3, themeColor10 } from "@/assets/js/variable";
+
 let timer = "";
 export default {
   name: "load-monitor",
   components: {
     LineProcess
+  },
+  props: {
+    overload: {
+      type: Array,
+      require: false,
+      default: () => []
+    }
   },
   data() {
     return {
@@ -84,13 +92,16 @@ export default {
 
 <style lang="less" scoped>
 @import "~@/assets/css/mixin/base";
+
 .load-monitor {
   .mixin-width-height();
+
   .lines {
     display: flex;
     height: 100%;
     flex-direction: column;
     justify-content: space-between;
+
     .line {
       margin: 10px 0;
     }

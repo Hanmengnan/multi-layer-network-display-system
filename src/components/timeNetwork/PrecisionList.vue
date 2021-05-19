@@ -48,8 +48,9 @@ export default {
       selectBody: [],
       body: [],
       source: [
-        { name: "误差0 - 10ns", id: "0-10" },
-        { name: "误差0 - 5ns", id: "0-5" }
+        { name: "误差0 - 10ns", id: "误差0 - 10ns" },
+        { name: "误差0 - 5ns", id: "误差0 - 5ns" },
+        { name: "全选", id: "全选" }
       ],
       range: []
     };
@@ -70,8 +71,9 @@ export default {
               .every((el, idx) => {
                 let parttern = /\d+/g;
                 let item = parttern.exec(val[el]);
+                console.log(this.range);
                 return (
-                  this.range === [] ||
+                  this.range.length === 0 ||
                   (Number(item) >= this.range[0] &&
                     Number(item) <= this.range[1])
                 );
@@ -101,8 +103,11 @@ export default {
       let parttern = /\d+/g;
       this.range = [];
       let item = "";
-      while ((item = parttern.exec(data)) != null)
+      while ((item = parttern.exec(data)) != null) {
+        console.log(item);
         this.range.push(Number(item[0]));
+      }
+      console.log(this.range);
     }
   },
   mounted() {

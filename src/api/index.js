@@ -10,16 +10,10 @@ import {
   netInfoMockData,
   nodeInfoMockData,
   linkInfoMockData,
-  bandInfoMockData,
-  nodeBandMockData
+  bandInfoMockData
 } from "./mock/light";
 
-import {
-  dataNetInfoMockData,
-  dataNetFlowMockData,
-  dataNetworkNodeInfoMockData,
-  dataNetworkLinkInfoMockData
-} from "./mock/data";
+import { dataNetInfoMockData, dataNetFlowMockData } from "./mock/data";
 
 import { timeColumnMockData, timeStationMockData } from "./mock/time";
 
@@ -65,7 +59,7 @@ export const getSysInfo = () => {
 export const getEventList = () => {
   return devMode
     ? eventListMockData()
-    : instance.post(`${BASE_URL}/api/eventList`);
+    : instance.get(`${BASE_URL}/api/eventList`);
 };
 
 export const getNodeStatistics = () => {
@@ -88,26 +82,25 @@ export const getFlowInfo = () => {
 };
 
 // light
-export const getLightNetInfo = () => {
+export const getLightNetNodeStatistics = () => {
   return devMode
     ? netInfoMockData()
-    : instance.post(`${BASE_URL}/api/lightNetInfo`);
+    : instance.get(`${BASE_URL}/api/lightNetNodeStatistics`);
 };
 
-export const getNodeInfo = ({ name }) => {
+export const getNodeInfo = ({ nodeId }) => {
   return devMode
     ? nodeInfoMockData()
-    : instance.get(`${BASE_URL}/api/nodeInfo`, {
-        name
+    : instance.post(`${BASE_URL}/api/lightNetNodeInfo`, {
+        nodeId
       });
 };
 
-export const getLinkInfo = ({ name }) => {
+export const getLinkInfo = linkId => {
   return devMode
     ? linkInfoMockData()
-    : instance.post(`${BASE_URL}/api/linkInfo`, {
-        start: name.splite("-")[0],
-        end: name.splite("-")[1]
+    : instance.post(`${BASE_URL}/api/lightNetLinkInfo`, {
+        linkId
       });
 };
 
@@ -119,12 +112,10 @@ export const getBandInfo = ({ target }) => {
       });
 };
 
-export const getNodeBand = ({ node }) => {
-  return devMode
-    ? nodeBandMockData()
-    : instance.post(`${BASE_URL}/api/lightNetBandUse`, {
-        node
-      });
+export const getNodeBand = ({ nodeId }) => {
+  websocket.send(
+    JSON.stringify({ dataType: "lightNetNodeOverload", data: nodeId })
+  );
 };
 
 // data
@@ -141,19 +132,21 @@ export const getDataNetWorkFlowData = () => {
 };
 
 export const getDataNetworkNodeInfo = ({ nodeId }) => {
-  return devMode
-    ? dataNetworkNodeInfoMockData()
-    : instance.post(`${BASE_URL}/api/dataNetNodeInfo`, {
-        nodeId
-      });
+  websocket.send(
+    JSON.stringify({
+      dataType: "dataNetNodeInfo",
+      data: nodeId
+    })
+  );
 };
 
 export const getDataNetworkLinkInfo = ({ linkId }) => {
-  return devMode
-    ? dataNetworkLinkInfoMockData()
-    : instance.post(`${BASE_URL}/api/dataNetLinkInfo`, {
-        linkId
-      });
+  websocket.send(
+    JSON.stringify({
+      dataType: "daraNetLinkInfo",
+      data: linkId
+    })
+  );
 };
 // time
 export const getTimeNetNodeStatistic = () => {

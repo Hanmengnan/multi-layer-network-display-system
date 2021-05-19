@@ -224,6 +224,12 @@ export default {
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
   },
   methods: {
+    lineCenter: function(linkId) {
+      let link = this.links.find(item => item.id === linkId);
+      let node1 = this.nodes.find(item => item.id === link.node1Id).location;
+      let node2 = this.nodes.find(item => item.id === link.node2Id).location;
+      return [(node1[0] + node2[0]) / 2, (node1[1] + node2[1]) / 2];
+    },
     computeCirclularFlight() {
       for (const p of this.nodes) {
         let position = this.Cesium.Cartesian3.fromDegrees(
@@ -367,8 +373,8 @@ export default {
       handler(newVal) {
         // const Cartesian3 = this.Cesium.Cartesian3;
         if (newVal === "") {
-          this.changePointVis(true);
-          this.changeDetailStatus(false);
+          // this.changePointVis(true);
+          // this.changeDetailStatus(false);
           // this.changeLineStatus(true);
           this.viewer.camera.flyTo({
             // Cesium的坐标是以地心为原点，一向指向南美洲，一向指向亚洲，一向指向北极州
@@ -387,14 +393,13 @@ export default {
             }
           });
         } else if (newVal.includes("-")) {
-          this.changeDetailStatus(true);
-          this.changeLineStatus(false);
-          this.changePointVis(false);
+          // this.changeDetailStatus(true);
+          // this.changeLineStatus(false);
+          // this.changePointVis(false);
+
           this.viewer.camera.flyTo({
             destination: this.Cesium.Cartesian3.fromDegrees(
-              116.911354,
-              38.87,
-              40000
+              ...[...this.lineCenter(newVal), 40000]
             ),
             orientation: {
               heading: 0.015150003699918813,

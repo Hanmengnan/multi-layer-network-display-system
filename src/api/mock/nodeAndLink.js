@@ -302,6 +302,13 @@ export const getPointsLocation = id => {
   });
   return res;
 };
+export const getLinkLocation = id => {
+  let res = -1;
+  nodes.forEach(el => {
+    if (el.id === id) res = el.location;
+  });
+  return res;
+};
 
 export const NodesMockData = () => {
   return new Promise(resolve => {

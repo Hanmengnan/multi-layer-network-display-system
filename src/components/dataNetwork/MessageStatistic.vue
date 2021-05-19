@@ -3,8 +3,8 @@
     <div class="chartArea">
       <BarChart
         :chart-name="statisticData.chartName"
-        :chart-data="statisticData.chartData || [[]]"
-        :chart-axis-data="statisticData.chartAxisData || []"
+        :chart-data="statisticData.chartData"
+        :chart-axis-data="statisticData.chartAxisData"
         :direction="false"
         style="width: 100%; height: 100%"
       ></BarChart>

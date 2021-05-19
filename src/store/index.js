@@ -11,6 +11,11 @@ import {
   UPDATE_NETINFO_MUTATION,
   UPDATE_NODELIST_MUTATION
 } from "@/store/module/home/constant";
+import { UPDATE_NODEBAND_MUTATION } from "@/store/module/light/constant";
+import {
+  UPDATE_LINKINFO_MUTATION,
+  UPDATE_NODEINFO_MUTATION
+} from "@/store/module/data/constant";
 
 Vue.use(Vuex);
 
@@ -29,6 +34,7 @@ export default new Vuex.Store({
       websocket.onmessage = function(res) {
         res = JSON.parse(res.data);
         let data = res.data;
+        console.log(data);
         switch (res.dataType) {
           case "parameterChange":
             commit("home/" + UPDATE_NETINFO_MUTATION, { data });
@@ -38,6 +44,16 @@ export default new Vuex.Store({
             break;
           case "situation":
             commit("home/" + UPDATE_EVENTLIST_MUTATION, { data });
+            break;
+          case "nodeOverLoad":
+            commit("light/" + UPDATE_NODEBAND_MUTATION, { data });
+            break;
+          case "nodeDetail":
+            commit("data/" + UPDATE_NODEINFO_MUTATION, { data });
+            break;
+          case "linkDetail":
+            commit("data/" + UPDATE_LINKINFO_MUTATION, { data });
+            break;
         }
       };
     }

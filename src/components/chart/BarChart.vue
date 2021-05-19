@@ -6,7 +6,6 @@
 import echart from "echarts";
 import { themeColors } from "@/assets/js/variable.js";
 
-let chart;
 let timer = null;
 
 export default {
@@ -133,6 +132,7 @@ export default {
   },
   data() {
     return {
+      chart: null,
       options: this.chartOption()
     };
   },
@@ -256,14 +256,14 @@ export default {
         } else {
           this.options.xAxis.data = this.chartAxisData;
         }
-        chart.setOption(this.options);
+        this.chart.setOption(this.options);
       }
     }
   },
 
   mounted() {
-    chart = echart.init(this.$refs.chartContainer);
-    chart.setOption(this.options);
+    this.chart = echart.init(this.$refs.chartContainer);
+    this.chart.setOption(this.options);
   },
   beforeDestroy() {
     setInterval(timer);

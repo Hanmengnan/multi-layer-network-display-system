@@ -22,7 +22,7 @@
       </div>
       <div class="box-3">
         <div class="box-title">
-          <span class="title"> 时频信号路由配置</span>
+          <span class="title"> 时频链路拓扑显示</span>
           <!-- 筛选 -->
         </div>
         <!-- 省地图组件 -->

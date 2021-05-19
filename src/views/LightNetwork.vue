@@ -5,6 +5,7 @@
         <component-box title-name="光网络节点设备状态">
           <template slot="body">
             <node-status
+              :node-info="nodeInfo"
               :node-city="selector"
               v-if="viewStatus === 'node'"
             ></node-status>
@@ -12,7 +13,10 @@
               :linkInfo="linkInfo"
               v-if="viewStatus === 'link'"
             ></link-status>
-            <net-status v-if="viewStatus === 'net'"></net-status>
+            <net-status
+              :nodeStatistics="nodeStatistics"
+              v-if="viewStatus === 'net'"
+            ></net-status>
           </template>
         </component-box>
       </div>
@@ -22,7 +26,10 @@
             <band-monitor
               v-if="viewStatus === 'net' || viewStatus === 'link'"
             ></band-monitor>
-            <load-monitor v-if="viewStatus === 'node'"></load-monitor>
+            <load-monitor
+              :overload="bandInfo"
+              v-if="viewStatus === 'node'"
+            ></load-monitor>
           </template>
         </component-box>
       </div>
@@ -108,7 +115,7 @@ import {
   UPDATE_NETINFO_ACTION,
   UPDATE_NODEINFO_ACTION,
   UPDATE_LINKINFO_ACTION,
-  UPDATE_BANDINFO_ACTION,
+  // UPDATE_BANDINFO_ACTION,
   UPDATE_NODEBAND_ACTION,
   UPDATE_NODELIST_ACTION,
   UPDATE_LINKLIST_ACTION
@@ -156,7 +163,7 @@ export default {
       return "node";
     },
     ...mapState({
-      netInfo: state => state.netInfo,
+      nodeStatistics: state => state.nodeStatistics,
       nodeInfo: state => state.nodeInfo,
       linkInfo: state => state.linkInfo,
       bandInfo: state => state.bandInfo,
@@ -167,8 +174,8 @@ export default {
   },
   mounted() {
     this.init();
-    this.getNetInfo();
-    this.getBandInfo("");
+    this.getNodeStatistics();
+    // this.getBandInfo("");
     this.getNodes();
     this.getLinks();
     // timer = setInterval(() => {
@@ -202,10 +209,10 @@ export default {
       el2.style.zIndex = 2;
     },
     ...mapActions({
-      getNetInfo: UPDATE_NETINFO_ACTION,
+      getNodeStatistics: UPDATE_NETINFO_ACTION,
       getNodeInfo: UPDATE_NODEINFO_ACTION,
       getLinkInfo: UPDATE_LINKINFO_ACTION,
-      getBandInfo: UPDATE_BANDINFO_ACTION,
+      // getBandInfo: UPDATE_NODEBAND_ACTION,
       getNodeBand: UPDATE_NODEBAND_ACTION,
       getNodes: UPDATE_NODELIST_ACTION,
       getLinks: UPDATE_LINKLIST_ACTION
@@ -218,23 +225,23 @@ export default {
         if (newval.includes("-")) {
           timer && clearInterval(timer);
           this.getLinkInfo(newval);
-          this.getBandInfo(newval);
-          timer = setInterval(() => {
-            this.getBandInfo(newval);
-          }, 3000);
+          // this.getBandInfo(newval);
+          // timer = setInterval(() => {
+          //   this.getBandInfo(newval);
+          // }, 3000);
         } else if (newval === "") {
           timer && clearInterval(timer);
-          this.getBandInfo(newval);
-          timer = setInterval(() => {
-            this.getBandInfo(newval);
-          }, 3000);
+          // this.getBandInfo(newval);
+          // timer = setInterval(() => {
+          //   this.getBandInfo(newval);
+          // }, 3000);
         } else {
           timer && clearInterval(timer);
           this.getNodeInfo(newval);
           this.getNodeBand(newval);
-          timer = setInterval(() => {
-            this.getNodeBand(newval);
-          }, 3000);
+          // timer = setInterval(() => {
+          //   this.getNodeBand(newval);
+          // }, 3000);
         }
       }
     }

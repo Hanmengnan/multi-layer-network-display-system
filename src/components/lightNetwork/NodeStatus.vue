@@ -9,7 +9,7 @@
     <div class="right">
       <div class="node-status-data">
         <div
-          v-for="(detailItem, detailIndex) in nodeDetailData"
+          v-for="(detailItem, detailIndex) in nodeInfo.nodeDetailData"
           :key="detailIndex"
         >
           <span v-text="detailItem.label + ':  '"> </span>
@@ -21,7 +21,7 @@
       </div>
       <div class="node-contact-data">
         <div
-          v-for="(contactItem, contactIndex) in nodeContactData"
+          v-for="(contactItem, contactIndex) in nodeInfo.nodeContactData"
           :key="contactIndex"
         >
           <span v-text="contactItem.label + ':  ' + contactItem.data"></span>
@@ -35,6 +35,11 @@
 export default {
   name: "NodeStatus",
   props: {
+    nodeInfo: {
+      type: Object,
+      require: false,
+      default: () => {}
+    },
     nodeCity: {
       type: String,
       required: true

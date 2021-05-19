@@ -10,7 +10,12 @@
     </div>
     <div class="link">
       <div>{{ linkInfo.linkType }}</div>
-      <div class="iconfont error">&#xe647;</div>
+      <div class="iconfont error" v-if="linkInfo.linkStatus === '阻塞'">
+        &#xe647;
+      </div>
+      <div class="iconfont work" v-else>
+        &#xe728;
+      </div>
       <div>
         <div>
           <span class="value">{{ linkInfo.linkNum }}</span

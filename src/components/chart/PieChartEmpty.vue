@@ -24,7 +24,7 @@ export default {
         return {
           legendShow: false,
           titleShow: true,
-          radius: ["70%", "80%"]
+          radius: ["60%", "80%"]
         };
       }
     },

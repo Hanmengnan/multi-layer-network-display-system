@@ -25,7 +25,7 @@
           路径
         </div>
         <SelectDown
-          :title="pathId"
+          :title="'路径' + pathId"
           v-model="pathId"
           :selectList="routes"
           v-show="!show"

@@ -133,7 +133,8 @@ import {
   UPDATE_NODESTATISTICS_ACTION,
   UPDATE_NETINFO_ACTION,
   UPDATE_FLWOINFO_ACTION,
-  UPDATE_LINKLIST_ACTION
+  UPDATE_LINKLIST_ACTION,
+  UPDATE_EVENTLIST_ACTION
 } from "@/store/module/home/constant";
 
 const { mapState, mapActions } = createNamespacedHelpers("home");
@@ -206,19 +207,21 @@ export default {
     },
     ...mapActions({
       getSysInfo: UPDATE_SYSINFO_ACTION,
+      getNetInfo: UPDATE_NETINFO_ACTION,
       getNodeList: UPDATE_NODELIST_ACTION,
-      getBasicInfo: UPDATE_NETINFO_ACTION,
       getFlowInfo: UPDATE_FLWOINFO_ACTION,
       getLinkList: UPDATE_LINKLIST_ACTION,
-      getNodeTypeStatistics: UPDATE_NODESTATISTICS_ACTION
+      getNodeTypeStatistics: UPDATE_NODESTATISTICS_ACTION,
+      getSituationHandleInfo: UPDATE_EVENTLIST_ACTION
     }),
     async initData() {
       this.getSysInfo();
+      this.getNetInfo();
       this.getNodeList();
       this.getNodeTypeStatistics();
-      this.getBasicInfo();
       this.getFlowInfo();
       this.getLinkList();
+      this.getSituationHandleInfo();
     }
   },
   mounted: function() {

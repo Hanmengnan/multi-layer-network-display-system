@@ -85,7 +85,7 @@ export default {
       font-weight: @titleFontWeight;
       display: flex;
       justify-content: space-between;
-      margin: 20px;
+      margin: 5px;
       flex: 1;
       .title > span {
         display: inline-block;
@@ -105,6 +105,8 @@ export default {
     .slot-area {
       flex: 14;
       margin: 10px;
+      width: 100%;
+      height: 55%;
     }
   }
 }

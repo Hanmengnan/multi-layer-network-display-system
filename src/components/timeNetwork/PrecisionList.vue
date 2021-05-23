@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="list-body">
-      <List is-scroll="scroll" :header="header" :body="selectBody" />
+      <List :header="header" :body="selectBody" />
     </div>
   </div>
 </template>

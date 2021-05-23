@@ -68,13 +68,13 @@ export default {
           }
         },
         visualMap: {
-          min: 0,
-          max: Math.max(...this.chartData.map(item => item.value)),
+          seriesIndex: 0,
+          dimension: 2,
           pieces: [
-            { min: 45 }, // 不指定 max，表示 max 为无限大（Infinity）。
-            { min: 30, max: 45 },
-            { min: 15, max: 30 },
-            { max: 15 } // 不指定 min，表示 min 为无限大（-Infinity）。
+            { min: 5 }, // 不指定 max，表示 max 为无限大（Infinity）。
+            { min: 3, max: 5 },
+            { min: 2, max: 3 },
+            { max: 2 } // 不指定 min，表示 min 为无限大（-Infinity）。
           ],
           color: [themeColor2, themeColor3, themeColor5, themeColor1],
           textStyle: {
@@ -121,7 +121,7 @@ export default {
               value: 2
             },
             symbolSize: function(val) {
-              return val[2] / 3;
+              return val[2] * 5;
             },
             label: {
               normal: {
@@ -155,7 +155,14 @@ export default {
       handler: function() {
         this.option.yAxis.data = this.chartData.map(item => item.name);
         this.option.series[0].data = scatterData(this.chartData);
-        this.option.series[1].data = this.chartData.map(item => item.value);
+        this.option.series[1].data = this.chartData.map(item => {
+          return {
+            value: item.value,
+            itemStyle: {
+              color: themeColor1
+            }
+          };
+        });
         myChart.setOption(this.option);
       }
     }

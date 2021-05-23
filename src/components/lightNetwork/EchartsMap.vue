@@ -8,6 +8,10 @@ import china from "@/assets/map/china.json";
 
 export default {
   props: {
+    linkList: {
+      type: Array,
+      default: () => []
+    },
     value: {
       type: String,
       required: true

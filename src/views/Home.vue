@@ -20,7 +20,10 @@
       </div>
       <div class="head-weather">
         <weather v-show="showWeather"></weather>
-        <people-container v-show="!showWeather"></people-container>
+        <people-container
+          :people="sysInfo.people"
+          v-show="!showWeather"
+        ></people-container>
       </div>
     </div>
     <div class="body-area">
@@ -101,6 +104,7 @@
       </div>
       <div class="map-background">
         <china3d-map
+          :forceRegion="this.$store.state.map3dForce"
           className="first"
           style="width: 100%; height: 100%"
         ></china3d-map>

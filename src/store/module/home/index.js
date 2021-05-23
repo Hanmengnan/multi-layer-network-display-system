@@ -85,7 +85,19 @@ export default {
             name: "数据服务集群",
             status: data.state.cluster
           }
-        ]
+        ],
+        people: {
+          principal: {
+            name: data.people.principal.name,
+            pic:
+              "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2561659095,299912888&fm=26&gp=0.jpg"
+          },
+          duty: {
+            name: data.people.duty.name,
+            pic:
+              "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2561659095,299912888&fm=26&gp=0.jpg"
+          }
+        }
       };
     },
     [UPDATE_EVENTLIST_MUTATION](state, { data }) {

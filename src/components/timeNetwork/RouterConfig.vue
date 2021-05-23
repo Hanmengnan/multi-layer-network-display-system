@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { themeColor5 } from "@/assets/js/variable";
 import echarts from "echarts";
 import SelectDown from "@/components/base/SelectDown";
 
@@ -79,22 +80,46 @@ export default {
   },
   computed: {},
   methods: {
-    routeOption() {
-      let res = [];
-      this.routeList.forEach((route, index) => {
-        res = res.concat(
-          route.map(item => {
-            return {
-              source: item.source,
-              target: item.target,
+    routeSet: function() {
+      let tmp = [];
+      this.routeList.forEach(item => {
+        item.forEach(link => {
+          if (
+            !tmp.some(i => {
+              return (
+                (link.source === i.source && link.target === i.target) ||
+                (link.target === i.source && link.source === i.target)
+              );
+            })
+          ) {
+            tmp.push({
               lineStyle: {
-                color:
-                  this.pathId === (index + 1).toString() ? "#005f00" : "grey",
+                color: "grey",
                 width: 4
+              },
+              source: link.source,
+              target: link.target
+            });
+          }
+        });
+      });
+      return tmp;
+    },
+    routeOption() {
+      let res = this.routeSet();
+      this.routeList.forEach((route, index) => {
+        if ((index + 1).toString() === this.pathId) {
+          route.forEach(item => {
+            res.forEach((old, index) => {
+              if (
+                (item.source === old.source && item.target === old.target) ||
+                (item.target === old.source && item.source === old.target)
+              ) {
+                res[index].lineStyle.color = themeColor5;
               }
-            };
-          })
-        );
+            });
+          });
+        }
       });
       return res;
     },

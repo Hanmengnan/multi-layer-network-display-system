@@ -123,7 +123,7 @@ export default {
       for (let item of Object.keys(data)) {
         state.bandInfo.push({
           name: item,
-          value: data[item] * 100
+          value: data[item].toPrecision(3)
         });
       }
     },

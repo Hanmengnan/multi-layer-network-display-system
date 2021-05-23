@@ -77,13 +77,13 @@
       </div>
       <div class="body">
         <div class="map-area">
-          <div
-            class="item one"
-            style="transform: translate(35.5%,33.5%) scale(0.42)"
-            @dblclick="clickChart('1')"
-          >
-            <EchartsMap v-model="selector" />
-          </div>
+          <!--          <div-->
+          <!--            class="item one"-->
+          <!--            style="transform: translate(35.5%,33.5%) scale(0.42)"-->
+          <!--            @dblclick="clickChart('1')"-->
+          <!--          >-->
+          <!--            <EchartsMap :link-list="linkList" v-model="selector" />-->
+          <!--          </div>-->
           <div
             class="item two active"
             @dblclick="clickChart('2')"
@@ -108,7 +108,7 @@ import LoadMonitor from "@/components/lightNetwork/LoadMonitor";
 import NetworkRunningConfig from "@/components/lightNetwork/NetworkRuningConfig";
 import NetStatus from "@/components/lightNetwork/NetStatus";
 import SelectDown from "@/components/base/SelectDown";
-import EchartsMap from "@/components/lightNetwork/EchartsMap";
+// import EchartsMap from "@/components/lightNetwork/EchartsMap";
 import Map from "@/components/lightNetwork/Map";
 
 import {
@@ -139,7 +139,7 @@ export default {
     SelectDown,
     ControlCenter,
     BandMonitor,
-    EchartsMap,
+    // EchartsMap,
     Map,
     Weather
   },
@@ -184,13 +184,14 @@ export default {
   },
   methods: {
     init() {
-      this.items = document.querySelectorAll(".mapArea .item");
+      this.items = document.querySelectorAll(".item");
+      console.log(this.items);
       for (let i = 0; i < this.items.length; i++) {
         this.items[i].dataset.order = i + 1;
       }
     },
     clickChart(clickIndex) {
-      let activeItem = document.querySelector(".mapArea .active");
+      let activeItem = document.querySelector(".active");
       let activeIndex = activeItem.dataset.order;
       let clickItem = this.items[clickIndex - 1];
       if (activeIndex === clickIndex) {

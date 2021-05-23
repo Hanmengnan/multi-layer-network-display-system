@@ -258,6 +258,20 @@ export default {
         }
         this.chart.setOption(this.options);
       }
+    },
+
+    chartData: {
+      deep: true,
+      handler: function() {
+        console.log("wa");
+        this.options = this.chartOption();
+        if (this.direction) {
+          this.options.yAxis.data = this.chartAxisData;
+        } else {
+          this.options.xAxis.data = this.chartAxisData;
+        }
+        this.chart.setOption(this.options);
+      }
     }
   },
 

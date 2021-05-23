@@ -112,7 +112,7 @@ export default {
           { title: "吞吐量/PB", value: data.NodeDetail.throughput },
           {
             title: "转发率",
-            value: (data.NodeDetail.forwardingRate * 100).toPrecision(3) + "%"
+            value: data.NodeDetail.forwardingRate.toPrecision(3) + "%"
           },
           { title: "处理时延/NS", value: data.NodeDetail.error }
         ],
@@ -182,11 +182,8 @@ export default {
         state.linkInfo.infoData = [
           { title: "运行状态", num: "正常" },
           { title: "带宽", num: data.basicInfo.contain },
-          {
-            title: "丢包率",
-            num: (data.parameterChange[0].loss * 100).toPrecision(3)
-          },
-          { title: "丢包率", num: data.parameterChange[0].loss }
+          { title: "时延", num: data.parameterChange[0].precisionError },
+          { title: "丢包率", num: data.parameterChange[0].loss.toPrecision(3) }
         ];
         state.linkInfo.chartData = [
           data.parameterChange.map(res => res.loss),

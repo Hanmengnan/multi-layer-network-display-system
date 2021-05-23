@@ -5,12 +5,14 @@
       :handleMouseOut="mouseMoveEvent"
       :header="headerList"
       :body="showList"
+      :is-scroll="true"
     />
   </div>
 </template>
 
 <script>
 import List from "@/components/base/List.vue";
+import { getProvince } from "@/api/mock/nodeAndLink";
 
 const headerList = [
   { value: "编号" },
@@ -51,6 +53,7 @@ export default {
   },
   methods: {
     mouseMoveEvent(val) {
+      val = getProvince(val.split("站")[0]);
       this.$store.commit("changeForce", val);
     }
   }

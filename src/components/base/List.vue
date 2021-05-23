@@ -31,6 +31,8 @@
               v-for="(row, rowIndex) in bodyForShow"
               :key="rowIndex"
               class="text"
+              @mouseenter="handleMouseIn(row.value)"
+              @mouseleave="handleMouseOut('')"
             >
               <td
                 v-for="prop in Object.keys(row).filter(val => val !== 'color')"
@@ -52,9 +54,17 @@
 <script>
 export default {
   props: {
+    handleMouseIn: {
+      type: Function,
+      default: () => {}
+    },
+    handleMouseOut: {
+      type: Function,
+      default: () => {}
+    },
     isScroll: {
-      type: String,
-      default: "hidden"
+      type: Boolean,
+      default: true
     },
     header: {
       type: Array,
@@ -162,16 +172,19 @@ export default {
       };
     });
     this.bodyForShow = this.body.map(val => val);
-    if (this.isScroll === "hidden") {
-      this.timer = setInterval(() => {
-        if (this.activeIndex < this.body.length) {
-          // 最后一行滚动到顶端为止，若加上“-总行数”则只滚动到最后一行出现为止
-          this.activeIndex += 1;
-        } else {
-          this.activeIndex = 0;
-        }
-      }, 1000); // 移动时间间隔
+    if (this.isScroll) {
+      document.querySelector(".body").style.overflow = "scroll";
     }
+    // if (this.isScroll === "hidden") {
+    //   this.timer = setInterval(() => {
+    //     if (this.activeIndex < this.body.length) {
+    //       // 最后一行滚动到顶端为止，若加上“-总行数”则只滚动到最后一行出现为止
+    //       this.activeIndex += 1;
+    //     } else {
+    //       this.activeIndex = 0;
+    //     }
+    //   }, 1000); // 移动时间间隔
+    // }
   },
   beforeDestroy() {
     clearInterval(this.timer);
@@ -194,9 +207,11 @@ export default {
 
 .body {
   width: 100%;
+  height: 91%;
   position: relative;
   //position: absolute;
 }
+
 .body::-webkit-scrollbar {
   display: none; /* Chrome Safari */
 }

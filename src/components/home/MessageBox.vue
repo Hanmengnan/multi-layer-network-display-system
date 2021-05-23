@@ -7,7 +7,11 @@
         class="scrollItem"
       >
         <span>
-          <span :style="`color: ${coutColor(val.state)}`">{{ val.city }} </span
+          <span
+            :style="`color: ${coutColor(val.state)}`"
+            @mouseenter="changeForce(val.city)"
+            @mouseleave="changeForce('')"
+            >{{ val.name }} </span
           >节点系统
           <span :style="`color: ${coutColor(val.state)}`">{{ val.state }}</span>
         </span>
@@ -44,13 +48,17 @@ export default {
       return this.nodeList.map(val => {
         return {
           msg: `${val.name}节点系统${val.state}`,
-          city: val.name,
+          city: val.city,
+          name: val.name,
           state: val.state
         };
       });
     }
   },
   methods: {
+    changeForce(name) {
+      this.$store.commit("changeForce", name);
+    },
     coutColor(state) {
       switch (state) {
         case "正常":

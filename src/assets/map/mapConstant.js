@@ -507,24 +507,13 @@ export const provinces = {
 export const scatterData = data => {
   let res = [];
   for (let i = 0; i < data.length; i++) {
-    // let geoCoord = provincesLocation[data[i].name];
-    let geoCoord = geoCoordMap[data[i].name];
+    let geoCoord = provincesLocation[data[i].name];
     if (geoCoord) {
       res.push({
         name: data[i].name,
-        value: geoCoord.concat(data[i].value * 10)
+        value: geoCoord.concat(data[i].value)
       });
     }
   }
   return res;
-};
-export const barData = data => {
-  let tempData = data.concat();
-  tempData.sort((a, b) => b.value - a.value).slice(0, 15);
-  let res = [];
-
-  for (let i = 0; i < tempData.length; i++) {
-    res.push([tempData[i].value, tempData[i].name]);
-  }
-  return tempData;
 };

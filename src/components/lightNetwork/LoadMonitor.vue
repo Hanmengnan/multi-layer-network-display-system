@@ -24,7 +24,6 @@
 import LineProcess from "@/components/base/LineProcess.vue";
 import { themeColor5, themeColor3, themeColor10 } from "@/assets/js/variable";
 
-let timer = "";
 export default {
   name: "load-monitor",
   components: {
@@ -41,52 +40,11 @@ export default {
     return {
       themeColor3,
       themeColor5,
-      themeColor10,
-      showList: [
-        {
-          name: "北京-天津",
-          value: 74
-        },
-        {
-          name: "北京-石家庄",
-          value: 63
-        },
-        {
-          name: "北京-太原",
-          value: 57
-        },
-        {
-          name: "北京-张家口",
-          value: 95
-        }
-      ]
+      themeColor10
     };
   },
-  mounted() {
-    timer = setInterval(() => {
-      this.showList = [
-        {
-          name: "北京-天津",
-          value: parseInt(Math.random() * 100)
-        },
-        {
-          name: "北京-石家庄",
-          value: parseInt(Math.random() * 100)
-        },
-        {
-          name: "北京-太原",
-          value: parseInt(Math.random() * 100)
-        },
-        {
-          name: "北京-张家口",
-          value: parseInt(Math.random() * 100)
-        }
-      ];
-    }, 10000);
-  },
-  beforeDestroy() {
-    clearInterval(timer);
-  }
+  mounted() {},
+  beforeDestroy() {}
 };
 </script>
 

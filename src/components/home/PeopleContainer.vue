@@ -4,18 +4,18 @@
       <div>今日值班:</div>
       <div>
         <i class="iconfont" style="padding-right: 5px">&#xe62f;</i
-        >{{ duty.name }}
+        >{{ people.duty.name }}
       </div>
     </div>
-    <img :src="duty.pic" alt="duty" />
+    <img :src="people.duty.pic" alt="duty" />
     <div class="people-name">
       <div>负责人:</div>
       <div>
         <i class="iconfont" style="padding-right: 5px">&#xe62f;</i
-        >{{ duty.name }}
+        >{{ people.principal.name }}
       </div>
     </div>
-    <img :src="owner.pic" alt="owner" />
+    <img :src="people.principal.pic" alt="owner" />
   </div>
 </template>
 
@@ -23,23 +23,13 @@
 export default {
   name: "people-box",
   props: {
-    duty: {
+    people: {
       type: Object,
+      require: false,
       default: () => {
         return {
-          name: "张三",
-          pic:
-            "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2561659095,299912888&fm=26&gp=0.jpg"
-        };
-      }
-    },
-    owner: {
-      type: Object,
-      default: () => {
-        return {
-          name: "牛猛",
-          pic:
-            "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2561659095,299912888&fm=26&gp=0.jpg"
+          duty: {},
+          principal: {}
         };
       }
     }
@@ -50,6 +40,7 @@ export default {
 <style lang="less" scoped>
 @import "~@/assets/css/common";
 @import "~@/assets/css/mixin/base";
+
 .people-area {
   .mixin-flex(@justify-content: space-around);
   .mixin-width-height(@height: 80%);

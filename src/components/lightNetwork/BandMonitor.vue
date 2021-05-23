@@ -1,7 +1,9 @@
 <template>
   <div class="band-monitor">
     <div class="title">
-      <div class="text time">时间: {{ time }}</div>
+      <div class="text time">
+        时间: {{ new Date(Date.now()).toLocaleDateString() }}
+      </div>
       <div class="text target">目标: {{ target }}</div>
     </div>
     <div class="container">
@@ -60,18 +62,19 @@ export default {
   mounted() {
     timer = setInterval(() => {
       this.chartData = new Array([
-        Math.floor(Math.random() * 100),
-        Math.floor(Math.random() * 100),
-        Math.floor(Math.random() * 100),
-        Math.floor(Math.random() * 100),
-        Math.floor(Math.random() * 100),
-        Math.floor(Math.random() * 100),
-        Math.floor(Math.random() * 100),
-        Math.floor(Math.random() * 100),
-        Math.floor(Math.random() * 100),
-        Math.floor(Math.random() * 100)
+        Math.floor(Math.random() * 20 + 50),
+        Math.floor(Math.random() * 20 + 50),
+        Math.floor(Math.random() * 20 + 50),
+        Math.floor(Math.random() * 20 + 50),
+        Math.floor(Math.random() * 20 + 50),
+        Math.floor(Math.random() * 20 + 50),
+        Math.floor(Math.random() * 20 + 50),
+        Math.floor(Math.random() * 20 + 50),
+        Math.floor(Math.random() * 20 + 50),
+        Math.floor(Math.random() * 20 + 50)
       ]);
-    }, 1000);
+      console.log(this.chartData);
+    }, 5000);
   },
   beforeDestroy() {
     setInterval(timer);

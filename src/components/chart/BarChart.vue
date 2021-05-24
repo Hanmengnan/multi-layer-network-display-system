@@ -58,7 +58,7 @@ export default {
     xAxisLabelFontSize: {
       type: Number,
       required: false,
-      default: 12
+      default: 10
     },
     xAxisLabelColor: {
       type: String,
@@ -88,7 +88,7 @@ export default {
     yAxisLabelFontSize: {
       type: Number,
       required: false,
-      default: 12
+      default: 9
     },
     yAxisLabelColor: {
       type: String,
@@ -263,7 +263,6 @@ export default {
     chartData: {
       deep: true,
       handler: function() {
-        console.log("wa");
         this.options = this.chartOption();
         if (this.direction) {
           this.options.yAxis.data = this.chartAxisData;

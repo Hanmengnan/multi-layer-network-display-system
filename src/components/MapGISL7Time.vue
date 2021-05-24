@@ -70,7 +70,9 @@ export default {
           start: el.node1Id,
           end: el.node2Id,
           // type: el.type,
-          type: "busy",
+          type: ["busy", "normal", "normal", "normal"][
+            Math.floor(Math.random() * 2)
+          ],
           used: el.usedForTime
         };
       });

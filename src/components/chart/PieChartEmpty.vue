@@ -124,12 +124,15 @@ export default {
       return (aim / total) * 100;
     },
     updateChart: function() {
+      console.log(this.aimConditionNumber);
+      this.options.title[0].subtext = this.aimConditionNumber + "起";
       this.options.series[0].data[0].value = this.percent(
         this.aimConditionNumber,
         this.conditionNumber
       );
       this.options.series[0].data[1].value =
         100 - this.percent(this.aimConditionNumber, this.conditionNumber);
+      console.log(this.options);
       this.chart.setOption(this.options);
     }
   },

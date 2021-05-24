@@ -43,7 +43,9 @@ export default {
           start: el.node1Name,
           end: el.node2Name,
           // type: el.type,
-          type: "busy",
+          type: ["busy", "normal", "normal", "normal"][
+            Math.floor(Math.random() * 4)
+          ],
           used: el.usedForData
         };
       });

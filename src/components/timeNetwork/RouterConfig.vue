@@ -133,10 +133,10 @@ export default {
             type: "graph",
             layout: "force",
             force: {
-              edgeLength: 70,
+              edgeLength: 50,
               layoutAnimation: true,
               gravity: 0.1,
-              repulsion: 200
+              repulsion: 50
             },
             symbolSize: 30,
             draggable: true,

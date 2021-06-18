@@ -140,7 +140,7 @@ export default {
           value: data.areaStatistics[item]
         });
       }
-      state.areaStatistics = tmp;
+      state.areaStatistics = tmp.slice(0, 18);
     },
     [UPDATE_LINKLIST_MUTATION](state, { data }) {
       state.linkList = [...data];

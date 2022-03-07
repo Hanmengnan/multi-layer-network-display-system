@@ -10,7 +10,7 @@
   "dependencies": {
     "@antv/l7": "^2.3.9",
     "@antv/l7-maps": "^2.3.9",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "cesium": "^1.79.1",
     "core-js": "^3.6.5",
     "echarts": "^4.9.0",
